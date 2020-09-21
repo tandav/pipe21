@@ -1,0 +1,54 @@
+from functools import reduce
+
+class B:
+    def __init__(self, f): self.f = f
+class Pipe  (B): __ror__ = lambda self, x: self.f(x)        
+class Map   (B): __ror__ = lambda self, x: map   (self.f, x)
+class Filter(B): __ror__ = lambda self, x: filter(self.f, x)
+class Reduce(B): __ror__ = lambda self, x: reduce(self.f, x)
+
+# extended
+
+import operator
+import subprocess
+import itertools
+import re
+
+class MapValues     (B): __ror__ = lambda self, it: it | Map(lambda kv: (kv[0], self.f(kv[1])))
+class FlatMap       (B): __ror__ = lambda self, it: it | Map(self.f) | Pipe(itertools.chain.from_iterable)
+class KeyBy         (B): __ror__ = lambda self, it: it | Map(lambda x: (self.f(x), x))
+class Keys          (B): __ror__ = lambda self, it: it | Map(operator.itemgetter(0))
+class Values        (B): __ror__ = lambda self, it: it | Map(operator.itemgetter(1))
+class Grep          (B): __ror__ = lambda self, it: it | Filter(lambda x:     re.search(self.f, x))
+class GrepV         (B): __ror__ = lambda self, it: it | Filter(lambda x: not re.search(self.f, x))
+class FilterEqual   (B): __ror__ = lambda self, it: it | Filter(lambda x: x == self.f)
+class FilterNotEqual(B): __ror__ = lambda self, it: it | Filter(lambda x: x != self.f)
+class GroupBy       (B): __ror__ = lambda self, it: itertools.groupby(it, key=self.f)
+class ReadLines     (B): __ror__ = lambda self, fn: open(fn).readlines()
+class ShellArg      (B): __ror__ = lambda self, x: subprocess.check_output((self.f, x), text=True).splitlines()
+class ShellExec     (B): __ror__ = lambda self, x: subprocess.check_output(         x , text=True).splitlines()
+class ForEach(B):
+    def __ror__(self, x):
+        for e in x: self.f(e)
+
+# class Sorted        (B): __ror__ = lambda self, x: sorted(x, **self.kw)
+
+# shell = lambda x : subprocess.check_output(x, text=True).splitlines()
+# argto
+count = lambda it: sum(1 for _ in it)
+    
+# class B:
+#     def __init__(self, f=None, **kw):
+#         self.f = f
+#         self.kw = kw # optional
+
+
+
+'''
+little docs:
+
+x | Pipe(f)   == f     (x   )
+x | Map(f)    == map   (f, x)
+x | Filter(f) == filter(f, x)
+x | Reduce(f) == reduce(f, x)
+'''
