@@ -1,19 +1,18 @@
 from functools import reduce
-
-class B:
-    def __init__(self, f): self.f = f
-class Pipe  (B): __ror__ = lambda self, x: self.f(x)        
-class Map   (B): __ror__ = lambda self, x: map   (self.f, x)
-class Filter(B): __ror__ = lambda self, x: filter(self.f, x)
-class Reduce(B): __ror__ = lambda self, x: reduce(self.f, x)
-
-# extended
-
 import operator
 import subprocess
 import itertools
 import re
 
+# basic
+class B:
+    def __init__(self, f): self.f = f
+class Pipe  (B): __ror__ = lambda self, x: self.f(x)        
+class Map   (B): __ror__ = lambda self, x: map   (self.f, x)
+class Filter(B): __ror__ = lambda self, x: filter(self.f, x)
+
+# extended
+class Reduce(B): __ror__ = lambda self, x: reduce(self.f, x)
 class MapValues     (B): __ror__ = lambda self, it: it | Map(lambda kv: (kv[0], self.f(kv[1])))
 class FlatMap       (B): __ror__ = lambda self, it: it | Map(self.f) | Pipe(itertools.chain.from_iterable)
 class KeyBy         (B): __ror__ = lambda self, it: it | Map(lambda x: (self.f(x), x))
@@ -43,12 +42,3 @@ count = lambda it: sum(1 for _ in it)
 #         self.kw = kw # optional
 
 
-
-'''
-little docs:
-
-x | Pipe(f)   == f     (x   )
-x | Map(f)    == map   (f, x)
-x | Filter(f) == filter(f, x)
-x | Reduce(f) == reduce(f, x)
-'''
