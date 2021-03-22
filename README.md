@@ -1,7 +1,7 @@
 ## Basic version
 just copy-paste it!
 
-This are the most frequently used operators. It's often easier to copypaste rather import.
+Most frequently used operators. It's often easier to copypaste than import.
 
 ```py
 class B:
