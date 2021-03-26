@@ -10,10 +10,10 @@ GREEN_STRING = lambda s: '\033[32m' + str(s) + '\033[0m'
 
 # n = 50_000
 # n = 500
-# n = 10_000
-n = 1_000
+n = 10_000
+# n = 1_000
 
-n_machines = 10
+n_machines = 5
 
 machines = [
     (random.random(), random.random(), m) # probability reward machine
@@ -65,7 +65,7 @@ def main():
     )
 
     E, R = zip(*result)
-    min_, max_ = min(R), max(R)
+
 
     C = collections.defaultdict(float)
     for e, r in zip(E, R):
@@ -73,22 +73,32 @@ def main():
 
     print(C)
 
+    min_, max_ = min(C.values()), max(C.values())
+    print(f'{min_=} {max_=}')
+
     # print(min_, max_)
 
     # print(result)
     n_bars = 16
 
+    # b / n_bars = qq
+    # b / n_bar = qq
+    # qq =
+
     for e, r in sorted(C.items()):
-        qq = (r - min_) / (max_ - min_)
+        reward_ratio = (r - min_) / (max_ - min_)
+
         # q = int(qq * 10)
 
-        b = round(qq * n_bars)
-        print(qq, b)
-        s = f'{e:5.2f} ' + '=' * b# + '|'
+        # b = round(qq * n_bars)
+        b = reward_ratio * n_bars
+        # print(r, reward_ratio, n_bars, b, round(b)) # 11219.067574202689 6.581111695311944 16 105
+        # 6 /16 =
+        s = f'{e:5.2f} ' + '=' * round(reward_ratio * n_bars)# + '|'
         s = f'{s:<66}'
         if r == max_:
             s = GREEN_STRING(s)
-        print(s, qq)
+        print(s, reward_ratio)
 
 
     # for e, r in result:
