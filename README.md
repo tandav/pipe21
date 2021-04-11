@@ -18,7 +18,7 @@ from pipe import *
 
 ## Examples
 
-little docs:
+#### little docs
 
 ```py
 x | Pipe(f)   == f     (x   )
@@ -29,14 +29,16 @@ x | Reduce(f) == reduce(f, x)
 
 ---
 
+#### simple pipe
 
-```
+```py
 range(5) | Pipe(list)
 # [0, 1, 2, 3, 4]
 ```
 
 ---
 
+#### print digits
 
 ```py
 (
@@ -53,7 +55,7 @@ Output:
 
 ---
 
-FizzBuzz
+#### FizzBuzz
 
 ```py
 import itertools
@@ -72,7 +74,7 @@ from pipe import *
 
 ---
 
-play random music from youtube links in markdown files:
+#### play random music from youtube links in markdown files:
 
 ```py
 import pathlib
