@@ -45,7 +45,7 @@ range(5) | Pipe(list)
     range(1_000_000)
     | Map(chr)
     | Filter(str.isdigit)
-    | Pipe(lambda x: ''.join(x))
+    | Pipe(''.join)
 )
 ```
 Output:
