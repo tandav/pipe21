@@ -5,16 +5,6 @@ import itertools
 import re
 import concurrent.futures
 
-__all__ = [
-    'Pipe', 'Map', 'Filter',
-    'Reduce', 'MapValues', 'MapKeys',
-    'FilterKeys', 'FilterValues', 'FlatMap',
-    'KeyBy', 'ValueBy', 'Keys', 'Values',
-    'Grep', 'GrepV', 'FilterEqual', 'FilterNotEqual',
-    'GroupBy', 'ReadLines', 'ShellArg', 'ShellExec', 'PipeArgs',
-    'MapArgs', 'ForEach', 'ThreadMap', 'ProcessMap', 'count',
-]
-
 # basic
 class B:
     def __init__(self, f=None): self.f = f
