@@ -4,6 +4,7 @@ import subprocess
 import itertools
 import re
 import concurrent.futures
+from collections.abc import Iterable
 
 # basic
 class B:
@@ -11,6 +12,13 @@ class B:
 class Pipe  (B): __ror__ = lambda self, x: self.f(x)        
 class Map   (B): __ror__ = lambda self, x: map   (self.f, x)
 class Filter(B): __ror__ = lambda self, x: filter(self.f, x)
+
+# helpers
+def unit_tuple(x):
+    if isinstance(x, Iterable):
+        return x
+    return x,
+
 
 # extended
 class Reduce        (B): __ror__ = lambda self, x: reduce(self.f, x)
