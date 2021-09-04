@@ -10,6 +10,10 @@ jobs:
       - uses: actions/setup-python@v2
         with:
           python-version: '3.9'
+      - name: ls pwd
+        run: |
+          pwd
+          ls -Al
       - name: install dependencies
         run: python3 -m pip install pytest
       - name: test
