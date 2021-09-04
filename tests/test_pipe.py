@@ -1,4 +1,4 @@
-from pipe import *
+from pipe21 import *
 
 
 def test_pipe():
