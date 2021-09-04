@@ -13,3 +13,7 @@ def test_filter():
     i = range(5)
     def is_even(x): return x % 2 == 0
     assert i | Filter(is_even) | Pipe(list) == list(filter(is_even, i))
+
+
+def test_value_by():
+    assert range(2) | ValueBy(str) | Pipe(list) == [(0, '0'), (1, '1')]
