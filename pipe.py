@@ -30,6 +30,7 @@ class FlatMap       (B): __ror__ = lambda self, it: it | Map(self.f) | Pipe(iter
 # class FlatMapValues (B): __ror__ = lambda self, it: it | Map(self.f) | Pipe(itertools.chain.from_iterable)
 class KeyBy         (B): __ror__ = lambda self, it: it | Map(lambda x: (self.f(x), x))
 class ValueBy       (B): __ror__ = lambda self, it: it | Map(lambda x: (x, self.f(x)))
+class Append        (B): __ror__ = lambda self, it: it | Map(lambda x: (*x, self.f(x)))
 class Keys          (B): __ror__ = lambda self, it: it | Map(operator.itemgetter(0))
 class Values        (B): __ror__ = lambda self, it: it | Map(operator.itemgetter(1))
 class Grep          (B): __ror__ = lambda self, it: it | Filter(lambda x:     re.search(self.f, x))

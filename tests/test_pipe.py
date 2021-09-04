@@ -23,3 +23,8 @@ def test_unit_tuple():
     assert unit_tuple(1) == (1,)
     assert unit_tuple((1,)) == (1,)
     assert unit_tuple((1,2)) == (1,2)
+
+
+def test_append():
+    assert [(0,), (1,)] | Append(lambda x: str(x[0])) | Pipe(list) == [(0, '0'), (1, '1')]
+    assert [(0, '0'), (1, '1')] | Append(lambda x: str(x[0] * 10)) | Pipe(list) == [(0, '0', '0'), (1, '1', '10')]
