@@ -1,18 +1,22 @@
+import hypothesis.strategies as st
+from hypothesis import given
 from pipe21 import *
 
 
-def test_pipe():
-    assert range(5) | Pipe(list) == list(range(5))
+@given(st.lists(st.integers() | st.characters() | st.floats() | st.booleans() | st.binary()))
+def test_pipe(it):
+    assert it | Pipe(list) == list(it)
 
 
-def test_map():
-    assert range(5) | Map(str) | Pipe(list) == list(map(str, range(5)))
+@given(st.lists(st.integers() | st.characters() | st.floats() | st.booleans() | st.binary()))
+def test_map(it):
+    assert it | Map(str) | Pipe(list) == list(map(str, it))
 
 
-def test_filter():
-    i = range(5)
+@given(st.lists(st.integers()))
+def test_filter(it):
     def is_even(x): return x % 2 == 0
-    assert i | Filter(is_even) | Pipe(list) == list(filter(is_even, i))
+    assert it | Filter(is_even) | Pipe(list) == list(filter(is_even, it))
 
 
 def test_value_by():
