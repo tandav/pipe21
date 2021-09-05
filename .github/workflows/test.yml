@@ -15,6 +15,6 @@ jobs:
           pwd
           ls -Al
       - name: install dependencies
-        run: python3 -m pip install pytest
+        run: python3 -m pip install pytest hypothesis
       - name: test
         run: make test
