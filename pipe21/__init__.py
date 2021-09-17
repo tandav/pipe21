@@ -54,12 +54,12 @@ class ForEach(B):
 class ThreadMap(B):
     def __ror__(self, it):
         with concurrent.futures.ThreadPoolExecutor() as pool:
-            return pool.map(self.f, it) | Pipe(list)
+            return pool.map(self.f, it) | Pipe(tuple)
 
 class ProcessMap(B):
     def __ror__(self, it):
         with concurrent.futures.ProcessPoolExecutor() as pool:
-            return pool.map(self.f, it) | Pipe(list)
+            return pool.map(self.f, it) | Pipe(tuple)
 
 
 

@@ -1,5 +1,5 @@
 test:
-	python3 -m pytest -v tests
+	python3 -m pytest -v --cov=pipe21 tests
 
 clean:
 	rm -rf build dist pipe21.egg-info
