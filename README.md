@@ -59,7 +59,7 @@ Output:
 ## Extended version
 ```py
 import pipe21 as P
-# from pipe21 import * # or use this
+# from pipe21 import * # or use this to use Map, Filter, etc (without P.)
 ```
 
 #### FizzBuzz
