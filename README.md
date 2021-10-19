@@ -107,6 +107,8 @@ import pipe21 as P
 )
 ```
 
+All available methods reference is [here](reference.md)
+
 ## review of similar tools
 - todo
 - [nekitdev/iters.py: Rich Iterators for Python.](https://github.com/nekitdev/iters.py)
