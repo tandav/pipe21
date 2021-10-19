@@ -112,4 +112,4 @@ import pipe21 as P
 - [nekitdev/iters.py: Rich Iterators for Python.](https://github.com/nekitdev/iters.py)
 - [R adds native pipe and lambda syntax | Hacker News](https://news.ycombinator.com/item?id=25316608)
 - [mpypl - Google Search](https://www.google.com/search?q=mpypl&oq=mpypl&aqs=chrome..69i57j0l6j69i60.1343j0j7&sourceid=chrome&ie=UTF-8)
-
+- [JulienPalard/Pipe: A Python library to use infix notation in Python](https://github.com/JulienPalard/Pipe)
