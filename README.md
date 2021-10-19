@@ -11,7 +11,11 @@ class Map   (B): __ror__ = lambda self, x: map   (self.f, x)
 class Filter(B): __ror__ = lambda self, x: filter(self.f, x)
 ```
 
+or install using pip:
 
+```py
+python -m pip install pipe21
+```
 
 ## Examples
 
@@ -54,15 +58,15 @@ Output:
 
 ## Extended version
 ```py
-import pipe as P
-# from pipe import * # or use this
+import pipe21 as P
+# from pipe21 import * # or use this
 ```
 
 #### FizzBuzz
 
 ```py
 import itertools
-import pipe as P
+import pipe21 as P
 
 (
     range(1, 100)
@@ -86,7 +90,7 @@ import itertools
 import re
 import operator
 import webbrowser
-import pipe as P
+import pipe21 as P
 
 
 (
@@ -104,4 +108,8 @@ import pipe as P
 ```
 
 ## review of similar tools
-todo
+- todo
+- [nekitdev/iters.py: Rich Iterators for Python.](https://github.com/nekitdev/iters.py)
+- [R adds native pipe and lambda syntax | Hacker News](https://news.ycombinator.com/item?id=25316608)
+- [mpypl - Google Search](https://www.google.com/search?q=mpypl&oq=mpypl&aqs=chrome..69i57j0l6j69i60.1343j0j7&sourceid=chrome&ie=UTF-8)
+
