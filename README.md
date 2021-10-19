@@ -107,7 +107,7 @@ import pipe21 as P
 )
 ```
 
-All available methods reference is [here](reference.md)
+All available methods reference is [here](docs/reference.md)
 
 ## review of similar tools
 - todo
