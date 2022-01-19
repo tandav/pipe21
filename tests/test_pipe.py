@@ -1,8 +1,7 @@
-import pytest
-
 import hypothesis.strategies as st
 from hypothesis import given
 from pipe21 import *
+
 
 def is_even(x):
     return x % 2 == 0
