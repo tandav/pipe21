@@ -1,6 +1,11 @@
+import pytest
+
 import hypothesis.strategies as st
 from hypothesis import given
 from pipe21 import *
+
+def is_even(x):
+    return x % 2 == 0
 
 
 @given(st.lists(st.integers() | st.characters() | st.floats() | st.booleans() | st.binary()))
@@ -15,8 +20,12 @@ def test_map(it):
 
 @given(st.lists(st.integers()))
 def test_filter(it):
-    def is_even(x): return x % 2 == 0
     assert it | Filter(is_even) | Pipe(list) == list(filter(is_even, it))
+
+
+@given(st.lists(st.integers()))
+def test_filter_false(it):
+    assert it | FilterFalse(is_even) | Pipe(list) == list(filter(lambda x: not is_even(x), it))
 
 
 def test_value_by():

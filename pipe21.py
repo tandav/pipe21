@@ -24,6 +24,7 @@ def unit_tuple(x):
 class Reduce        (B): __ror__ = lambda self, x: reduce(self.f, x)
 class MapValues     (B): __ror__ = lambda self, it: it | Map(lambda kv: (kv[0], self.f(kv[1])))
 class MapKeys       (B): __ror__ = lambda self, it: it | Map(lambda kv: (self.f(kv[0]), kv[1]))
+class FilterFalse   (B): __ror__ = lambda self, it: it | Filter(lambda x: not self.f(x))
 class FilterKeys    (B): __ror__ = lambda self, it: it | Filter(operator.itemgetter(0))
 class FilterValues  (B): __ror__ = lambda self, it: it | Filter(operator.itemgetter(1))
 class FlatMap       (B): __ror__ = lambda self, it: it | Map(self.f) | Pipe(itertools.chain.from_iterable)
