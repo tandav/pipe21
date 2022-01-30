@@ -1,7 +1,7 @@
 import hypothesis.strategies as st
 from hypothesis import given
 from pipe21 import *
-
+import pytest
 
 def is_even(x):
     return x % 2 == 0
@@ -40,3 +40,22 @@ def test_unit_tuple():
 def test_append():
     assert [(0,), (1,)] | Append(lambda x: str(x[0])) | Pipe(list) == [(0, '0'), (1, '1')]
     assert [(0, '0'), (1, '1')] | Append(lambda x: str(x[0] * 10)) | Pipe(list) == [(0, '0', '0'), (1, '1', '10')]
+
+
+@pytest.mark.parametrize('seq, key, expected', (
+    ([0, 1, 1, 2], None, [0, 1, 2]),
+    ('0112', int, ['0', '1', '2']),
+    (range(10), lambda x: x % 3, [0, 1, 2])
+))
+def test_unique(seq, key, expected):
+    assert seq | Unique(key) | Pipe(list) == expected
+
+
+@pytest.mark.parametrize('seq, key, expected', (
+    ([0, 1, 2, 3], None, True),
+    ([0, 1, 1, 3], None, False),
+    ('0123', int, True),
+    ('0113', int, False),
+))
+def test_is_unique(seq, key, expected):
+    assert seq | IsUnique(key) == expected

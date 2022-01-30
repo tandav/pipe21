@@ -20,6 +20,8 @@ def unit_tuple(x):
     return x,
 
 
+
+
 # extended
 class Reduce        (B): __ror__ = lambda self, x: reduce(self.f, x)
 class MapValues     (B): __ror__ = lambda self, it: it | Map(lambda kv: (kv[0], self.f(kv[1])))
@@ -45,6 +47,21 @@ class ShellArg      (B): __ror__ = lambda self, x: subprocess.check_output((self
 class ShellExec     (B): __ror__ = lambda self, x: subprocess.check_output(         x , text=True).splitlines()
 class PipeArgs      (B): __ror__ = lambda self, x: self.f(*x)
 class MapArgs       (B): __ror__ = lambda self, x: x | Map(lambda y: y | PipeArgs(self.f))
+class IsUnique      (B): __ror__ = lambda self, seq: len(seq) == len(set(seq if self.f is None else map(self.f, seq)))
+
+
+class Unique(B):
+    def __ror__(self, it):
+        key = self.f or (lambda x: x)
+        seen = set()
+        for item in it:
+            k = key(item)
+            if k in seen:
+                continue
+            seen.add(k)
+            yield item
+
+
 class ForEach(B):
     def __ror__(self, x):
         for e in x: self.f(e)
