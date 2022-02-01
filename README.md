@@ -33,8 +33,10 @@ x | Reduce(f) == reduce(f, x)
 #### simple pipe
 
 ```py
-range(5) | Pipe(list)
-# [0, 1, 2, 3, 4]
+range(5) | Pipe(list) # [0, 1, 2, 3, 4]
+range(5) | Map(str) | Pipe(''.join) # '01234'
+range(10) | Filter(lambda x: x % 2 == 0) | Pipe(list) # [0, 2, 4, 6, 8]
+range(5) | Reduce(lambda a, b: a + b) # 10
 ```
 
 ---
