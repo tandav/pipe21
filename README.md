@@ -35,7 +35,7 @@ x | Reduce(f) == reduce(f, x)
 ```py
 range(5) | Pipe(list) # [0, 1, 2, 3, 4]
 range(5) | Map(str) | Pipe(''.join) # '01234'
-range(10) | Filter(lambda x: x % 2 == 0) | Pipe(list) # [0, 2, 4, 6, 8]
+range(5) | Filter(lambda x: x % 2 == 0) | Pipe(list) # [0, 2, 4]
 range(5) | Reduce(lambda a, b: a + b) # 10
 ```
 
@@ -119,3 +119,4 @@ All available methods reference is [here](docs/reference.md)
 - [JulienPalard/Pipe: A Python library to use infix notation in Python](https://github.com/JulienPalard/Pipe)
 - [Pydash: A Kitchen Sink of Missing Python Utilities | by Khuyen Tran | Towards Data Science](https://towardsdatascience.com/pydash-a-bucket-of-missing-python-utilities-5d10365be4fc)
 - [Write Clean Python Code Using Pipes | by Khuyen Tran | Oct, 2021 | Towards Data Science](https://towardsdatascience.com/write-clean-python-code-using-pipes-1239a0f3abf5)
+- [A trick to have arbitrary infix operators in Python | Hacker News](https://news.ycombinator.com/item?id=30057048)
