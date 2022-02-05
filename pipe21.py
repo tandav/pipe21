@@ -1,4 +1,5 @@
 from functools import reduce
+from functools import partial
 import operator
 import subprocess
 import itertools
@@ -42,6 +43,7 @@ class FilterEqual   (B): __ror__ = lambda self, it: it | Filter(lambda x: x == s
 class FilterNotEqual(B): __ror__ = lambda self, it: it | Filter(lambda x: x != self.f)
 class Count         (B): __ror__ = lambda self, it: sum(1 for _ in it)
 class Take          (B): __ror__ = lambda self, it: itertools.islice(it, self.f) | Pipe(tuple)
+class Chunked       (B): __ror__ = lambda self, it: iter(partial(lambda n, i: i | Take(n), self.f, iter(it)), ())
 class GroupBy       (B): __ror__ = lambda self, it: itertools.groupby(it, key=self.f)
 class ReadLines     (B): __ror__ = lambda self, fn: open(fn).readlines()
 class ShellArg      (B): __ror__ = lambda self, x: subprocess.check_output((self.f, x), text=True).splitlines()

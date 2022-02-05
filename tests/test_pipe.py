@@ -80,3 +80,14 @@ def test_take(it, n, expected):
 def test_count(it, expected):
     assert it | Count() == expected
 
+
+@pytest.mark.parametrize('it, n, expected', (
+    (range(5), 5, [(0, 1, 2, 3, 4)]),
+    (range(5), 4, [(0, 1, 2, 3), (4,)]),
+    (range(5), 3, [(0, 1, 2), (3, 4)]),
+    (range(5), 2, [(0, 1), (2, 3), (4,)]),
+    (range(5), 1, [(0,), (1,), (2,), (3,), (4,)]),
+    (range(5), 0, []),
+))
+def test_chunked(it, n, expected):
+    assert it | Chunked(n) | Pipe(list) == expected
