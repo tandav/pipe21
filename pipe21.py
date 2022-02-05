@@ -9,8 +9,8 @@ from functools import reduce
 
 # basic
 class B:
-    def __init__(self, f=None): self.f = f
-class Pipe  (B): __ror__ = lambda self, x: self.f(x)        
+    def __init__(self, f=None, **kw): self.f = f; self.kw = kw
+class Pipe  (B): __ror__ = lambda self, x: self.f(x)
 class Map   (B): __ror__ = lambda self, x: map   (self.f, x)
 class Filter(B): __ror__ = lambda self, x: filter(self.f, x)
 
@@ -43,6 +43,7 @@ class ShellExec     (B): __ror__ = lambda self, x: subprocess.check_output(     
 class PipeArgs      (B): __ror__ = lambda self, x: self.f(*x)
 class MapArgs       (B): __ror__ = lambda self, x: x | Map(lambda y: y | PipeArgs(self.f))
 class IsUnique      (B): __ror__ = lambda self, seq: len(seq) == len(set(seq if self.f is None else map(self.f, seq)))
+class Sorted        (B): __ror__ = lambda self, it: sorted(it, **self.kw)
 
 
 class Unique(B):

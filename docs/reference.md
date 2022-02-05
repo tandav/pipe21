@@ -5,8 +5,8 @@ Put a value into a function with 1 argument.
 
 Examples:
 ```py
-range(5) | Pipe(list)
-# [0, 1, 2, 3, 4]
+>>> range(5) | Pipe(list)
+[0, 1, 2, 3, 4]
 ```
 
 ## `Map`
@@ -23,7 +23,7 @@ range(5) | Pipe(list)
 
 ## `FilterValues`
 
-## `FlatMap`     
+## `FlatMap`
 
 ## `KeyBy`         
 
@@ -43,7 +43,29 @@ range(5) | Pipe(list)
 
 ## `FilterNotEqual`
 
-## `Take`          
+## `Count`
+
+```py
+>>> 'abc' | Count()
+3
+```
+
+## `Take`
+
+```py
+>>> range(5) | Take(3)
+(0, 1, 2)
+```
+
+## `Chunked`
+
+```py
+>>> range(5) | Chunked(2) | Pipe(list)
+[(0, 1), (2, 3), (4,)]
+
+>>> range(5) | Chunked(3) | Pipe(list)
+[(0, 1, 2), (3, 4)]
+```
 
 ## `GroupBy`       
 
@@ -62,3 +84,19 @@ range(5) | Pipe(list)
 ## `ThreadMap`
 
 ## `ProcessMap`
+
+## `Sorted`
+
+```py
+>>> '3510' | Sorted()
+['0', '1', '3', '5']
+
+>>> '3510' | Sorted(reverse=True)
+['5', '3', '1', '0']
+
+>>> '!*&)#' | Sorted(key=ord)
+['!', '#', '&', ')', '*']
+
+>>> '!*&)#' | Sorted(key=ord, reverse=True)
+['*', ')', '&', '#', '!']
+```

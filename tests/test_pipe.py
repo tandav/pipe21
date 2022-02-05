@@ -87,3 +87,15 @@ def test_count(it, expected):
 ))
 def test_chunked(it, n, expected):
     assert it | Chunked(n) | Pipe(list) == expected
+
+
+@pytest.mark.parametrize('it, kw', (
+    ([3, 5, 1, 0], {}),
+    ([3, 5, 1, 0], {'reverse': True}),
+    ('3510', {'key': int}),
+    ('3510', {'key': int, 'reverse': True}),
+    ('9j8xy2m#98g%^xd$', {'key': ord, 'reverse': True}),
+    ('9j8xy2m#98g%^xd$', {'key': ord, 'reverse': False}),
+))
+def test_sorted(it, kw):
+    assert it | Sorted(**kw) == sorted(it, **kw)
