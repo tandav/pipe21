@@ -40,6 +40,7 @@ class Grep          (B): __ror__ = lambda self, it: it | Filter(lambda x:     re
 class GrepV         (B): __ror__ = lambda self, it: it | Filter(lambda x: not re.search(self.f, x))
 class FilterEqual   (B): __ror__ = lambda self, it: it | Filter(lambda x: x == self.f)
 class FilterNotEqual(B): __ror__ = lambda self, it: it | Filter(lambda x: x != self.f)
+class Count         (B): __ror__ = lambda self, it: sum(1 for _ in it)
 class Take          (B): __ror__ = lambda self, it: itertools.islice(it, self.f) | Pipe(tuple)
 class GroupBy       (B): __ror__ = lambda self, it: itertools.groupby(it, key=self.f)
 class ReadLines     (B): __ror__ = lambda self, fn: open(fn).readlines()
@@ -85,8 +86,6 @@ class ProcessMap(B):
 
 # shell = lambda x : subprocess.check_output(x, text=True).splitlines()
 # argto
-count = lambda it: sum(1 for _ in it)
-    
 # class B:
 #     def __init__(self, f=None, **kw):
 #         self.f = f

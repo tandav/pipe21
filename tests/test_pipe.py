@@ -69,3 +69,14 @@ def test_is_unique(seq, key, expected):
 ))
 def test_take(it, n, expected):
     assert it | Take(n) == expected
+
+
+@pytest.mark.parametrize('it, expected', (
+    (range(5), 5),
+    ('abc', 3),
+    ({1, 2, 3}, 3),
+    ({'a': 1, 'b': 2}, 2),
+))
+def test_count(it, expected):
+    assert it | Count() == expected
+
