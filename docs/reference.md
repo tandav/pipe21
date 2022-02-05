@@ -11,9 +11,24 @@ Examples:
 
 ## `Map`
 
+```py
+>>> range(5) | Map(str) | Pipe(''.join)
+'01234'
+```
+
 ## `Filter`
 
+```py
+>>> range(5) | Filter(lambda x: x % 2 == 0) | Pipe(list) 
+[0, 2, 4]
+```
+
 ## `Reduce`      
+
+```py
+>>> range(5) | Reduce(lambda a, b: a + b) 
+10
+```
 
 ## `MapValues`   
 
