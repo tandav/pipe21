@@ -14,7 +14,7 @@ class Filter(B): __ror__ = lambda self, x: filter(self.f, x)
 or install using pip:
 
 ```py
-python -m pip install pipe21
+pip install pipe21
 ```
 
 ## Examples

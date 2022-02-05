@@ -1,11 +1,11 @@
-from functools import reduce
-from functools import partial
-import operator
-import subprocess
-import itertools
-import re
 import concurrent.futures
-from collections.abc import Iterable
+import itertools
+import operator
+import re
+import subprocess
+from functools import partial
+from functools import reduce
+
 
 # basic
 class B:
@@ -13,14 +13,6 @@ class B:
 class Pipe  (B): __ror__ = lambda self, x: self.f(x)        
 class Map   (B): __ror__ = lambda self, x: map   (self.f, x)
 class Filter(B): __ror__ = lambda self, x: filter(self.f, x)
-
-# helpers
-def unit_tuple(x):
-    if isinstance(x, Iterable):
-        return x
-    return x,
-
-
 
 
 # extended
@@ -69,28 +61,14 @@ class ForEach(B):
     def __ror__(self, x):
         for e in x: self.f(e)
 
-# flat_map_fn = lambda kv: ((kv[0], x) for x in f(kv[1]))
-#         return self.flatMap(flat_map_fn, preservesPartitioning=True)
 
 class ThreadMap(B):
     def __ror__(self, it):
         with concurrent.futures.ThreadPoolExecutor() as pool:
             return pool.map(self.f, it) | Pipe(tuple)
 
+
 class ProcessMap(B):
     def __ror__(self, it):
         with concurrent.futures.ProcessPoolExecutor() as pool:
             return pool.map(self.f, it) | Pipe(tuple)
-
-
-
-# class Sorted        (B): __ror__ = lambda self, x: sorted(x, **self.kw)
-
-# shell = lambda x : subprocess.check_output(x, text=True).splitlines()
-# argto
-# class B:
-#     def __init__(self, f=None, **kw):
-#         self.f = f
-#         self.kw = kw # optional
-
-

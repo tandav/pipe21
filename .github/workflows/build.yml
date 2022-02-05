@@ -13,7 +13,7 @@ jobs:
       - name: install dependencies
         run: python3 -m pip install pytest pytest-cov hypothesis
       - name: test
-        run: make test
+        run: python3 -m pytest -v --cov=pipe21 tests
 
   build-linux:
     runs-on: ubuntu-latest

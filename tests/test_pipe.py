@@ -1,7 +1,9 @@
 import hypothesis.strategies as st
-from hypothesis import given
-from pipe21 import *
 import pytest
+from hypothesis import given
+
+from pipe21 import *
+
 
 def is_even(x):
     return x % 2 == 0
@@ -29,12 +31,6 @@ def test_filter_false(it):
 
 def test_value_by():
     assert range(2) | ValueBy(str) | Pipe(list) == [(0, '0'), (1, '1')]
-
-
-def test_unit_tuple():
-    assert unit_tuple(1) == (1,)
-    assert unit_tuple((1,)) == (1,)
-    assert unit_tuple((1,2)) == (1,2)
 
 
 def test_append():
