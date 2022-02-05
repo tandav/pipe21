@@ -59,3 +59,13 @@ def test_unique(seq, key, expected):
 ))
 def test_is_unique(seq, key, expected):
     assert seq | IsUnique(key) == expected
+
+
+@pytest.mark.parametrize('it, n, expected', (
+    (range(5), 3, (0, 1, 2)),
+    (range(5), 1, (0,)),
+    (range(5), 0, ()),
+    (range(5), 10, (0, 1, 2, 3, 4)),
+))
+def test_take(it, n, expected):
+    assert it | Take(n) == expected
