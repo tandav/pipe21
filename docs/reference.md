@@ -40,6 +40,21 @@ Examples:
 
 ## `FlatMap`
 
+```py
+>>> [2, 3, 4] | FlatMap(lambda x: range(1, x)) | Pipe(list) 
+[1, 1, 2, 1, 2, 3]
+
+>>> [2, 3, 4] | FlatMap(lambda x: [(x, x), (x, x)]) | Pipe(list) 
+[(2, 2), (2, 2), (3, 3), (3, 3), (4, 4), (4, 4)]
+```
+
+## `FlatMapValues`
+
+```py
+>>> [("a", ["x", "y", "z"]), ("b", ["p", "r"])] | FlatMapValues(lambda x: x) | Pipe(list) 
+[('a', 'x'), ('a', 'y'), ('a', 'z'), ('b', 'p'), ('b', 'r')]
+```
+
 ## `KeyBy`         
 
 ## `ValueBy`       

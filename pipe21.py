@@ -7,7 +7,6 @@ from functools import partial
 from functools import reduce
 
 
-# basic
 class B:
     def __init__(self, f=None, **kw): self.f = f; self.kw = kw
 class Pipe  (B): __ror__ = lambda self, x: self.f(x)
@@ -15,7 +14,6 @@ class Map   (B): __ror__ = lambda self, x: map   (self.f, x)
 class Filter(B): __ror__ = lambda self, x: filter(self.f, x)
 
 
-# extended
 class Reduce        (B): __ror__ = lambda self, x: reduce(self.f, x)
 class MapValues     (B): __ror__ = lambda self, it: it | Map(lambda kv: (kv[0], self.f(kv[1])))
 class MapKeys       (B): __ror__ = lambda self, it: it | Map(lambda kv: (self.f(kv[0]), kv[1]))
@@ -23,7 +21,7 @@ class FilterFalse   (B): __ror__ = lambda self, it: it | Filter(lambda x: not se
 class FilterKeys    (B): __ror__ = lambda self, it: it | Filter(operator.itemgetter(0))
 class FilterValues  (B): __ror__ = lambda self, it: it | Filter(operator.itemgetter(1))
 class FlatMap       (B): __ror__ = lambda self, it: it | Map(self.f) | Pipe(itertools.chain.from_iterable)
-# class FlatMapValues (B): __ror__ = lambda self, it: it | Map(self.f) | Pipe(itertools.chain.from_iterable)
+class FlatMapValues (B): __ror__ = lambda self, it: it | FlatMap(lambda kv: ((kv[0], x) for x in self.f(kv[1])))
 class KeyBy         (B): __ror__ = lambda self, it: it | Map(lambda x: (self.f(x), x))
 class ValueBy       (B): __ror__ = lambda self, it: it | Map(lambda x: (x, self.f(x)))
 class Append        (B): __ror__ = lambda self, it: it | Map(lambda x: (*x, self.f(x)))
