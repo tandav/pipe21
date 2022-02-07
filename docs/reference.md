@@ -46,6 +46,9 @@ Examples:
 
 >>> [2, 3, 4] | FlatMap(lambda x: [(x, x), (x, x)]) | Pipe(list) 
 [(2, 2), (2, 2), (3, 3), (3, 3), (4, 4), (4, 4)]
+
+>>> [0, 1, 0, 2] | Map(range) | FlatMap(list) | Pipe(list) 
+[0, 0, 1]
 ```
 
 ## `FlatMapValues`

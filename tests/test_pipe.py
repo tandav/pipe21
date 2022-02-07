@@ -104,6 +104,7 @@ def test_sorted(it, kw):
 @pytest.mark.parametrize('it, f ,expected', (
     ([2, 3, 4], lambda x: range(1, x), [1, 1, 2, 1, 2, 3]),
     ([2, 3, 4], lambda x: [(x, x), (x, x)], [(2, 2), (2, 2), (3, 3), (3, 3), (4, 4), (4, 4)]),
+    ([0, 1, 0, 2] | Map(range), list, [0, 0, 1]),
 ))
 def test_flat_map(it, f, expected):
     assert it | FlatMap(f) | Pipe(list) == expected
