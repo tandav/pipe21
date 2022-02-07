@@ -41,7 +41,9 @@ def test_append():
 @pytest.mark.parametrize('seq, key, expected', (
     ([0, 1, 1, 2], None, [0, 1, 2]),
     ('0112', int, ['0', '1', '2']),
-    (range(10), lambda x: x % 3, [0, 1, 2])
+    (range(10), lambda x: x % 3, [0, 1, 2]),
+    (['a', 'cd', 'cd', 'e', 'fgh'], None, ['a', 'cd', 'e', 'fgh']),
+    (['a', 'cd', 'cd', 'e', 'fgh'], len, ['a', 'cd', 'fgh']),
 ))
 def test_unique(seq, key, expected):
     assert seq | Unique(key) | Pipe(list) == expected

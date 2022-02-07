@@ -133,3 +133,13 @@ Examples:
 >>> '!*&)#' | Sorted(key=ord, reverse=True)
 ['*', ')', '&', '#', '!']
 ```
+
+## `Unique`
+
+```py
+>>> ['a', 'cd', 'cd', 'e', 'fgh'] | Unique() | Pipe(list)
+['a', 'cd', 'e', 'fgh']
+
+>>> ['a', 'cd', 'cd', 'e', 'fgh'] | Unique(len) | Pipe(list)
+['a', 'cd', 'fgh']
+```
