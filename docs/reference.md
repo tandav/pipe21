@@ -41,14 +41,11 @@ Examples:
 ## `FlatMap`
 
 ```py
->>> [2, 3, 4] | FlatMap(lambda x: range(1, x)) | Pipe(list) 
-[1, 1, 2, 1, 2, 3]
+>>> [0, 2, 3, 0, 4] | FlatMap(range) | Pipe(list) 
+[0, 1, 0, 1, 2, 0, 1, 2, 3]
 
 >>> [2, 3, 4] | FlatMap(lambda x: [(x, x), (x, x)]) | Pipe(list) 
 [(2, 2), (2, 2), (3, 3), (3, 3), (4, 4), (4, 4)]
-
->>> [0, 1, 0, 2] | Map(range) | FlatMap(list) | Pipe(list) 
-[0, 0, 1]
 ```
 
 ## `FlatMapValues`

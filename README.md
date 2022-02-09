@@ -46,12 +46,7 @@ range(5) | Reduce(lambda a, b: a + b) # 10
 #### print digits
 
 ```py
-(
-    range(1_000_000)
-    | Map(chr)
-    | Filter(str.isdigit)
-    | Pipe(''.join)
-)
+range(1_000_000) | Map(chr) | Filter(str.isdigit) | Pipe(''.join)
 ```
 Output:
 
