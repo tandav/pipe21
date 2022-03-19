@@ -15,9 +15,11 @@ jobs:
         with:
           python-version: ${{ matrix.python_version }}
       - name: install dependencies
-        run: python -m pip install pytest pytest-cov hypothesis
+        run: python -m pip install pytest pytest-cov hypothesis mypy
       - name: test
         run: python -m pytest -v --cov=pipe21 tests
+      - name: mypy
+        run: python -m mypy --config-file pyproject.toml pipe21
 
   build-linux:
     runs-on: ubuntu-latest
