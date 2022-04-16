@@ -1,5 +1,6 @@
 import hypothesis.strategies as st
 import pytest
+import operator
 from hypothesis import given
 
 from pipe21 import *
@@ -116,3 +117,11 @@ def test_flat_map(it, f, expected):
 ))
 def test_flat_map_values(it, f, expected):
     assert it | FlatMapValues(f) | Pipe(list) == expected
+
+
+@pytest.mark.parametrize('it, f, expected', [
+    ([(0, 'a'), (0, 'b'), (1, 'c'), (2, 'd')], operator.itemgetter(0), [(0, [(0, 'a'), (0, 'b')]), (1, [(1, 'c')]), (2, [(2, 'd')])]),
+    (['ab', 'cd', 'e', 'f', 'gh', 'ij'], len, [(2, ['ab', 'cd']), (1, ['e', 'f']), (2, ['gh', 'ij'])]),
+])
+def test_groupby(it, f, expected):
+    assert it | GroupBy(f) | MapValues(list) | Pipe(list) == expected

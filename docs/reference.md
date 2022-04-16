@@ -97,7 +97,15 @@ Examples:
 [(0, 1, 2), (3, 4)]
 ```
 
-## `GroupBy`       
+## `GroupBy`
+
+```py
+>>> [(0, 'a'), (0, 'b'), (1, 'c'), (2, 'd')] | GroupBy(operator.itemgetter(0)) | MapValues(list) | Pipe(list)
+[(0, [(0, 'a'), (0, 'b')]), (1, [(1, 'c')]), (2, [(2, 'd')])]
+
+>>> ['ab', 'cd', 'e', 'f', 'gh', 'ij'] | GroupBy(len) | MapValues(list) | Pipe(list)
+[(2, ['ab', 'cd']), (1, ['e', 'f']), (2, ['gh', 'ij'])]
+```
 
 ## `ReadLines`     
 
