@@ -61,9 +61,19 @@ Examples:
 
 ## `Append`        
 
-## `Keys`          
+## `Keys`     
+
+```py
+>>> [(0, 'a'), (1, 'b')] | Keys() | Pipe(list)
+[0, 1]
+```     
 
 ## `Values`        
+
+```py
+>>> [(0, 'a'), (1, 'b')] | Values() | Pipe(list)
+['a', 'b']
+```
 
 ## `Grep`          
 

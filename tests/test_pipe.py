@@ -135,3 +135,17 @@ def test_groupby(it, f, expected):
 ])
 def test_pipe_args(it, f, expected):
     assert it | PipeArgs(f) == expected
+
+
+@pytest.mark.parametrize('it, expected', [
+    ([(0, 'a'), (1, 'b')], [0, 1]),
+])
+def test_keys(it, expected):
+    assert it | Keys() | Pipe(list) == expected
+
+
+@pytest.mark.parametrize('it, expected', [
+    ([(0, 'a'), (1, 'b')], ['a', 'b']),
+])
+def test_values(it, expected):
+    assert it | Values() | Pipe(list) == expected
