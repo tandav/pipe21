@@ -42,6 +42,7 @@ Examples:
 >>> [(1, 10), (2, 20)] | MapValues(str) | Pipe(list)
 [(1, '10'), (2, '20')]
 ```
+
 ## `FilterKeys`
 
 ## `FilterValues`
@@ -62,9 +63,19 @@ Examples:
 [('a', 'x'), ('a', 'y'), ('a', 'z'), ('b', 'p'), ('b', 'r')]
 ```
 
-## `KeyBy`         
+## `KeyBy`
 
-## `ValueBy`       
+```py
+>>> range(2) | KeyBy(str) | Pipe(list)
+[('0', 0), ('1', 1)]
+```
+
+## `ValueBy`   
+
+```py
+>>> range(2) | ValueBy(str) | Pipe(list)
+[(0, '0'), (1, '1')]
+```
 
 ## `Append`        
 

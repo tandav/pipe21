@@ -154,3 +154,8 @@ def test_values(it, expected):
 def test_map_keys_map_values():
     assert [(1, 10), (2, 20)] | MapKeys(str) | Pipe(list) == [('1', 10), ('2', 20)]
     assert [(1, 10), (2, 20)] | MapValues(str) | Pipe(list) == [(1, '10'), (2, '20')]
+
+
+def test_key_by_value_by():
+    assert range(2) | KeyBy(str) | Pipe(list) == [('0', 0), ('1', 1)]
+    assert range(2) | ValueBy(str) | Pipe(list) == [(0, '0'), (1, '1')]
