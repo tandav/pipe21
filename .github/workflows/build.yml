@@ -8,61 +8,50 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python_version: ['3.8', '3.9', '3.10']
+        python_version: ['3.8', '3.9', '3.10', '3.11']
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-python@v2
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python_version }}
-      - name: install dependencies
-        run: python -m pip install pytest pytest-cov hypothesis mypy
-      - name: test
-        run: python -m pytest -v --cov=pipe21 tests
-      - name: mypy
-        run: python -m mypy --config-file pyproject.toml pipe21
 
-  build-linux:
+      - name: install wheel
+        run: python3 -m pip install wheel
+
+      - name: install dependencies
+        run: python3 -m pip install .[dev]
+
+      - name: test
+        run: make test
+        
+      # - name: mypy
+      #   run: make mypy
+
+
+  build-and-publish-to-pypi:
     runs-on: ubuntu-latest
-    if: "startsWith(github.ref, 'refs/tags/')"
+    if: "startsWith(github.ref, 'refs/tags')"
     needs: test
     steps:
-    - uses: actions/checkout@master
-    - name: Set up Python 3.10
-      uses: actions/setup-python@v2
-      with:
-        python-version: '3.10'
+      - uses: actions/checkout@master
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
 
-    - name: Install pypa/build
-      run: python -m pip install build --user
+      - name: Install pypa/build
+        run: python -m pip install --upgrade build
 
-    - name: Build a source tarball
-      run: python -m build --sdist --outdir dist/ .
+      - name: Build a source tarball and wheel
+        run: python -m build .
 
-    - name: Store the binary wheel
-      uses: actions/upload-artifact@v2
-      with:
-        name: python-package-distributions
-        path: dist
+      # - name: Publish distribution 📦 to Test PyPI
+      #   uses: pypa/gh-action-pypi-publish@master
+      #   with:
+      #    password: ${{ secrets.TEST_PYPI_API_TOKEN }}
+      #    repository_url: https://test.pypi.org/legacy/
 
-  release:
-    name: Release to PyPI and TestPyPI
-    runs-on: ubuntu-latest
-    needs: build-linux
-
-    steps:
-    - name: Download all the dists
-      uses: actions/download-artifact@v2
-      with:
-        name: python-package-distributions
-        path: dist/
-
-    - name: Publish distribution 📦 to Test PyPI
-      uses: pypa/gh-action-pypi-publish@master
-      with:
-       password: ${{ secrets.TEST_PYPI_API_TOKEN }}
-       repository_url: https://test.pypi.org/legacy/
-
-    - name: Publish distribution 📦 to PyPI
-      uses: pypa/gh-action-pypi-publish@master
-      with:
-        password: ${{ secrets.PYPI_API_TOKEN }}
+      - name: Publish distribution 📦 to PyPI
+        uses: pypa/gh-action-pypi-publish@master
+        with:
+          password: ${{ secrets.PYPI_API_TOKEN }}
