@@ -131,6 +131,7 @@ def test_groupby(it, f, expected):
     ((1, 2), operator.add, 3),
     (('FF', 16), int, 255),
     (([1, 2], 'A'), dict.fromkeys, {1: 'A', 2: 'A'}),
+    (({1, 2}, {3, 4, 5}), set.union, {1, 2, 3, 4, 5}),
 ])
 def test_pipe_args(it, f, expected):
     assert it | PipeArgs(f) == expected
