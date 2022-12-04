@@ -115,7 +115,8 @@ import pipe21 as P
 
 All available methods reference is [here](docs/reference.md)
 
-## review of similar tools
+## similar tools
+- [pytoolz/toolz: A functional standard library for Python.](https://github.com/pytoolz/toolz/)
 - [nekitdev/iters.py: Rich Iterators for Python.](https://github.com/nekitdev/iters.py)
 - [R adds native pipe and lambda syntax | Hacker News](https://news.ycombinator.com/item?id=25316608)
 - [mpypl - Google Search](https://www.google.com/search?q=mpypl&oq=mpypl&aqs=chrome..69i57j0l6j69i60.1343j0j7&sourceid=chrome&ie=UTF-8)
@@ -124,3 +125,12 @@ All available methods reference is [here](docs/reference.md)
 - [Write Clean Python Code Using Pipes | by Khuyen Tran | Oct, 2021 | Towards Data Science](https://towardsdatascience.com/write-clean-python-code-using-pipes-1239a0f3abf5)
 - [A trick to have arbitrary infix operators in Python | Hacker News](https://news.ycombinator.com/item?id=30057048)
 - [PySpark - RDD API](https://spark.apache.org/docs/latest/api/python/reference/pyspark.html#rdd-apis)
+- [altimin/fcollections](https://github.com/altimin/fcollections)
+- [InvestmentSystems/function-pipe: Tools for extended function composition and pipelines in Python](https://github.com/InvestmentSystems/function-pipe)
+- [kachayev/fn.py: Functional programming in Python: implementation of missing features to enjoy FP](https://github.com/kachayev/fn.py)
+- [man-group/mdf: Data-flow programming toolkit for Python](https://github.com/man-group/mdf)
+- [0101/pipetools: Functional plumbing for Python](https://github.com/0101/pipetools)
+- [EntilZha/PyFunctional: Python library for creating data pipelines with chain functional programming](https://github.com/EntilZha/PyFunctional)
+- [jasondelaat/pymonad: ](https://github.com/jasondelaat/pymonad)
+- [machow/siuba: Python library for using dplyr like syntax with pandas and SQL](https://github.com/machow/siuba)
+- [pipeop · PyPI](https://pypi.org/project/pipeop/)
