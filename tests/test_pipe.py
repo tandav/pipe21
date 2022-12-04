@@ -125,3 +125,12 @@ def test_flat_map_values(it, f, expected):
 ])
 def test_groupby(it, f, expected):
     assert it | GroupBy(f) | MapValues(list) | Pipe(list) == expected
+
+
+@pytest.mark.parametrize('it, f, expected', [
+    ((1, 2), operator.add, 3),
+    (('FF', 16), int, 255),
+    (([1, 2], 'A'), dict.fromkeys, {1: 'A', 2: 'A'}),
+])
+def test_pipe_args(it, f, expected):
+    assert it | PipeArgs(f) == expected
