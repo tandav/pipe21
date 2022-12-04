@@ -6,6 +6,8 @@ import subprocess
 from functools import partial
 from functools import reduce
 
+__version__ = '1.0.9'
+
 
 class B:
     def __init__(self, f=None, **kw): self.f = f; self.kw = kw
