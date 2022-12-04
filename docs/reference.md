@@ -30,11 +30,19 @@ Examples:
 10
 ```
 
-## `MapValues`   
+## `MapKeys`
 
-## `MapKeys`     
+```py
+>>> [(1, 10), (2, 20)] | MapKeys(str) | Pipe(list)
+[('1', 10), ('2', 20)]
+```
+## `MapValues`
 
-## `FilterKeys`  
+```py
+>>> [(1, 10), (2, 20)] | MapValues(str) | Pipe(list)
+[(1, '10'), (2, '20')]
+```
+## `FilterKeys`
 
 ## `FilterValues`
 
@@ -47,7 +55,6 @@ Examples:
 >>> [2, 3, 4] | FlatMap(lambda x: [(x, x), (x, x)]) | Pipe(list) 
 [(2, 2), (2, 2), (3, 3), (3, 3), (4, 4), (4, 4)]
 ```
-
 ## `FlatMapValues`
 
 ```py
