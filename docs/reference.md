@@ -103,8 +103,10 @@ Examples:
 
 ## `Count`
 
+useful for objects that don't have `__len__` method:
+
 ```py
->>> 'abc' | Count()
+>>> iter(range(3)) | Count()
 3
 ```
 

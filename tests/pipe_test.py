@@ -102,7 +102,8 @@ def test_take(it, n, expected):
 
 @pytest.mark.parametrize(
     'it, expected', (
-        (range(5), 5),
+        (range(3), 3),
+        (iter(range(3)), 3),
         ('abc', 3),
         ({1, 2, 3}, 3),
         ({'a': 1, 'b': 2}, 2),
