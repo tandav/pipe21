@@ -4,7 +4,7 @@ import operator
 import random
 from hypothesis import given
 
-from pipe21 import *
+from pipe21 import Append, Apply, Chunked, Count, Filter, FilterFalse, FlatMap, FlatMapValues, GroupBy, IsUnique, KeyBy, Keys, Map, MapKeys, MapValues, Pipe, PipeArgs, Sorted, Take, Unique, ValueBy, Values
 
 
 def is_even(x):
