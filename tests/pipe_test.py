@@ -10,7 +10,9 @@ from pipe21 import Apply
 from pipe21 import Chunked
 from pipe21 import Count
 from pipe21 import Filter
+from pipe21 import FilterEqual
 from pipe21 import FilterFalse
+from pipe21 import FilterNotEqual
 from pipe21 import FlatMap
 from pipe21 import FlatMapValues
 from pipe21 import GroupBy
@@ -217,3 +219,11 @@ def test_apply():
 
 def test_read_lines():
     assert 'tests/testing/file.txt' | ReadLines() == ['hello', 'world']
+
+
+def test_filter_equal():
+    assert range(3) | FilterEqual(2) | Pipe(list) == [2]
+
+
+def test_filter_not_equal():
+    assert range(3) | FilterNotEqual(2) | Pipe(list) == [0, 1]

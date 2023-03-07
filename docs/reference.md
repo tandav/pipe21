@@ -99,7 +99,17 @@ Examples:
 
 ## `FilterEqual`
 
+```py
+>>> range(3) | P.FilterEqual(2) | P.Pipe(list)
+[2]
+```
+
 ## `FilterNotEqual`
+
+```py
+>>> range(3) | P.FilterNotEqual(2) | P.Pipe(list)
+[0, 1]
+```
 
 ## `Count`
 
