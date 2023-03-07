@@ -15,17 +15,14 @@ jobs:
         with:
           python-version: ${{ matrix.python_version }}
 
-      - name: install wheel
-        run: python3 -m pip install wheel
-
       - name: install dependencies
         run: python3 -m pip install .[dev]
 
       - name: test
-        run: make test
-        
-      # - name: mypy
-      #   run: make mypy
+        run: pytest
+
+      # - name: pre-commit
+      #   run: pre-commit run --all-files
 
 
   build-and-publish-to-pypi:
@@ -40,18 +37,13 @@ jobs:
           python-version: '3.11'
 
       - name: Install pypa/build
-        run: python -m pip install --upgrade build
+        run: python -m pip install --upgrade setuptools build twine
 
       - name: Build a source tarball and wheel
         run: python -m build .
 
-      # - name: Publish distribution 📦 to Test PyPI
-      #   uses: pypa/gh-action-pypi-publish@master
-      #   with:
-      #    password: ${{ secrets.TEST_PYPI_API_TOKEN }}
-      #    repository_url: https://test.pypi.org/legacy/
-
-      - name: Publish distribution 📦 to PyPI
-        uses: pypa/gh-action-pypi-publish@master
-        with:
-          password: ${{ secrets.PYPI_API_TOKEN }}
+      - name:
+        env:
+          TWINE_USERNAME: __token__
+          TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
+        run: python -m twine upload dist/*

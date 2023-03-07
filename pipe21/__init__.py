@@ -4,6 +4,7 @@ import re
 import subprocess
 from functools import partial
 from functools import reduce
+from pathlib import Path
 
 __version__ = '1.1.0'
 
@@ -36,7 +37,7 @@ class Count         (B): __ror__ = lambda self, it: sum(1 for _ in it)
 class Take          (B): __ror__ = lambda self, it: itertools.islice(it, self.f) | Pipe(tuple)
 class Chunked       (B): __ror__ = lambda self, it: iter(partial(lambda n, i: i | Take(n), self.f, iter(it)), ())
 class GroupBy       (B): __ror__ = lambda self, it: itertools.groupby(it, key=self.f)
-class ReadLines     (B): __ror__ = lambda self, fn: open(fn).readlines()
+class ReadLines     (B): __ror__ = lambda self, fn: Path(fn).read_text().splitlines()
 class ShellExec     (B): __ror__ = lambda self, x: subprocess.check_output(         x , text=True).splitlines()
 class PipeArgs      (B): __ror__ = lambda self, x: self.f(*x)
 class MapArgs       (B): __ror__ = lambda self, x: x | Map(lambda y: y | PipeArgs(self.f))

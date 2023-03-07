@@ -19,14 +19,14 @@ Examples:
 ## `Filter`
 
 ```py
->>> range(5) | Filter(lambda x: x % 2 == 0) | Pipe(list) 
+>>> range(5) | Filter(lambda x: x % 2 == 0) | Pipe(list)
 [0, 2, 4]
 ```
 
-## `Reduce`      
+## `Reduce`
 
 ```py
->>> range(5) | Reduce(lambda a, b: a + b) 
+>>> range(5) | Reduce(lambda a, b: a + b)
 10
 ```
 
@@ -50,16 +50,16 @@ Examples:
 ## `FlatMap`
 
 ```py
->>> [0, 2, 3, 0, 4] | FlatMap(range) | Pipe(list) 
+>>> [0, 2, 3, 0, 4] | FlatMap(range) | Pipe(list)
 [0, 1, 0, 1, 2, 0, 1, 2, 3]
 
->>> [2, 3, 4] | FlatMap(lambda x: [(x, x), (x, x)]) | Pipe(list) 
+>>> [2, 3, 4] | FlatMap(lambda x: [(x, x), (x, x)]) | Pipe(list)
 [(2, 2), (2, 2), (3, 3), (3, 3), (4, 4), (4, 4)]
 ```
 ## `FlatMapValues`
 
 ```py
->>> [("a", ["x", "y", "z"]), ("b", ["p", "r"])] | FlatMapValues(lambda x: x) | Pipe(list) 
+>>> [("a", ["x", "y", "z"]), ("b", ["p", "r"])] | FlatMapValues(lambda x: x) | Pipe(list)
 [('a', 'x'), ('a', 'y'), ('a', 'z'), ('b', 'p'), ('b', 'r')]
 ```
 
@@ -70,34 +70,34 @@ Examples:
 [('0', 0), ('1', 1)]
 ```
 
-## `ValueBy`   
+## `ValueBy`
 
 ```py
 >>> range(2) | ValueBy(str) | Pipe(list)
 [(0, '0'), (1, '1')]
 ```
 
-## `Append`        
+## `Append`
 
-## `Keys`     
+## `Keys`
 
 ```py
 >>> [(0, 'a'), (1, 'b')] | Keys() | Pipe(list)
 [0, 1]
-```     
+```
 
-## `Values`        
+## `Values`
 
 ```py
 >>> [(0, 'a'), (1, 'b')] | Values() | Pipe(list)
 ['a', 'b']
 ```
 
-## `Grep`          
+## `Grep`
 
-## `GrepV`         
+## `GrepV`
 
-## `FilterEqual`   
+## `FilterEqual`
 
 ## `FilterNotEqual`
 
@@ -135,13 +135,24 @@ Examples:
 [(2, ['ab', 'cd']), (1, ['e', 'f']), (2, ['gh', 'ij'])]
 ```
 
-## `ReadLines`     
+## `ReadLines`
+
+```bash
+cat file.txt
+hello
+world
+```
+
+```py
+>>> 'file.txt' | ReadLines()
+['hello', 'world']
+```
 
 ## `ShellArg`
 
-## `ShellExec`     
+## `ShellExec`
 
-## `PipeArgs`      
+## `PipeArgs`
 
 ```py
 >>> (1, 2) | PipeArgs(operator.add)
@@ -157,7 +168,7 @@ Examples:
 {1, 2, 3, 4, 5}
 ```
 
-## `MapArgs`       
+## `MapArgs`
 
 ## `ForEach`
 
