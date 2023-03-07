@@ -45,7 +45,23 @@ Examples:
 
 ## `FilterKeys`
 
+```py
+>>> [(0, 2), (3, 0)] | FilterKeys() | Pipe(list)
+[(3, 0)]
+
+>>> [(0, 2), (3, 0)] | FilterKeys(lambda x: x % 2 == 0) | Pipe(list)
+[(0, 2)]
+```
+
 ## `FilterValues`
+
+```py
+>>> [(0, 2), (3, 0)] | FilterValues() | Pipe(list)
+[(0, 2)]
+
+>>> [(0, 2), (3, 0)] | FilterValues(lambda x: x % 2 == 0) | Pipe(list)
+[(0, 2), (3, 0)]
+```
 
 ## `FlatMap`
 

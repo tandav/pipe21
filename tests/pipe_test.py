@@ -12,7 +12,9 @@ from pipe21 import Count
 from pipe21 import Filter
 from pipe21 import FilterEqual
 from pipe21 import FilterFalse
+from pipe21 import FilterKeys
 from pipe21 import FilterNotEqual
+from pipe21 import FilterValues
 from pipe21 import FlatMap
 from pipe21 import FlatMapValues
 from pipe21 import GroupBy
@@ -160,6 +162,26 @@ def test_flat_map(it, f, expected):
 )
 def test_flat_map_values(it, f, expected):
     assert it | FlatMapValues(f) | Pipe(list) == expected
+
+
+@pytest.mark.parametrize(
+    'it, f ,expected', (
+        ([(0, 2), (3, 0)], None, [(3, 0)]),
+        ([(0, 2), (3, 0)], lambda x: x % 2 == 0, [(0, 2)]),
+    ),
+)
+def test_filter_keys(it, f ,expected):
+    assert it | FilterKeys(f) | Pipe(list) == expected
+
+
+@pytest.mark.parametrize(
+    'it, f ,expected', (
+        ([(0, 2), (3, 0)], None, [(0, 2)]),
+        ([(0, 2), (3, 0)], lambda x: x % 2 == 0, [(0, 2), (3, 0)]),
+    ),
+)
+def test_filter_values(it, f ,expected):
+    assert it | FilterValues(f) | Pipe(list) == expected
 
 
 @pytest.mark.parametrize(
