@@ -160,10 +160,6 @@ world
 ['hello', 'world']
 ```
 
-## `ShellArg`
-
-## `ShellExec`
-
 ## `PipeArgs`
 
 ```py

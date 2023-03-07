@@ -1,7 +1,6 @@
 import itertools
 import operator
 import re
-import subprocess
 from functools import partial
 from functools import reduce
 from pathlib import Path
@@ -38,7 +37,6 @@ class Take          (B): __ror__ = lambda self, it: itertools.islice(it, self.f)
 class Chunked       (B): __ror__ = lambda self, it: iter(partial(lambda n, i: i | Take(n), self.f, iter(it)), ())
 class GroupBy       (B): __ror__ = lambda self, it: itertools.groupby(it, key=self.f)
 class ReadLines     (B): __ror__ = lambda self, fn: Path(fn).read_text().splitlines()
-class ShellExec     (B): __ror__ = lambda self, x: subprocess.check_output(x, text=True).splitlines()
 class PipeArgs      (B): __ror__ = lambda self, x: self.f(*x)
 class MapArgs       (B): __ror__ = lambda self, x: x | Map(lambda y: y | PipeArgs(self.f))
 class IsUnique      (B): __ror__ = lambda self, seq: len(seq) == len(set(seq if self.f is None else map(self.f, seq)))

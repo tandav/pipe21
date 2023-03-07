@@ -95,9 +95,6 @@ class GroupBy(B):
 class ReadLines(B):
     def __ror__(self, fn: str | Path) -> list[str]: ...
 
-class ShellExec(B):
-    def __ror__(self, x: Sequence[str]) -> list[str]: ...
-
 class PipeArgs(B):
     def __ror__(self, x: Iterable[Any]) -> Any: ...
 
