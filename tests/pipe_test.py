@@ -189,3 +189,7 @@ def test_key_by_value_by():
 def test_apply():
     random.seed(42)
     assert range(5) | Pipe(list) | Apply(random.shuffle) == [3, 1, 2, 4, 0]
+
+
+def test_read_lines():
+    assert 'tests/testing/file.txt' | ReadLines() == ['hello', 'world']

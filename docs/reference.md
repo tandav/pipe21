@@ -137,6 +137,17 @@ Examples:
 
 ## `ReadLines`
 
+```bash
+cat file.txt
+hello
+world
+```
+
+```py
+>>> 'file.txt' | ReadLines()
+['hello', 'world']
+```
+
 ## `ShellArg`
 
 ## `ShellExec`
