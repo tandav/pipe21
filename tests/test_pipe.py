@@ -164,4 +164,4 @@ def test_key_by_value_by():
 
 def test_apply_inplace():
     random.seed(42)
-    assert list(range(5)) | ApplyInplace(random.shuffle) | Pipe(list) == [3, 1, 2, 4, 0]
+    assert range(5) | Pipe(list) | ApplyInplace(random.shuffle) == [3, 1, 2, 4, 0]

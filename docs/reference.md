@@ -196,5 +196,6 @@ Examples:
 ```py
 >>> import random
 >>> random.seed(42)
->>> range(5) | Pipe(list) | ApplyInplace(random.shuffle) | Pipe(list) == [3, 1, 2, 4, 0]
+>>> range(5) | Pipe(list) | ApplyInplace(random.shuffle)
+[3, 1, 2, 4, 0]
 ```
