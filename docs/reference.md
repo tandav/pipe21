@@ -95,6 +95,14 @@ Examples:
 
 ## `Append`
 
+```py
+>>> [(0,), (1,)] | Append(lambda x: str(x[0])) | Pipe(list)
+[(0, '0'), (1, '1')]
+
+>>> [(0, '0'), (1, '1')] | Append(lambda x: str(x[0] * 10)) | Pipe(list)
+[(0, '0', '0'), (1, '1', '10')]
+```
+
 ## `Keys`
 
 ```py

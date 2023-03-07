@@ -62,9 +62,15 @@ def test_value_by():
     assert range(2) | ValueBy(str) | Pipe(list) == [(0, '0'), (1, '1')]
 
 
-def test_append():
-    assert [(0,), (1,)] | Append(lambda x: str(x[0])) | Pipe(list) == [(0, '0'), (1, '1')]
-    assert [(0, '0'), (1, '1')] | Append(lambda x: str(x[0] * 10)) | Pipe(list) == [(0, '0', '0'), (1, '1', '10')]
+@pytest.mark.parametrize(
+    'it, f ,expected', (
+        ([(0,), (1,)], lambda x: str(x[0]), [(0, '0'), (1, '1')]),
+        ([(0, '0'), (1, '1')], lambda x: str(x[0] * 10), [(0, '0', '0'), (1, '1', '10')]),
+    ),
+)
+def test_append(it, f ,expected):
+    assert it | Append(f) | Pipe(list) == expected
+    assert it | Append(f) | Pipe(list) == expected
 
 
 @pytest.mark.parametrize(
