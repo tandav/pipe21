@@ -57,7 +57,7 @@ class Unique(B):
             yield item
 
 
-class ApplyInplace(B):
+class Apply(B):
     def __ror__(self, x):
         self.f(x)
         return x

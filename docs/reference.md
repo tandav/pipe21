@@ -191,11 +191,11 @@ Examples:
 ['a', 'cd', 'fgh']
 ```
 
-## `ApplyInplace`
+## `Apply`
 
 ```py
 >>> import random
 >>> random.seed(42)
->>> range(5) | Pipe(list) | ApplyInplace(random.shuffle)
+>>> range(5) | Pipe(list) | Apply(random.shuffle)
 [3, 1, 2, 4, 0]
 ```
