@@ -5,33 +5,7 @@ import hypothesis.strategies as st
 import pytest
 from hypothesis import given
 
-from pipe21 import Append
-from pipe21 import Apply
-from pipe21 import Chunked
-from pipe21 import Count
-from pipe21 import Filter
-from pipe21 import FilterEqual
-from pipe21 import FilterFalse
-from pipe21 import FilterKeys
-from pipe21 import FilterNotEqual
-from pipe21 import FilterValues
-from pipe21 import FlatMap
-from pipe21 import FlatMapValues
-from pipe21 import GroupBy
-from pipe21 import IsUnique
-from pipe21 import KeyBy
-from pipe21 import Keys
-from pipe21 import Map
-from pipe21 import MapKeys
-from pipe21 import MapValues
-from pipe21 import Pipe
-from pipe21 import PipeArgs
-from pipe21 import ReadLines
-from pipe21 import Sorted
-from pipe21 import Take
-from pipe21 import Unique
-from pipe21 import ValueBy
-from pipe21 import Values
+from pipe21 import *
 
 
 def is_even(x):
@@ -210,6 +184,10 @@ def test_groupby(it, f, expected):
 )
 def test_pipe_args(it, f, expected):
     assert it | PipeArgs(f) == expected
+
+
+def test_map_args():
+    assert [('00', 16), ('A5', 16), ('FF', 16)] | MapArgs(int) | Pipe(list) == [0, 165, 255]
 
 
 @pytest.mark.parametrize(

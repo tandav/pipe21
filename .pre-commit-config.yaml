@@ -33,11 +33,6 @@ repos:
       - id: pyupgrade
         args: [--py310-plus]
 
-  - repo: https://github.com/PyCQA/autoflake
-    rev: v2.0.1
-    hooks:
-      - id: autoflake
-
   - repo: https://github.com/charliermarsh/ruff-pre-commit
     rev: v0.0.254
     hooks:

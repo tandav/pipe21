@@ -202,6 +202,11 @@ world
 
 ## `MapArgs`
 
+```py
+>>> [('00', 16), ('A5', 16), ('FF', 16)] | MapArgs(int) | Pipe(list)
+[0, 165, 255]
+```
+
 ## `Sorted`
 
 ```py

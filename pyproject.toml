@@ -109,6 +109,8 @@ ignore = [
     "E731",
     "E701",
     "E702",
+    "F403", # star imports
+    "F405", # star imports
     "B008",
     "PLR0913",
     "TCH003",
@@ -127,6 +129,8 @@ force-single-line = true
 disable = [
     "C0321","C3001","C0116","C0301","C0103","C0115","C0114",
     "W1514",
+    "W0401",  # wildcard import
+    "W0614",
     "R0903",
     "E0401",
 ]
