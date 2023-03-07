@@ -1,4 +1,3 @@
-import concurrent.futures
 import itertools
 import operator
 import re
@@ -66,15 +65,3 @@ class Apply(B):
 class ForEach(B):
     def __ror__(self, x):
         for e in x: self.f(e)
-
-
-class ThreadMap(B):
-    def __ror__(self, it):
-        with concurrent.futures.ThreadPoolExecutor() as pool:
-            return pool.map(self.f, it) | Pipe(tuple)
-
-
-class ProcessMap(B):
-    def __ror__(self, it):
-        with concurrent.futures.ProcessPoolExecutor() as pool:
-            return pool.map(self.f, it) | Pipe(tuple)

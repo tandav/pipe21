@@ -161,10 +161,6 @@ Examples:
 
 ## `ForEach`
 
-## `ThreadMap`
-
-## `ProcessMap`
-
 ## `Sorted`
 
 ```py

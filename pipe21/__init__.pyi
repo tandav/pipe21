@@ -115,9 +115,3 @@ class Unique(B):
 
 class ForEach(B):
     def __ror__(self, x: Any) -> None: ...
-
-class ThreadMap(B):
-    def __ror__(self, x: Iterable[T]) -> tuple[V]: ...
-
-class ProcessMap(B):
-    def __ror__(self, x: Iterable[T]) -> tuple[V]: ...
