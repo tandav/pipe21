@@ -1,6 +1,7 @@
 import hypothesis.strategies as st
 import pytest
 import operator
+import random
 from hypothesis import given
 
 from pipe21 import *
@@ -159,3 +160,8 @@ def test_map_keys_map_values():
 def test_key_by_value_by():
     assert range(2) | KeyBy(str) | Pipe(list) == [('0', 0), ('1', 1)]
     assert range(2) | ValueBy(str) | Pipe(list) == [(0, '0'), (1, '1')]
+
+
+def test_apply_inplace():
+    random.seed(42)
+    assert list(range(5)) | ApplyInplace(random.shuffle) | Pipe(list) == [3, 1, 2, 4, 0]

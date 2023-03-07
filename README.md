@@ -32,7 +32,7 @@ x | Reduce(f) == reduce(f, x)
 
 ---
 
-#### simple pipe
+#### simple pipes
 
 ```py
 range(5) | Pipe(list) # [0, 1, 2, 3, 4]

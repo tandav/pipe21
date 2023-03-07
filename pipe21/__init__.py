@@ -57,6 +57,12 @@ class Unique(B):
             yield item
 
 
+class ApplyInplace(B):
+    def __ror__(self, x):
+        self.f(x)
+        return x
+
+
 class ForEach(B):
     def __ror__(self, x):
         for e in x: self.f(e)
