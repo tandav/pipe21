@@ -23,7 +23,7 @@ jobs:
 
       - name: test
         run: make test
-        
+
       # - name: mypy
       #   run: make mypy
 

@@ -8,7 +8,7 @@ Most frequently used operators. It's often easier to copypaste than import.
 ```py
 class B:
     def __init__(self, f): self.f = f
-class Pipe  (B): __ror__ = lambda self, x: self.f(x)        
+class Pipe  (B): __ror__ = lambda self, x: self.f(x)
 class Map   (B): __ror__ = lambda self, x: map   (self.f, x)
 class Filter(B): __ror__ = lambda self, x: filter(self.f, x)
 ```
@@ -103,7 +103,7 @@ import pipe21 as P
     pathlib.Path.home() / 'GoogleDrive/knowledge/music'    # take a directory
     | P.Pipe(lambda x: x.rglob('*.md'))                    # find all markdown files
     | P.FlatMap(lambda p: open(p).read().splitlines())     # read all lines from all files and flatten into a single iterable
-    | P.Map(lambda l: re.findall(r'\[(.+)\]\((.+)\)', l))  # check: is a line has a markdown link 
+    | P.Map(lambda l: re.findall(r'\[(.+)\]\((.+)\)', l))  # check: is a line has a markdown link
     | P.Filter(bool)                                       # keep only lines with a link
     | P.Map(operator.itemgetter(0))                        # extract a link
     | P.Map(operator.itemgetter(1))                        # extract a link
