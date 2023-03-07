@@ -49,7 +49,7 @@ tag = true
     '^version = "{pep440_version}"',
     '^current_version = "{version}"',
 ]
-"pipe21/__init__.py" = [
+"pipe21.py" = [
     "^__version__ = '{pep440_version}'",
 ]
 

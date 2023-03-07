@@ -1,10 +1,10 @@
 .PHONY: test
 test:
-	python -m pytest -v --cov=pipe21 tests
+	pytest --cov=pipe21
 
 .PHONY: coverage
 coverage:
-	python -m pytest --asyncio-mode=strict --cov=pipe21 --cov-report=html tests
+	pytest --cov=pipe21 --cov-report=html
 	open htmlcov/index.html
 
 .PHONY: bumpver

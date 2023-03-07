@@ -170,8 +170,6 @@ world
 
 ## `MapArgs`
 
-## `ForEach`
-
 ## `Sorted`
 
 ```py
