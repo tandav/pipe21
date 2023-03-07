@@ -119,7 +119,17 @@ Examples:
 
 ## `Grep`
 
+```py
+>>> ['hello 42 bro', 'world', 'awesome 42'] | Grep('42') | Pipe(list)
+['hello 42 bro', 'awesome 42']
+```
+
 ## `GrepV`
+
+```py
+>>> ['hello 42 bro', 'world', 'awesome 42'] | GrepV('42') | Pipe(list)
+['world']
+```
 
 ## `FilterEqual`
 

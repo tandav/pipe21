@@ -218,6 +218,11 @@ def test_key_by_value_by():
     assert range(2) | ValueBy(str) | Pipe(list) == [(0, '0'), (1, '1')]
 
 
+def test_grep():
+    assert ['hello 42 bro', 'world', 'awesome 42'] | Grep('42') | Pipe(list) == ['hello 42 bro', 'awesome 42']
+    assert ['hello 42 bro', 'world', 'awesome 42'] | GrepV('42') | Pipe(list) == ['world']
+
+
 def test_apply():
     random.seed(42)
     assert range(5) | Pipe(list) | Apply(random.shuffle) == [3, 1, 2, 4, 0]
