@@ -6,7 +6,7 @@ from functools import partial
 from functools import reduce
 from pathlib import Path
 
-__version__ = '1.1.1'
+__version__ = '1.1.2'
 
 
 class B:
