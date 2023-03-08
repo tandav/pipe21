@@ -186,8 +186,14 @@ def test_pipe_args(it, f, expected):
     assert it | PipeArgs(f) == expected
 
 
-def test_map_args():
-    assert [('00', 16), ('A5', 16), ('FF', 16)] | MapArgs(int) | Pipe(list) == [0, 165, 255]
+@pytest.mark.parametrize(
+    'it, f, expected', [
+        ([(2, 5), (3, 2), (10, 3)], pow, [32, 9, 1000]),
+        ([('00', 16), ('A5', 16), ('FF', 16)], int, [0, 165, 255]),
+    ],
+)
+def test_map_args(it, f, expected):
+    assert it | StarMap(f) | Pipe(list) == expected
 
 
 @pytest.mark.parametrize(

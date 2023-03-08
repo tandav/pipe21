@@ -210,10 +210,12 @@ world
 {1, 2, 3, 4, 5}
 ```
 
-## `MapArgs`
+## `StarMap`
 
 ```py
->>> [('00', 16), ('A5', 16), ('FF', 16)] | MapArgs(int) | Pipe(list)
+>>> [(2, 5), (3, 2), (10, 3)] | StarMap(pow) | Pipe(list)
+[32, 9, 1000]
+>>> [('00', 16), ('A5', 16), ('FF', 16)] | StarMap(int) | Pipe(list)
 [0, 165, 255]
 ```
 

@@ -98,7 +98,7 @@ class ReadLines(B):
 class PipeArgs(B):
     def __ror__(self, x: Iterable[Any]) -> Any: ...
 
-class MapArgs(B):
+class StarMap(B):
     def __ror__(self, x: Iterable[Iterable[Any]]) -> Iterable[Any]: ...
 
 class IsUnique(B):
