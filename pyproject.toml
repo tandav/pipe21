@@ -32,9 +32,6 @@ chans-server = "chans.server:main"
 requires = ["setuptools"]
 build-backend = "setuptools.build_meta"
 
-[tool.setuptools.packages]
-find = {}
-
 # ==============================================================================
 
 [tool.bumpver]
