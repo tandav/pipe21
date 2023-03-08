@@ -109,3 +109,6 @@ class Sorted(B):
 
 class Unique(B):
     def __ror__(self, it: Iterable[T]) -> Generator[T, None, None]: ...
+
+class ApplyMap(B):
+    def __ror__(self, it: Iterable[T]) -> Generator[T, None, None]: ...

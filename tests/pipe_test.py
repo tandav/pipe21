@@ -234,6 +234,11 @@ def test_apply():
     assert range(5) | Pipe(list) | Apply(random.shuffle) == [3, 1, 2, 4, 0]
 
 
+def test_apply_map():
+    random.seed(42)
+    assert range(3, 5) | Map(range) | Map(list) | ApplyMap(random.shuffle) | Pipe(list) == [[1, 0, 2], [3, 1, 2, 0]]
+
+
 def test_read_lines():
     assert 'tests/testing/file.txt' | ReadLines() == ['hello', 'world']
 

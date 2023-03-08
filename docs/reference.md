@@ -253,3 +253,19 @@ world
 >>> range(5) | Pipe(list) | Apply(random.shuffle)
 [3, 1, 2, 4, 0]
 ```
+
+## `ApplyMap`
+
+```py
+>>> import random
+>>> random.seed(42)
+>>> range(3, 5) | Map(range) | Map(list) | ApplyMap(random.shuffle) | Pipe(list)
+[[1, 0, 2], [3, 1, 2, 0]]
+
+>>> def setitem(key, value):
+        def inner(x):
+            x[key] = value
+        return inner
+>>> [{'hello': 'world'}] | ApplyMap(setitem('foo', 'bar')) | Pipe(list)
+[{'hello': 'world', 'foo': 'bar'}]
+```
