@@ -9,48 +9,68 @@ from typing import Callable
 from typing import TypeVar
 from typing import Generic
 
+from typing import Any, Callable, TypeVar
+
 T = TypeVar('T')
-K = TypeVar('K')
-V = TypeVar('V')
-R = TypeVar('R')
+U = TypeVar('U')
 
-# todo: add f and kw annotations for every class
-
-# class B:
-#     f: Callable[..., R]
-#     kw: Any
-#     def __init__(self, f: Callable[..., Any] | None = None, **kw: Any) -> None: ...
+def pipe(x: T, f: Callable[[T], U]) -> U:
+    """
+    Applies a function f to the input x and returns the result.
+    """
+    return f(x)
 
 
-# C = TypeVar('C', bound=Callable[..., Any])
-# C = Callable[[T], R]
+def double(x: int) -> int:
+    return x * 2
 
-# class Pipe(B):
+x = 5
+result = pipe(x, double)
+print(result)  # Output: 10
+
+
+# T = TypeVar('T')
+# K = TypeVar('K')
+# V = TypeVar('V')
+# R = TypeVar('R')
+
+# # todo: add f and kw annotations for every class
+
+# # class B:
+# #     f: Callable[..., R]
+# #     kw: Any
+# #     def __init__(self, f: Callable[..., Any] | None = None, **kw: Any) -> None: ...
+
+
+# # C = TypeVar('C', bound=Callable[..., Any])
+# # C = Callable[[T], R]
+
+# # class Pipe(B):
 # class Pipe:
 # # class Pipe(Generic[R]):
-#     f: Callable[[T], R]
+#     f: Callable[[object], R]
 #     # f: C
-#     def __ror__(self, x: T) -> R: ...
+#     def __ror__(self, x: object) -> R: ...
 #     # def __ror__(self, x: T) -> Any: ...
 #     # def __ror__(self, x: R) -> R: ...
 
 
-def pipe(x: object, *fs: Callable[[object], R]) -> R: ...
+# # def pipe(x: object, *fs: Callable[[object], R]) -> R: ...
 
 
-# class Pipe:
-#     def __init__(self, f: Callable[..., Any] | None = None, **kw: Any) -> None: ...
-#     def hz(self, x: str) -> int: ...
-#     def __ror__(self, x: str) -> int: ...
+# # class Pipe:
+# #     def __init__(self, f: Callable[..., Any] | None = None, **kw: Any) -> None: ...
+# #     def hz(self, x: str) -> int: ...
+# #     def __ror__(self, x: str) -> int: ...
 
 
-# class MyNumber:
-#     def __init__(self, value: int) -> None:
-#         self.value = value
+# # class MyNumber:
+# #     def __init__(self, value: int) -> None:
+# #         self.value = value
     
-#     def __ror__(self, other: int) -> int:
-#         return self.value | other
+# #     def __ror__(self, other: int) -> int:
+# #         return self.value | other
 
-def bits_to_intervals(bits: int) -> str:
-    # return bits | Pipe(str)
-    return pipe(bits, str)
+# def bits_to_intervals(bits: int) -> str:
+#     return bits | Pipe(str)
+#     # return pipe(bits, str)
