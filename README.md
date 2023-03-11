@@ -118,5 +118,5 @@ import pipe21 as P
 
 ---
 
-- [all available methods reference](docs/reference.md)
-- [review of similar tools / alternatives](docs/alternatives.md)
+- [all available methods reference](reference.md)
+- [review of similar tools / alternatives](similar-tools.md)
