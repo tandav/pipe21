@@ -17,6 +17,8 @@ dev = [
     "mypy",
     "pytest",
     "pytest-cov",
+    "mkdocs",
+    "mkdocs-material",
 ]
 
 [project.urls]

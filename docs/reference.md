@@ -1,4 +1,4 @@
-# methods reference
+# reference
 
 ```py
 >>> from pipe21 import *

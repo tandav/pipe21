@@ -1,4 +1,4 @@
-# similar tools / alternatives
+# similar tools
 - [pytoolz/toolz: A functional standard library for Python.](https://github.com/pytoolz/toolz/)
 - [nekitdev/iters.py: Rich Iterators for Python.](https://github.com/nekitdev/iters.py)
 - [R adds native pipe and lambda syntax | Hacker News](https://news.ycombinator.com/item?id=25316608)

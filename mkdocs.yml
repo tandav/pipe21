@@ -1,0 +1,44 @@
+site_name: pipe21
+site_url: https://tandav.github.io/pipe21
+repo_url: https://github.com/tandav/pipe21
+repo_name: tandav/pipe21
+edit_uri: edit/master/docs/
+theme:
+  name: material
+  icon:
+    logo: material/pipe
+    repo: fontawesome/brands/github
+    edit: material/pencil
+    view: material/eye
+  features:
+    - navigation.instant
+    # - navigation.tracking
+    # - navigation.tabs
+    - content.action.edit
+    - content.action.view
+  palette:
+    # Palette toggle for light mode
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+
+    # Palette toggle for dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: yellow
+      accent: yellow
+      toggle:
+        icon: material/brightness-4
+        name: Switch to system preference
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
