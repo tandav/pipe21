@@ -54,6 +54,7 @@ tag = true
 
 [tool.mypy]
 # todo: review this
+mypy_path = "typings"
 pretty = true
 show_traceback = true
 color_output = true
