@@ -5,7 +5,7 @@
 
 ```
 
-## `Pipe`
+## Pipe
 Put a value into a function with 1 argument.
 
 Examples:
@@ -15,7 +15,7 @@ Examples:
 
 ```
 
-## `Map`
+## Map
 
 ```py
 >>> range(5) | Map(str) | Pipe(''.join)
@@ -23,7 +23,7 @@ Examples:
 
 ```
 
-## `Filter`
+## Filter
 
 ```py
 >>> range(5) | Filter(lambda x: x % 2 == 0) | Pipe(list)
@@ -31,7 +31,7 @@ Examples:
 
 ```
 
-## `Reduce`
+## Reduce
 
 ```py
 >>> range(5) | Reduce(lambda a, b: a + b)
@@ -39,7 +39,7 @@ Examples:
 
 ```
 
-## `MapKeys`
+## MapKeys
 
 ```py
 >>> [(1, 10), (2, 20)] | MapKeys(str) | Pipe(list)
@@ -47,7 +47,7 @@ Examples:
 
 ```
 
-## `MapValues`
+## MapValues
 
 ```py
 >>> [(1, 10), (2, 20)] | MapValues(str) | Pipe(list)
@@ -55,7 +55,7 @@ Examples:
 
 ```
 
-## `FilterKeys`
+## FilterKeys
 
 ```py
 >>> [(0, 2), (3, 0)] | FilterKeys() | Pipe(list)
@@ -66,7 +66,7 @@ Examples:
 
 ```
 
-## `FilterValues`
+## FilterValues
 
 ```py
 >>> [(0, 2), (3, 0)] | FilterValues() | Pipe(list)
@@ -77,7 +77,7 @@ Examples:
 
 ```
 
-## `FlatMap`
+## FlatMap
 
 ```py
 >>> [0, 2, 3, 0, 4] | FlatMap(range) | Pipe(list)
@@ -88,7 +88,7 @@ Examples:
 
 ```
 
-## `FlatMapValues`
+## FlatMapValues
 
 ```py
 >>> [("a", ["x", "y", "z"]), ("b", ["p", "r"])] | FlatMapValues(lambda x: x) | Pipe(list)
@@ -96,7 +96,7 @@ Examples:
 
 ```
 
-## `KeyBy`
+## KeyBy
 
 ```py
 >>> range(2) | KeyBy(str) | Pipe(list)
@@ -104,7 +104,7 @@ Examples:
 
 ```
 
-## `ValueBy`
+## ValueBy
 
 ```py
 >>> range(2) | ValueBy(str) | Pipe(list)
@@ -112,7 +112,7 @@ Examples:
 
 ```
 
-## `Append`
+## Append
 
 ```py
 >>> [(0,), (1,)] | Append(lambda x: str(x[0])) | Pipe(list)
@@ -123,7 +123,7 @@ Examples:
 
 ```
 
-## `Keys`
+## Keys
 
 ```py
 >>> [(0, 'a'), (1, 'b')] | Keys() | Pipe(list)
@@ -131,7 +131,7 @@ Examples:
 
 ```
 
-## `Values`
+## Values
 
 ```py
 >>> [(0, 'a'), (1, 'b')] | Values() | Pipe(list)
@@ -139,7 +139,7 @@ Examples:
 
 ```
 
-## `Grep`
+## Grep
 
 ```py
 >>> ['hello 42 bro', 'world', 'awesome 42'] | Grep('42') | Pipe(list)
@@ -151,7 +151,7 @@ Examples:
 
 ```
 
-## `GrepV`
+## GrepV
 
 ```py
 >>> ['hello 42 bro', 'world', 'awesome 42'] | GrepV('42') | Pipe(list)
@@ -161,7 +161,7 @@ Examples:
 
 ```
 
-## `Count`
+## Count
 
 useful for objects that don't have `__len__` method:
 
@@ -171,7 +171,7 @@ useful for objects that don't have `__len__` method:
 
 ```
 
-## `Take`
+## Take
 
 ```py
 >>> range(5) | Take(3)
@@ -179,7 +179,7 @@ useful for objects that don't have `__len__` method:
 
 ```
 
-## `Chunked`
+## Chunked
 
 ```py
 >>> range(5) | Chunked(2) | Pipe(list)
@@ -190,7 +190,7 @@ useful for objects that don't have `__len__` method:
 
 ```
 
-## `GroupBy`
+## GroupBy
 
 ```py
 >>> import operator
@@ -202,7 +202,7 @@ useful for objects that don't have `__len__` method:
 
 ```
 
-## `IterLines`
+## IterLines
 
 ```py
 >>> import tempfile
@@ -216,7 +216,7 @@ useful for objects that don't have `__len__` method:
 
 ```
 
-## `PipeArgs`
+## PipeArgs
 
 ```py
 >>> (1, 2) | PipeArgs(operator.add)
@@ -233,7 +233,7 @@ useful for objects that don't have `__len__` method:
 
 ```
 
-## `StarMap`
+## StarMap
 
 ```py
 >>> [(2, 5), (3, 2), (10, 3)] | StarMap(pow) | Pipe(list)
@@ -243,7 +243,7 @@ useful for objects that don't have `__len__` method:
 
 ```
 
-## `Sorted`
+## Sorted
 
 ```py
 >>> '3510' | Sorted()
@@ -260,7 +260,7 @@ useful for objects that don't have `__len__` method:
 
 ```
 
-## `Unique`
+## Unique
 
 ```py
 >>> ['a', 'cd', 'cd', 'e', 'fgh'] | Unique() | Pipe(list)
@@ -271,7 +271,7 @@ useful for objects that don't have `__len__` method:
 
 ```
 
-## `Apply`
+## Apply
 
 ```py
 >>> import random
@@ -281,7 +281,7 @@ useful for objects that don't have `__len__` method:
 
 ```
 
-## `MapApply`
+## MapApply
 
 ```py
 >>> import random

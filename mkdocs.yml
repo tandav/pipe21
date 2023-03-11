@@ -3,6 +3,8 @@ site_url: https://tandav.github.io/pipe21
 repo_url: https://github.com/tandav/pipe21
 repo_name: tandav/pipe21
 edit_uri: edit/master/docs/
+extra_css:
+  - stylesheets/extra.css
 theme:
   name: material
   icon:
