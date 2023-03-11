@@ -13,3 +13,6 @@ class Pipe(Generic[T, U]):
 
 # def bits_to_intervals(bits: int) -> str:
 #     return bits | Pipe(str)
+
+# def f(x: int) -> int: ...
+# def f(x): ...

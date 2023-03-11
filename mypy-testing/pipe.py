@@ -8,8 +8,9 @@ class Pipe:
 # def bits_to_intervals(bits: int) -> str:
 #     return bits | Pipe(str)
 
-# def f(x):
-#     return x + 1
+def f(x):
+    # return x + 1
+    return x + 'hello'
 
 # def f(x: int) -> str:
 #     return x + 1

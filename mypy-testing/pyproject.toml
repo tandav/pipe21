@@ -1,6 +1,9 @@
 [tool.mypy]
 # todo: review this
-files = ["typings"]
+# mypy_path = "typings"
+# files = ["typings"]
+
+
 pretty = true
 show_traceback = true
 color_output = true
@@ -35,6 +38,7 @@ typeCheckingMode = "strict"
 reportMissingTypeStubs = true
 reportInvalidStubStatement = true
 include = ["typings"]
+# include = ["pipe"]
 # include = [".", "typings"]
 # include = ["pandas", "typings"]
 # exclude = ["pandas/tests", "pandas/io/clipboard", "pandas/util/version"]
