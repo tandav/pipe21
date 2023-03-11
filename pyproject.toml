@@ -88,7 +88,6 @@ extend-select = [
     "W",
     "C",
     "I",
-    "PTH",
     "SIM",
     "TCH",
     "C4",

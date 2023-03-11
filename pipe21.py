@@ -2,7 +2,6 @@ import itertools
 import re
 from functools import partial
 from functools import reduce
-from pathlib import Path
 
 __version__ = '1.5.0'
 
@@ -35,7 +34,6 @@ class Count         (B): __ror__ = lambda self, it: sum(1 for _ in it)
 class Take          (B): __ror__ = lambda self, it: itertools.islice(it, self.f) | Pipe(tuple)
 class Chunked       (B): __ror__ = lambda self, it: iter(partial(lambda n, i: i | Take(n), self.f, iter(it)), ())
 class GroupBy       (B): __ror__ = lambda self, it: itertools.groupby(it, key=self.f)
-class ReadLines     (B): __ror__ = lambda self, fn: Path(fn).read_text().splitlines()
 class PipeArgs      (B): __ror__ = lambda self, x: self.f(*x)
 class StarMap       (B): __ror__ = lambda self, x: x | Map(lambda y: y | PipeArgs(self.f))
 class IsUnique      (B): __ror__ = lambda self, seq: len(seq) == len(set(seq if self.f is None else map(self.f, seq)))
@@ -59,3 +57,9 @@ class Apply(B):
     def __ror__(self, x):
         self.f(x)
         return x
+
+
+class IterLines(B):
+    def __ror__(self, fn):
+        with open(fn) as f:
+            yield from f

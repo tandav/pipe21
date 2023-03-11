@@ -1,4 +1,4 @@
-# all available methods
+# methods reference
 
 ## `Pipe`
 Put a value into a function with 1 argument.
@@ -181,7 +181,7 @@ useful for objects that don't have `__len__` method:
 [(2, ['ab', 'cd']), (1, ['e', 'f']), (2, ['gh', 'ij'])]
 ```
 
-## `ReadLines`
+## `IterLines`
 
 ```bash
 cat file.txt
@@ -190,8 +190,8 @@ world
 ```
 
 ```py
->>> 'file.txt' | ReadLines()
-['hello', 'world']
+>>> 'file.txt' | IterLines() | Pipe(list)
+['hello\n', 'world\n']
 ```
 
 ## `PipeArgs`

@@ -239,8 +239,8 @@ def test_apply_map():
     assert range(3, 5) | Map(range) | Map(list) | ApplyMap(random.shuffle) | Pipe(list) == [[1, 0, 2], [3, 1, 2, 0]]
 
 
-def test_read_lines():
-    assert 'tests/testing/file.txt' | ReadLines() == ['hello', 'world']
+def test_iter_lines():
+    assert 'tests/testing/file.txt' | IterLines() | Pipe(list) == ['hello\n', 'world\n']
 
 
 def test_filter_equal():
