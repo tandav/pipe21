@@ -1,6 +1,6 @@
 .PHONY: test
 test:
-	pytest --cov=pipe21
+	pytest --cov=pipe21 --doctest-glob='reference.md'
 
 .PHONY: coverage
 coverage:

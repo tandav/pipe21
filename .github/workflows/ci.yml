@@ -19,10 +19,7 @@ jobs:
         run: python3 -m pip install .[dev]
 
       - name: test
-        run: pytest
-
-      - name: doctest
-        run: python3 -m doctest docs/reference.md
+        run: pytest --cov=pipe21 --doctest-glob='reference.md'
 
       # - name: pre-commit
       #   run: pre-commit run --all-files
