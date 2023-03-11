@@ -11,3 +11,13 @@ coverage:
 bumpver:
 	# usage: make bumpver PART=minor
 	bumpver update --no-fetch --$(PART)
+
+
+.PHONY: mypy
+mypy:
+	mypy typings/pipe21
+
+.PHONY: pyright
+pyright:
+	pyright -vv pipe21.py
+

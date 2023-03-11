@@ -83,6 +83,14 @@ disallow_untyped_defs = false
 
 # ==============================================================================
 
+[tool.pyright]
+typeCheckingMode = "strict"
+reportMissingTypeStubs = true
+reportInvalidStubStatement = true
+include = ["typings"]
+
+# ==============================================================================
+
 [tool.ruff]
 extend-select = [
     "W",
