@@ -2,7 +2,7 @@ import functools
 import itertools
 import re
 
-__version__ = '1.7.2'
+__version__ = '1.7.3'
 
 
 class B:
