@@ -1,5 +1,10 @@
 # methods reference
 
+```py
+>>> from pipe21 import *
+
+```
+
 ## `Pipe`
 Put a value into a function with 1 argument.
 
@@ -7,6 +12,7 @@ Examples:
 ```py
 >>> range(5) | Pipe(list)
 [0, 1, 2, 3, 4]
+
 ```
 
 ## `Map`
@@ -14,6 +20,7 @@ Examples:
 ```py
 >>> range(5) | Map(str) | Pipe(''.join)
 '01234'
+
 ```
 
 ## `Filter`
@@ -21,6 +28,7 @@ Examples:
 ```py
 >>> range(5) | Filter(lambda x: x % 2 == 0) | Pipe(list)
 [0, 2, 4]
+
 ```
 
 ## `Reduce`
@@ -28,6 +36,7 @@ Examples:
 ```py
 >>> range(5) | Reduce(lambda a, b: a + b)
 10
+
 ```
 
 ## `MapKeys`
@@ -35,12 +44,15 @@ Examples:
 ```py
 >>> [(1, 10), (2, 20)] | MapKeys(str) | Pipe(list)
 [('1', 10), ('2', 20)]
+
 ```
+
 ## `MapValues`
 
 ```py
 >>> [(1, 10), (2, 20)] | MapValues(str) | Pipe(list)
 [(1, '10'), (2, '20')]
+
 ```
 
 ## `FilterKeys`
@@ -51,6 +63,7 @@ Examples:
 
 >>> [(0, 2), (3, 0)] | FilterKeys(lambda x: x % 2 == 0) | Pipe(list)
 [(0, 2)]
+
 ```
 
 ## `FilterValues`
@@ -61,6 +74,7 @@ Examples:
 
 >>> [(0, 2), (3, 0)] | FilterValues(lambda x: x % 2 == 0) | Pipe(list)
 [(0, 2), (3, 0)]
+
 ```
 
 ## `FlatMap`
@@ -71,12 +85,15 @@ Examples:
 
 >>> [2, 3, 4] | FlatMap(lambda x: [(x, x), (x, x)]) | Pipe(list)
 [(2, 2), (2, 2), (3, 3), (3, 3), (4, 4), (4, 4)]
+
 ```
+
 ## `FlatMapValues`
 
 ```py
 >>> [("a", ["x", "y", "z"]), ("b", ["p", "r"])] | FlatMapValues(lambda x: x) | Pipe(list)
 [('a', 'x'), ('a', 'y'), ('a', 'z'), ('b', 'p'), ('b', 'r')]
+
 ```
 
 ## `KeyBy`
@@ -84,6 +101,7 @@ Examples:
 ```py
 >>> range(2) | KeyBy(str) | Pipe(list)
 [('0', 0), ('1', 1)]
+
 ```
 
 ## `ValueBy`
@@ -91,6 +109,7 @@ Examples:
 ```py
 >>> range(2) | ValueBy(str) | Pipe(list)
 [(0, '0'), (1, '1')]
+
 ```
 
 ## `Append`
@@ -101,6 +120,7 @@ Examples:
 
 >>> [(0, '0'), (1, '1')] | Append(lambda x: str(x[0] * 10)) | Pipe(list)
 [(0, '0', '0'), (1, '1', '10')]
+
 ```
 
 ## `Keys`
@@ -108,6 +128,7 @@ Examples:
 ```py
 >>> [(0, 'a'), (1, 'b')] | Keys() | Pipe(list)
 [0, 1]
+
 ```
 
 ## `Values`
@@ -115,6 +136,7 @@ Examples:
 ```py
 >>> [(0, 'a'), (1, 'b')] | Values() | Pipe(list)
 ['a', 'b']
+
 ```
 
 ## `Grep`
@@ -126,6 +148,7 @@ Examples:
 # regex is supported (passed to re.search)
 >>> ['foo1', 'foo2', '3foo', 'bar1'] | Grep('^foo.*') | Pipe(list)
 ['foo1', 'foo2']
+
 ```
 
 ## `GrepV`
@@ -135,6 +158,7 @@ Examples:
 ['world']
 >>> ['foo1', 'foo2', '3foo', 'bar1'] | GrepV('^foo.*') | Pipe(list)
 ['3foo', 'bar1']
+
 ```
 
 ## `Count`
@@ -144,6 +168,7 @@ useful for objects that don't have `__len__` method:
 ```py
 >>> iter(range(3)) | Count()
 3
+
 ```
 
 ## `Take`
@@ -151,6 +176,7 @@ useful for objects that don't have `__len__` method:
 ```py
 >>> range(5) | Take(3)
 (0, 1, 2)
+
 ```
 
 ## `Chunked`
@@ -161,29 +187,33 @@ useful for objects that don't have `__len__` method:
 
 >>> range(5) | Chunked(3) | Pipe(list)
 [(0, 1, 2), (3, 4)]
+
 ```
 
 ## `GroupBy`
 
 ```py
+>>> import operator
 >>> [(0, 'a'), (0, 'b'), (1, 'c'), (2, 'd')] | GroupBy(operator.itemgetter(0)) | MapValues(list) | Pipe(list)
 [(0, [(0, 'a'), (0, 'b')]), (1, [(1, 'c')]), (2, [(2, 'd')])]
 
 >>> ['ab', 'cd', 'e', 'f', 'gh', 'ij'] | GroupBy(len) | MapValues(list) | Pipe(list)
 [(2, ['ab', 'cd']), (1, ['e', 'f']), (2, ['gh', 'ij'])]
+
 ```
 
 ## `IterLines`
 
-```bash
-cat file.txt
-hello
-world
-```
-
 ```py
->>> 'file.txt' | IterLines() | Pipe(list)
+>>> import tempfile
+>>> f = tempfile.NamedTemporaryFile('w+')
+>>> f.write('hello\nworld\n')
+12
+>>> f.seek(0)
+0
+>>> f.name | IterLines() | Pipe(list)
 ['hello\n', 'world\n']
+
 ```
 
 ## `PipeArgs`
@@ -198,8 +228,9 @@ world
 >>> ([1, 2], 'A') | PipeArgs(dict.fromkeys)
 {1: 'A', 2: 'A'}
 
->>> ({1, 2}, {3, 4, 5}) | P.PipeArgs(set.union)
+>>> ({1, 2}, {3, 4, 5}) | PipeArgs(set.union)
 {1, 2, 3, 4, 5}
+
 ```
 
 ## `StarMap`
@@ -209,6 +240,7 @@ world
 [32, 9, 1000]
 >>> [('00', 16), ('A5', 16), ('FF', 16)] | StarMap(int) | Pipe(list)
 [0, 165, 255]
+
 ```
 
 ## `Sorted`
@@ -225,6 +257,7 @@ world
 
 >>> '!*&)#' | Sorted(key=ord, reverse=True)
 ['*', ')', '&', '#', '!']
+
 ```
 
 ## `Unique`
@@ -235,6 +268,7 @@ world
 
 >>> ['a', 'cd', 'cd', 'e', 'fgh'] | Unique(len) | Pipe(list)
 ['a', 'cd', 'fgh']
+
 ```
 
 ## `Apply`
@@ -244,6 +278,7 @@ world
 >>> random.seed(42)
 >>> range(5) | Pipe(list) | Apply(random.shuffle)
 [3, 1, 2, 4, 0]
+
 ```
 
 ## `MapApply`
@@ -255,9 +290,10 @@ world
 [[1, 0, 2], [3, 1, 2, 0]]
 
 >>> def setitem(key, value):
-        def inner(x):
-            x[key] = value
-        return inner
+...     def inner(x):
+...         x[key] = value
+...     return inner
 >>> [{'hello': 'world'}] | MapApply(setitem('foo', 'bar')) | Pipe(list)
 [{'hello': 'world', 'foo': 'bar'}]
+
 ```
