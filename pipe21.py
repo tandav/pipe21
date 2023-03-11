@@ -1,7 +1,6 @@
+import functools
 import itertools
 import re
-from functools import partial
-from functools import reduce
 
 __version__ = '1.5.0'
 
@@ -13,7 +12,7 @@ class Map   (B): __ror__ = lambda self, x: map   (self.f, x)
 class Filter(B): __ror__ = lambda self, x: filter(self.f, x)
 
 
-class Reduce        (B): __ror__ = lambda self, x: reduce(self.f, x)
+class Reduce        (B): __ror__ = lambda self, x: functools.reduce(self.f, x)
 class MapValues     (B): __ror__ = lambda self, it: it | Map(lambda kv: (kv[0], self.f(kv[1])))
 class MapKeys       (B): __ror__ = lambda self, it: it | Map(lambda kv: (self.f(kv[0]), kv[1]))
 class FilterFalse   (B): __ror__ = lambda self, it: it | Filter(lambda x: not self.f(x))
@@ -32,7 +31,7 @@ class FilterEqual   (B): __ror__ = lambda self, it: it | Filter(lambda x: x == s
 class FilterNotEqual(B): __ror__ = lambda self, it: it | Filter(lambda x: x != self.f)
 class Count         (B): __ror__ = lambda self, it: sum(1 for _ in it)
 class Take          (B): __ror__ = lambda self, it: itertools.islice(it, self.f) | Pipe(tuple)
-class Chunked       (B): __ror__ = lambda self, it: iter(partial(lambda n, i: i | Take(n), self.f, iter(it)), ())
+class Chunked       (B): __ror__ = lambda self, it: iter(functools.partial(lambda n, i: i | Take(n), self.f, iter(it)), ())
 class GroupBy       (B): __ror__ = lambda self, it: itertools.groupby(it, key=self.f)
 class PipeArgs      (B): __ror__ = lambda self, x: self.f(*x)
 class StarMap       (B): __ror__ = lambda self, x: x | Map(lambda y: y | PipeArgs(self.f))
