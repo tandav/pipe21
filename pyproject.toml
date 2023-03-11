@@ -23,6 +23,10 @@ dev = [
 
 [project.urls]
 source = "https://github.com/tandav/pipe21"
+docs = "https://tandav.github.io/pipe21/"
+issues = "https://github.com/tandav/pipe21/issues"
+"release notes" = "https://github.com/tandav/pipe21/releases"
+
 
 [project.scripts]
 chans-cli = "chans.__main__:main"
