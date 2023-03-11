@@ -224,9 +224,24 @@ def test_key_by_value_by():
     assert range(2) | ValueBy(str) | Pipe(list) == [(0, '0'), (1, '1')]
 
 
-def test_grep():
-    assert ['hello 42 bro', 'world', 'awesome 42'] | Grep('42') | Pipe(list) == ['hello 42 bro', 'awesome 42']
-    assert ['hello 42 bro', 'world', 'awesome 42'] | GrepV('42') | Pipe(list) == ['world']
+@pytest.mark.parametrize(
+    'it, grep, expected', [
+        (['hello 42 bro', 'world', 'awesome 42'], '42', ['hello 42 bro', 'awesome 42']),
+        (['foo1', 'foo2', '3foo', 'bar1'], '^foo.*', ['foo1', 'foo2']),
+    ],
+)
+def test_grep(it, grep, expected):
+    assert it | Grep(grep) | Pipe(list) == expected
+
+
+@pytest.mark.parametrize(
+    'it, grep, expected', [
+        (['hello 42 bro', 'world', 'awesome 42'], '42', ['world']),
+        (['foo1', 'foo2', '3foo', 'bar1'], '^foo.*', ['3foo', 'bar1']),
+    ],
+)
+def test_grep_v(it, grep, expected):
+    assert it | GrepV(grep) | Pipe(list) == expected
 
 
 def test_apply():

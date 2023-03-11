@@ -122,6 +122,10 @@ Examples:
 ```py
 >>> ['hello 42 bro', 'world', 'awesome 42'] | Grep('42') | Pipe(list)
 ['hello 42 bro', 'awesome 42']
+
+# regex is supported (passed to re.search)
+>>> ['foo1', 'foo2', '3foo', 'bar1'] | Grep('^foo.*') | Pipe(list)
+['foo1', 'foo2']
 ```
 
 ## `GrepV`
@@ -129,6 +133,8 @@ Examples:
 ```py
 >>> ['hello 42 bro', 'world', 'awesome 42'] | GrepV('42') | Pipe(list)
 ['world']
+>>> ['foo1', 'foo2', '3foo', 'bar1'] | GrepV('^foo.*') | Pipe(list)
+['3foo', 'bar1']
 ```
 
 ## `Count`
