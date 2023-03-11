@@ -32,6 +32,9 @@ chans-server = "chans.server:main"
 requires = ["setuptools"]
 build-backend = "setuptools.build_meta"
 
+[tool.setuptools.packages]
+find = {}
+
 # ==============================================================================
 
 [tool.bumpver]
@@ -46,7 +49,7 @@ tag = true
     '^version = "{pep440_version}"',
     '^current_version = "{version}"',
 ]
-"pipe21.py" = [
+"pipe21/__init__.py" = [
     "^__version__ = '{pep440_version}'",
 ]
 
@@ -54,7 +57,10 @@ tag = true
 
 [tool.mypy]
 # todo: review this
-mypy_path = "typings"
+# mypy_path = "typings"
+# files = ["typings", "pipe21"]
+files = ["pipe21", "tests/mypy_test.py"]
+
 pretty = true
 show_traceback = true
 color_output = true
@@ -88,7 +94,9 @@ disallow_untyped_defs = false
 typeCheckingMode = "strict"
 reportMissingTypeStubs = true
 reportInvalidStubStatement = true
-include = ["typings"]
+# include = ["typings"]
+include = ["pipe21"]
+stubPath = "pipe21"
 
 # ==============================================================================
 
