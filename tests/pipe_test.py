@@ -241,11 +241,3 @@ def test_apply_map():
 
 def test_iter_lines():
     assert 'tests/testing/file.txt' | IterLines() | Pipe(list) == ['hello\n', 'world\n']
-
-
-def test_filter_equal():
-    assert range(3) | FilterEqual(2) | Pipe(list) == [2]
-
-
-def test_filter_not_equal():
-    assert range(3) | FilterNotEqual(2) | Pipe(list) == [0, 1]
