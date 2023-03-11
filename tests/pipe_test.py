@@ -254,5 +254,7 @@ def test_apply_map():
     assert range(3, 5) | Map(range) | Map(list) | MapApply(random.shuffle) | Pipe(list) == [[1, 0, 2], [3, 1, 2, 0]]
 
 
-def test_iter_lines():
-    assert 'tests/testing/file.txt' | IterLines() | Pipe(list) == ['hello\n', 'world\n']
+def test_iter_lines(tmp_path):
+    file = tmp_path / 'file.txt'
+    file.write_text('hello\nworld\n')
+    assert file | IterLines() | Pipe(list) == ['hello\n', 'world\n']
