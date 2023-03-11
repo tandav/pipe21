@@ -1,6 +1,5 @@
 site_name: pipe21
-# site_url: https://tandav.github.io/pipe21/
-site_url: https://pipe21.readthedocs.io/en/latest/
+site_url: https://tandav.github.io/pipe21
 repo_url: https://github.com/tandav/pipe21
 repo_name: tandav/pipe21
 edit_uri: edit/master/docs/
