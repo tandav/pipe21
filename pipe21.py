@@ -35,7 +35,7 @@ class PipeArgs     (B): __ror__ = lambda self, x: self.f(*x)
 class StarMap      (B): __ror__ = lambda self, x: x | Map(lambda y: y | PipeArgs(self.f))
 class IsUnique     (B): __ror__ = lambda self, seq: len(seq) == len(set(seq if self.f is None else map(self.f, seq)))
 class Sorted       (B): __ror__ = lambda self, it: sorted(it, **self.kw)
-class ApplyMap     (B): __ror__ = lambda self, it: it | Map(lambda x: x | Apply(self.f))
+class MapApply     (B): __ror__ = lambda self, it: it | Map(lambda x: x | Apply(self.f))
 
 
 class Unique(B):

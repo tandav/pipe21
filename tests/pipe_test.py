@@ -251,7 +251,7 @@ def test_apply():
 
 def test_apply_map():
     random.seed(42)
-    assert range(3, 5) | Map(range) | Map(list) | ApplyMap(random.shuffle) | Pipe(list) == [[1, 0, 2], [3, 1, 2, 0]]
+    assert range(3, 5) | Map(range) | Map(list) | MapApply(random.shuffle) | Pipe(list) == [[1, 0, 2], [3, 1, 2, 0]]
 
 
 def test_iter_lines():
