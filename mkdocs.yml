@@ -12,8 +12,6 @@ theme:
     view: material/eye
   features:
     - navigation.instant
-    # - navigation.tracking
-    # - navigation.tabs
     - content.action.edit
     - content.action.view
   palette:

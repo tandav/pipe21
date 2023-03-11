@@ -1,6 +1,6 @@
 [![PyPI version](https://img.shields.io/pypi/v/pipe21.svg?logo=pypi&logoColor=FFE873)](https://pypi.org/project/pipe21/)
 
-# pipe21 - simple functional pipes [[docs]](docs/reference.md)
+# pipe21 - simple functional pipes [[docs]](https://tandav.github.io/pipe21)
 
 ## Basic version
 just copy-paste it!
