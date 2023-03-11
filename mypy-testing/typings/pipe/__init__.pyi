@@ -9,8 +9,7 @@ class Pipe(Generic[T, U]):
     def __init__(self, f: Callable[[T], U]) -> None:
         self.f = f
 
-    def __ror__(self, x: T) -> U:
-        return self.f(x)
+    def __ror__(self, x: T) -> U: ...
 
 # def bits_to_intervals(bits: int) -> str:
 #     return bits | Pipe(str)

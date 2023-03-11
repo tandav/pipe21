@@ -1,6 +1,6 @@
 [tool.mypy]
 # todo: review this
-files = ["bar.py", "typings"]
+files = ["typings"]
 pretty = true
 show_traceback = true
 color_output = true
