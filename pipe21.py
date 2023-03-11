@@ -4,12 +4,13 @@ import re
 
 __version__ = '1.7.0'
 
-class Pipe:
-    def __init__(self, f):
-        self.f = f
 
-    def __ror__(self, x):
-        return self.f(x)
+# class Pipe:
+#     def __init__(self, f):
+#         self.f = f
+
+#     def __ror__(self, x):
+#         return self.f(x)
 
 # def bits_to_intervals(bits: int) -> str:
 #     return bits | Pipe(str)
@@ -19,9 +20,9 @@ def f(x):
     return x + 2
 
 
-# class B:
-#     def __init__(self, f=None, **kw): self.f = f; self.kw = kw
-# class Pipe  (B): __ror__ = lambda self, x: self.f(x)
+class B:
+    def __init__(self, f=None, **kw): self.f = f; self.kw = kw
+class Pipe  (B): __ror__ = lambda self, x: self.f(x)
 # class Map   (B): __ror__ = lambda self, x: map   (self.f, x)
 # class Filter(B): __ror__ = lambda self, x: filter(self.f, x)
 
