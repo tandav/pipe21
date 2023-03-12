@@ -12,7 +12,7 @@ class Map   (B): __ror__ = lambda self, x: map   (self.f, x)
 class Filter(B): __ror__ = lambda self, x: filter(self.f, x)
 
 
-class Reduce       (B): __ror__ = lambda self, x: functools.reduce(self.f, x, *self.kw.values())
+class Reduce       (B): __ror__ = lambda self, x: functools.reduce(self.f, x, *self.args)
 class MapValues    (B): __ror__ = lambda self, it: it | Map(lambda kv: (kv[0], self.f(kv[1])))
 class MapKeys      (B): __ror__ = lambda self, it: it | Map(lambda kv: (self.f(kv[0]), kv[1]))
 class FilterFalse  (B): __ror__ = lambda self, it: it | Filter(lambda x: not self.f(x))

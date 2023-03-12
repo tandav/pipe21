@@ -56,7 +56,7 @@ def test_reduce(it, initializer):
     if initializer is None:
         assert it | Reduce(operator.add) == functools.reduce(operator.add, it)
         return
-    assert it | Reduce(operator.add, initializer=initializer) == functools.reduce(operator.add, it, initializer)
+    assert it | Reduce(operator.add, initializer) == functools.reduce(operator.add, it, initializer)
 
 
 @given(st.lists(st.integers()))
