@@ -34,6 +34,9 @@ jobs:
       - name: doctest
         run: python3 -m doctest docs/reference.md
 
+      - name: Upload codecov coverage
+        uses: codecov/codecov-action@v3
+
       - name: Upload coverage data to coveralls.io
         run: coveralls --service=github
         env:
