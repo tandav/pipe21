@@ -105,6 +105,17 @@ def test_is_unique(seq, key, expected):
 
 
 @pytest.mark.parametrize(
+    'it, args, expected', (
+        (range(5), (2,), [0, 1]),
+        (range(5), (2, 4), [2, 3]),
+        (range(5), (2, None), [2, 3, 4]),
+        (range(5), (0, None, 2), [0, 2, 4]),
+    ),
+)
+def test_slice(it, args, expected):
+    assert it | Slice(*args) | Pipe(list) == expected
+
+@pytest.mark.parametrize(
     'it, n, expected', (
         (range(5), 3, (0, 1, 2)),
         (range(5), 1, (0,)),

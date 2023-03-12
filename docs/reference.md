@@ -174,6 +174,20 @@ useful for objects that don't have `__len__` method:
 
 ```
 
+## Slice
+
+```py
+>>> range(5) | Slice(2) | Pipe(list)
+[0, 1]
+>>> range(5) | Slice(2, 4) | Pipe(list)
+[2, 3]
+>>> range(5) | Slice(2, None) | Pipe(list)
+[2, 3, 4]
+>>> range(5) | Slice(0, None, 2) | Pipe(list)
+[0, 2, 4]
+
+```
+
 ## Take
 
 ```py

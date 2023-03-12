@@ -6,7 +6,7 @@ __version__ = '1.7.3'
 
 
 class B:
-    def __init__(self, f=None, **kw): self.f = f; self.kw = kw
+    def __init__(self, f=None, *args, **kw): self.f = f; self.args = args; self.kw = kw
 class Pipe  (B): __ror__ = lambda self, x: self.f(x)
 class Map   (B): __ror__ = lambda self, x: map   (self.f, x)
 class Filter(B): __ror__ = lambda self, x: filter(self.f, x)
@@ -28,6 +28,7 @@ class Values       (B): __ror__ = lambda self, it: it | Map(lambda x: x[1])
 class Grep         (B): __ror__ = lambda self, it: it | Filter(lambda x:     re.search(self.f, x))
 class GrepV        (B): __ror__ = lambda self, it: it | Filter(lambda x: not re.search(self.f, x))
 class Count        (B): __ror__ = lambda self, it: sum(1 for _ in it)
+class Slice        (B): __ror__ = lambda self, it: itertools.islice(it, self.f, *self.args)
 class Take         (B): __ror__ = lambda self, it: itertools.islice(it, self.f) | Pipe(tuple)
 class Chunked      (B): __ror__ = lambda self, it: iter(functools.partial(lambda n, i: i | Take(n), self.f, iter(it)), ())
 class GroupBy      (B): __ror__ = lambda self, it: itertools.groupby(it, key=self.f)
