@@ -81,7 +81,7 @@ def test_filter_false(it):
         ([(0, 2), (3, 0)], lambda x: x % 2 == 0, [(0, 2)]),
     ),
 )
-def test_filter_keys(it, f ,expected):
+def test_filter_keys(it, f, expected):
     assert it | FilterKeys(f) | Pipe(list) == expected
 
 
@@ -91,7 +91,7 @@ def test_filter_keys(it, f ,expected):
         ([(0, 2), (3, 0)], lambda x: x % 2 == 0, [(0, 2), (3, 0)]),
     ),
 )
-def test_filter_values(it, f ,expected):
+def test_filter_values(it, f, expected):
     assert it | FilterValues(f) | Pipe(list) == expected
 
 
@@ -126,7 +126,7 @@ def test_key_by_value_by():
         ([(0, '0'), (1, '1')], lambda x: str(x[0] * 10), [(0, '0', '0'), (1, '1', '10')]),
     ),
 )
-def test_append(it, f ,expected):
+def test_append(it, f, expected):
     assert it | Append(f) | Pipe(list) == expected
     assert it | Append(f) | Pipe(list) == expected
 

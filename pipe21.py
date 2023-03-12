@@ -7,13 +7,15 @@ __version__ = '1.8.0'
 
 class B:
     def __init__(self, f=None, *args, **kw):
-        self.f = f; self.args = args; self.kw = kw
-class Pipe  (B): __ror__ = lambda self, x: self.f(x)
-class Map   (B): __ror__ = lambda self, x: map   (self.f, x)
-class Filter(B): __ror__ = lambda self, x: filter(self.f, x)
+        self.f = f
+        self.args = args
+        self.kw = kw
 
 
-class Reduce       (B): __ror__ = lambda self, x: functools.reduce(self.f, x, *self.args)
+class Pipe         (B): __ror__ = lambda self, x: self.f(x)
+class Map          (B): __ror__ = lambda self, it: map(self.f, it)
+class Filter       (B): __ror__ = lambda self, it: filter(self.f, it)
+class Reduce       (B): __ror__ = lambda self, it: functools.reduce(self.f, it, *self.args)
 class MapValues    (B): __ror__ = lambda self, it: it | Map(lambda kv: (kv[0], self.f(kv[1])))
 class MapKeys      (B): __ror__ = lambda self, it: it | Map(lambda kv: (self.f(kv[0]), kv[1]))
 class FilterFalse  (B): __ror__ = lambda self, it: it | Filter(lambda x: not self.f(x))
@@ -26,7 +28,7 @@ class ValueBy      (B): __ror__ = lambda self, it: it | Map(lambda x: (x, self.f
 class Append       (B): __ror__ = lambda self, it: it | Map(lambda x: (*x, self.f(x)))
 class Keys         (B): __ror__ = lambda self, it: it | Map(lambda x: x[0])
 class Values       (B): __ror__ = lambda self, it: it | Map(lambda x: x[1])
-class Grep         (B): __ror__ = lambda self, it: it | Filter(lambda x:     re.search(self.f, x))
+class Grep         (B): __ror__ = lambda self, it: it | Filter(lambda x: re.search(self.f, x))
 class GrepV        (B): __ror__ = lambda self, it: it | Filter(lambda x: not re.search(self.f, x))
 class Count        (B): __ror__ = lambda self, it: sum(1 for _ in it)
 class Slice        (B): __ror__ = lambda self, it: itertools.islice(it, self.f, *self.args)
