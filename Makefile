@@ -1,7 +1,6 @@
 .PHONY: test
 test:
-
-	pytest --cov=pipe21
+	pytest
 
 .PHONY: doctest
 doctest:
