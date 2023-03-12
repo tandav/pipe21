@@ -90,6 +90,13 @@ Examples:
 >>> [2, 3, 4] | FlatMap(lambda x: [(x, x), (x, x)]) | Pipe(list)
 [(2, 2), (2, 2), (3, 3), (3, 3), (4, 4), (4, 4)]
 
+>>> def yield_even(it):
+...     for x in it:
+...         if x % 2 == 0:
+...             yield x
+>>> [range(0, 5), range(100, 105)] | FlatMap(yield_even) | Pipe(list)
+[0, 2, 4, 100, 102, 104]
+
 ```
 
 ## FlatMapValues
