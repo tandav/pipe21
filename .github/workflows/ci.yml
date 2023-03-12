@@ -8,6 +8,8 @@ permissions:
 jobs:
   test:
     runs-on: ubuntu-latest
+    env:
+      MINIMUM_COVERAGE_PERCENTAGE: 100
     strategy:
       fail-fast: false
       matrix:
@@ -21,8 +23,16 @@ jobs:
       - name: install dependencies
         run: python3 -m pip install .[dev]
 
+      - name: reformat # neccessary to fix 100% coverage
+        run: |
+          autopep8 --in-place --aggressive --aggressive pipe21.py
+          black pipe21.py
+
       - name: test
-        run: pytest --cov pipe21 --doctest-glob='reference.md'
+        run: pytest --cov pipe21 --cov-fail-under=${{ env.MINIMUM_COVERAGE_PERCENTAGE }}
+
+      - name: doctest
+        run: python3 -m doctest docs/reference.md
 
       # - name: pre-commit
       #   run: pre-commit run --all-files
