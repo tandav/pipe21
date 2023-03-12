@@ -34,10 +34,11 @@ Examples:
 ## Reduce
 
 ```py
->>> range(5) | Reduce(lambda a, b: a + b)
+>>> import operator
+>>> range(5) | Reduce(operator.add)
 10
 
->>> range(5) | Reduce(lambda a, b: a + b, 5)  # with initial value
+>>> range(5) | Reduce(operator.add, 5)  # with initial value
 15
 
 ```
@@ -312,5 +313,14 @@ useful for objects that don't have `__len__` method:
 ...     return inner
 >>> [{'hello': 'world'}] | MapApply(setitem('foo', 'bar')) | Pipe(list)
 [{'hello': 'world', 'foo': 'bar'}]
+
+```
+
+## ReduceByKey
+
+```py
+>>> import operator
+>>> [('a', 1), ('b', 1), ('a', 1)] | ReduceByKey(operator.add)
+[('a', 2), ('b', 1)]
 
 ```

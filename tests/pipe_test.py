@@ -219,6 +219,15 @@ def test_groupby(it, f, expected):
 
 @pytest.mark.parametrize(
     'it, f, expected', [
+        ([('a', 1), ('b', 1), ('a', 1)], operator.add, [('a', 2), ('b', 1)]),
+    ],
+)
+def test_reduce_by_key(it, f, expected):
+    assert it | ReduceByKey(f) == expected
+
+
+@pytest.mark.parametrize(
+    'it, f, expected', [
         ((1, 2), operator.add, 3),
         (('FF', 16), int, 255),
         (([1, 2], 'A'), dict.fromkeys, {1: 'A', 2: 'A'}),
