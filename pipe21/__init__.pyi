@@ -1,4 +1,3 @@
-import abc
 from collections.abc import Callable
 from typing import Any
 from typing import Generic
@@ -16,7 +15,7 @@ _T_co = TypeVar("_T_co", covariant=True)
 
 class PipedIterator(Iterable[_T_co], Protocol[_T_co]):
     def __or__(self, x: B[T, U]) -> U: ...
-    @abc.abstractmethod
+    # @abc.abstractmethod # todo: try delete?
     def __next__(self) -> _T_co: ...
     def __iter__(self) -> Iterator[_T_co]: ...
 

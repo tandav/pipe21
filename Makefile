@@ -15,9 +15,9 @@ bumpver:
 
 .PHONY: mypy
 mypy:
-	mypy typings/pipe21
+	# mypy typings/pipe21
+	mypy pipe21 tests
 
 .PHONY: pyright
 pyright:
 	pyright -vv pipe21.py
-

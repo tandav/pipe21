@@ -84,9 +84,9 @@ warn_unreachable = true
 warn_unused_configs = true
 warn_unused_ignores = true
 
-[[tool.mypy.overrides]]
-module = ["tests.*"]
-disallow_untyped_defs = false
+# [[tool.mypy.overrides]]
+# module = ["tests.pipe_test.py"]
+# disallow_untyped_defs = false
 
 # ==============================================================================
 

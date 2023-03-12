@@ -1,29 +1,26 @@
-import pipe21 as P
+from pipe21 import *
+
+
+def types_pipe(x: int) -> str:
+    return x | Pipe(str)
 
 
 def f0(x: str) -> frozenset[int]:
-    return frozenset(x | P.Map(int))
+    return frozenset(x | Map(int))
 
 
-def f1(bits: str) -> frozenset[int]:
-    # q = bits | P.Map(int)
-    # reveal_type(q)
-    # v = P.Pipe(frozenset)
-    # reveal_type(v)
-    # u = q | v
-    # reveal_type(u)
-    # return u
-
+def f1(x: str) -> frozenset[str]:
+# def f1(x: str) -> frozenset[int]:
     return (
-        bits
-        | P.Map(int)
-        | P.Pipe(frozenset)
+        x
+        | Map(int)
+        | Pipe(frozenset)
     )
 
 
-# def bits_to_intervals(bits: str) -> frozenset[int]:
+# def bits_to_intervals(x: str) -> frozenset[int]:
 #     return (
-#         bits
+#         x
 #         | P.Map(int)
 #         | P.Pipe(enumerate)
 #         | P.FilterValues()
