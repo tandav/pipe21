@@ -37,6 +37,9 @@ Examples:
 >>> range(5) | Reduce(lambda a, b: a + b)
 10
 
+>>> range(5) | Reduce(lambda a, b: a + b, initializer=5)
+15
+
 ```
 
 ## MapKeys

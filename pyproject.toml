@@ -12,6 +12,8 @@ dependencies = []
 [project.optional-dependencies]
 dev = [
     "bumpver",
+    "black",
+    "autopep8",
     "pre-commit",
     "hypothesis",
     "pytest",

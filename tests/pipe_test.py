@@ -1,3 +1,4 @@
+import functools
 import operator
 import random
 
@@ -25,6 +26,37 @@ def test_map(it):
 @given(st.lists(st.integers()))
 def test_filter(it):
     assert it | Filter(is_even) | Pipe(list) == list(filter(is_even, it))
+
+
+@pytest.mark.parametrize(
+    'it, initializer', [
+        ([], 0),
+        ([], None),
+        ([1, 2, 3], 0),
+        ([1, 2, 3], 1),
+        ([1, 2, 3], None),
+        (range(0), 0),
+        (range(10), 0),
+        (range(10), 1),
+        (range(10), None),
+        (list('abc'), ''),
+        (list('abc'), 'd'),
+        (list('abc'), None),
+        (list(''), ''),
+        (list(''), 'd'),
+        (list(''), None),
+    ],
+)
+def test_reduce(it, initializer):
+    if len(it) == 0 and initializer is None:
+        with pytest.raises(TypeError):
+            it | Reduce(operator.add)  # pylint: disable=W0106
+        return
+
+    if initializer is None:
+        assert it | Reduce(operator.add) == functools.reduce(operator.add, it)
+        return
+    assert it | Reduce(operator.add, initializer=initializer) == functools.reduce(operator.add, it, initializer)
 
 
 @given(st.lists(st.integers()))
