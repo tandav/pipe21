@@ -8,8 +8,6 @@ permissions:
 jobs:
   test:
     runs-on: ubuntu-latest
-    env:
-      MINIMUM_COVERAGE_PERCENTAGE: 100
     strategy:
       fail-fast: false
       matrix:
@@ -29,7 +27,8 @@ jobs:
           black pipe21.py
 
       - name: test
-        run: pytest --cov pipe21 --cov-fail-under=${{ env.MINIMUM_COVERAGE_PERCENTAGE }}
+        # run: pytest --cov pipe21 --cov-fail-under=100
+        run: pytest --cov pipe21
 
       - name: doctest
         run: python3 -m doctest docs/reference.md

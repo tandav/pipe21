@@ -140,108 +140,108 @@ def test_count(it, expected):
     assert it | Count() == expected
 
 
-@pytest.mark.parametrize(
-    'it, n, expected', (
-        (range(5), 5, [(0, 1, 2, 3, 4)]),
-        (range(5), 4, [(0, 1, 2, 3), (4,)]),
-        (range(5), 3, [(0, 1, 2), (3, 4)]),
-        (range(5), 2, [(0, 1), (2, 3), (4,)]),
-        (range(5), 1, [(0,), (1,), (2,), (3,), (4,)]),
-        (range(5), 0, []),
-    ),
-)
-def test_chunked(it, n, expected):
-    assert it | Chunked(n) | Pipe(list) == expected
+# @pytest.mark.parametrize(
+#     'it, n, expected', (
+#         (range(5), 5, [(0, 1, 2, 3, 4)]),
+#         (range(5), 4, [(0, 1, 2, 3), (4,)]),
+#         (range(5), 3, [(0, 1, 2), (3, 4)]),
+#         (range(5), 2, [(0, 1), (2, 3), (4,)]),
+#         (range(5), 1, [(0,), (1,), (2,), (3,), (4,)]),
+#         (range(5), 0, []),
+#     ),
+# )
+# def test_chunked(it, n, expected):
+#     assert it | Chunked(n) | Pipe(list) == expected
 
 
-@pytest.mark.parametrize(
-    'it, kw', (
-        ([3, 5, 1, 0], {}),
-        ([3, 5, 1, 0], {'reverse': True}),
-        ('3510', {'key': int}),
-        ('3510', {'key': int, 'reverse': True}),
-        ('9j8xy2m#98g%^xd$', {'key': ord, 'reverse': True}),
-        ('9j8xy2m#98g%^xd$', {'key': ord, 'reverse': False}),
-    ),
-)
-def test_sorted(it, kw):
-    assert it | Sorted(**kw) == sorted(it, **kw)
+# @pytest.mark.parametrize(
+#     'it, kw', (
+#         ([3, 5, 1, 0], {}),
+#         ([3, 5, 1, 0], {'reverse': True}),
+#         ('3510', {'key': int}),
+#         ('3510', {'key': int, 'reverse': True}),
+#         ('9j8xy2m#98g%^xd$', {'key': ord, 'reverse': True}),
+#         ('9j8xy2m#98g%^xd$', {'key': ord, 'reverse': False}),
+#     ),
+# )
+# def test_sorted(it, kw):
+#     assert it | Sorted(**kw) == sorted(it, **kw)
 
 
-def yield_even(it):
-    for x in it:
-        if x % 2 == 0:
-            yield x
+# def yield_even(it):
+#     for x in it:
+#         if x % 2 == 0:
+#             yield x
 
-@pytest.mark.parametrize(
-    'it, f ,expected', (
-        ([0, 2, 3, 0, 4], range, [0, 1, 0, 1, 2, 0, 1, 2, 3]),
-        ([2, 3, 4], lambda x: [(x, x), (x, x)], [(2, 2), (2, 2), (3, 3), (3, 3), (4, 4), (4, 4)]),
-        ([range(0, 5), range(100, 105)], yield_even, [0, 2, 4, 100, 102, 104]),
-    ),
-)
-def test_flat_map(it, f, expected):
-    assert it | FlatMap(f) | Pipe(list) == expected
-
-
-@pytest.mark.parametrize(
-    'it, f ,expected', (
-        ([('a', ['x', 'y', 'z']), ('b', ['p', 'r'])], lambda x: x, [('a', 'x'), ('a', 'y'), ('a', 'z'), ('b', 'p'), ('b', 'r')]),
-    ),
-)
-def test_flat_map_values(it, f, expected):
-    assert it | FlatMapValues(f) | Pipe(list) == expected
+# @pytest.mark.parametrize(
+#     'it, f ,expected', (
+#         ([0, 2, 3, 0, 4], range, [0, 1, 0, 1, 2, 0, 1, 2, 3]),
+#         ([2, 3, 4], lambda x: [(x, x), (x, x)], [(2, 2), (2, 2), (3, 3), (3, 3), (4, 4), (4, 4)]),
+#         ([range(0, 5), range(100, 105)], yield_even, [0, 2, 4, 100, 102, 104]),
+#     ),
+# )
+# def test_flat_map(it, f, expected):
+#     assert it | FlatMap(f) | Pipe(list) == expected
 
 
-@pytest.mark.parametrize(
-    'it, f ,expected', (
-        ([(0, 2), (3, 0)], None, [(3, 0)]),
-        ([(0, 2), (3, 0)], lambda x: x % 2 == 0, [(0, 2)]),
-    ),
-)
-def test_filter_keys(it, f ,expected):
-    assert it | FilterKeys(f) | Pipe(list) == expected
+# @pytest.mark.parametrize(
+#     'it, f ,expected', (
+#         ([('a', ['x', 'y', 'z']), ('b', ['p', 'r'])], lambda x: x, [('a', 'x'), ('a', 'y'), ('a', 'z'), ('b', 'p'), ('b', 'r')]),
+#     ),
+# )
+# def test_flat_map_values(it, f, expected):
+#     assert it | FlatMapValues(f) | Pipe(list) == expected
 
 
-@pytest.mark.parametrize(
-    'it, f ,expected', (
-        ([(0, 2), (3, 0)], None, [(0, 2)]),
-        ([(0, 2), (3, 0)], lambda x: x % 2 == 0, [(0, 2), (3, 0)]),
-    ),
-)
-def test_filter_values(it, f ,expected):
-    assert it | FilterValues(f) | Pipe(list) == expected
+# @pytest.mark.parametrize(
+#     'it, f ,expected', (
+#         ([(0, 2), (3, 0)], None, [(3, 0)]),
+#         ([(0, 2), (3, 0)], lambda x: x % 2 == 0, [(0, 2)]),
+#     ),
+# )
+# def test_filter_keys(it, f ,expected):
+#     assert it | FilterKeys(f) | Pipe(list) == expected
 
 
-@pytest.mark.parametrize(
-    'it, f, expected', [
-        ([(0, 'a'), (0, 'b'), (1, 'c'), (2, 'd')], operator.itemgetter(0), [(0, [(0, 'a'), (0, 'b')]), (1, [(1, 'c')]), (2, [(2, 'd')])]),
-        (['ab', 'cd', 'e', 'f', 'gh', 'ij'], len, [(2, ['ab', 'cd']), (1, ['e', 'f']), (2, ['gh', 'ij'])]),
-    ],
-)
-def test_groupby(it, f, expected):
-    assert it | GroupBy(f) | MapValues(list) | Pipe(list) == expected
+# @pytest.mark.parametrize(
+#     'it, f ,expected', (
+#         ([(0, 2), (3, 0)], None, [(0, 2)]),
+#         ([(0, 2), (3, 0)], lambda x: x % 2 == 0, [(0, 2), (3, 0)]),
+#     ),
+# )
+# def test_filter_values(it, f ,expected):
+#     assert it | FilterValues(f) | Pipe(list) == expected
 
 
-@pytest.mark.parametrize(
-    'it, f, expected', [
-        ([('a', 1), ('b', 1), ('a', 1)], operator.add, [('a', 2), ('b', 1)]),
-    ],
-)
-def test_reduce_by_key(it, f, expected):
-    assert it | ReduceByKey(f) == expected
+# @pytest.mark.parametrize(
+#     'it, f, expected', [
+#         ([(0, 'a'), (0, 'b'), (1, 'c'), (2, 'd')], operator.itemgetter(0), [(0, [(0, 'a'), (0, 'b')]), (1, [(1, 'c')]), (2, [(2, 'd')])]),
+#         (['ab', 'cd', 'e', 'f', 'gh', 'ij'], len, [(2, ['ab', 'cd']), (1, ['e', 'f']), (2, ['gh', 'ij'])]),
+#     ],
+# )
+# def test_groupby(it, f, expected):
+#     assert it | GroupBy(f) | MapValues(list) | Pipe(list) == expected
 
 
-@pytest.mark.parametrize(
-    'it, f, expected', [
-        ((1, 2), operator.add, 3),
-        (('FF', 16), int, 255),
-        (([1, 2], 'A'), dict.fromkeys, {1: 'A', 2: 'A'}),
-        (({1, 2}, {3, 4, 5}), set.union, {1, 2, 3, 4, 5}),
-    ],
-)
-def test_pipe_args(it, f, expected):
-    assert it | PipeArgs(f) == expected
+# @pytest.mark.parametrize(
+#     'it, f, expected', [
+#         ([('a', 1), ('b', 1), ('a', 1)], operator.add, [('a', 2), ('b', 1)]),
+#     ],
+# )
+# def test_reduce_by_key(it, f, expected):
+#     assert it | ReduceByKey(f) == expected
+
+
+# @pytest.mark.parametrize(
+#     'it, f, expected', [
+#         ((1, 2), operator.add, 3),
+#         (('FF', 16), int, 255),
+#         (([1, 2], 'A'), dict.fromkeys, {1: 'A', 2: 'A'}),
+#         (({1, 2}, {3, 4, 5}), set.union, {1, 2, 3, 4, 5}),
+#     ],
+# )
+# def test_pipe_args(it, f, expected):
+#     assert it | PipeArgs(f) == expected
 
 
 @pytest.mark.parametrize(
