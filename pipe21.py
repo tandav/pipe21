@@ -6,7 +6,8 @@ __version__ = '1.7.3'
 
 
 class B:
-    def __init__(self, f=None, *args, **kw): self.f = f; self.args = args; self.kw = kw
+    def __init__(self, f=None, *args, **kw):
+        self.f = f; self.args = args; self.kw = kw
 class Pipe  (B): __ror__ = lambda self, x: self.f(x)
 class Map   (B): __ror__ = lambda self, x: map   (self.f, x)
 class Filter(B): __ror__ = lambda self, x: filter(self.f, x)
