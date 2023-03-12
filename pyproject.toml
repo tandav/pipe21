@@ -18,6 +18,7 @@ dev = [
     "hypothesis",
     "pytest",
     "pytest-cov",
+    "coveralls",
     "mkdocs",
     "mkdocs-material",
 ]
