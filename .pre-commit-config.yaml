@@ -40,12 +40,12 @@ repos:
         args: [--fix, --exit-non-zero-on-fix]
 
   - repo: https://github.com/PyCQA/pylint
-    rev: v2.16.4
+    rev: v2.17.0
     hooks:
       - id: pylint
 
   - repo: https://github.com/pre-commit/mirrors-autopep8
-    rev: v2.0.1
+    rev: v2.0.2
     hooks:
       - id: autopep8
 
