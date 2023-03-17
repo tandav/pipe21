@@ -29,11 +29,6 @@ docs = "https://tandav.github.io/pipe21/"
 issues = "https://github.com/tandav/pipe21/issues"
 "release notes" = "https://github.com/tandav/pipe21/releases"
 
-
-[project.scripts]
-chans-cli = "chans.__main__:main"
-chans-server = "chans.server:main"
-
 # ==============================================================================
 
 [build-system]
