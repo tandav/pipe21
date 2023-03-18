@@ -17,3 +17,4 @@
 - [jasondelaat/pymonad: ](https://github.com/jasondelaat/pymonad)
 - [machow/siuba: Python library for using dplyr like syntax with pandas and SQL](https://github.com/machow/siuba)
 - [pipeop · PyPI](https://pypi.org/project/pipeop/)
+- [Suor/funcy: A fancy and practical functional tools](https://github.com/Suor/funcy)
