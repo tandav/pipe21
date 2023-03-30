@@ -268,6 +268,20 @@ useful for objects that don't have `__len__` method:
 
 ```
 
+## IsUnique
+
+```py
+>>> [0, 1, 2, 3] | IsUnique()
+True
+>>> [0, 1, 1, 3] | IsUnique()
+False
+>>> '0123' | IsUnique(int)
+True
+>>> '0113' | IsUnique(int)
+False
+
+```
+
 ## Sorted
 
 ```py
