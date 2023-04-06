@@ -44,6 +44,7 @@ repos:
     rev: v2.17.1
     hooks:
       - id: pylint
+        additional_dependencies: ["pylint-per-file-ignores"]
 
   - repo: https://github.com/pre-commit/mirrors-autopep8
     rev: v2.0.2
