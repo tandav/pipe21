@@ -222,8 +222,8 @@ def test_chunked(it, n, expected):
 
 @pytest.mark.parametrize(
     ('it', 'f', 'expected'), [
-        ([(0, 'a'), (0, 'b'), (1, 'c'), (2, 'd')], operator.itemgetter(0), [(0, [(0, 'a'), (0, 'b')]), (1, [(1, 'c')]), (2, [(2, 'd')])]),
-        (['ab', 'cd', 'e', 'f', 'gh', 'ij'], len, [(2, ['ab', 'cd']), (1, ['e', 'f']), (2, ['gh', 'ij'])]),
+        ([(0, 'a'), (1, 'c'), (0, 'b'), (2, 'd')], operator.itemgetter(0), [(0, [(0, 'a'), (0, 'b')]), (1, [(1, 'c')]), (2, [(2, 'd')])]),
+        (['ab', 'cd', 'e', 'f', 'gh', 'ij'], len, [(1, ['e', 'f']), (2, ['ab', 'cd', 'gh', 'ij'])]),
     ],
 )
 def test_groupby(it, f, expected):

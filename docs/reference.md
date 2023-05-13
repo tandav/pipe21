@@ -215,15 +215,34 @@ useful for objects that don't have `__len__` method:
 
 ```
 
+## Sorted
+
+```py
+>>> '3510' | Sorted()
+['0', '1', '3', '5']
+
+>>> '3510' | Sorted(reverse=True)
+['5', '3', '1', '0']
+
+>>> '!*&)#' | Sorted(key=ord)
+['!', '#', '&', ')', '*']
+
+>>> '!*&)#' | Sorted(key=ord, reverse=True)
+['*', ')', '&', '#', '!']
+
+```
+
 ## GroupBy
+
+Note: `GroupBy` sorts iterable before grouping. If you pass key function, eg `GroupBy(len)`, it also will be used as sorting key.
 
 ```py
 >>> import operator
->>> [(0, 'a'), (0, 'b'), (1, 'c'), (2, 'd')] | GroupBy(operator.itemgetter(0)) | MapValues(list) | Pipe(list)
+>>> [(0, 'a'), (1, 'c'), (0, 'b'), (2, 'd')] | GroupBy(operator.itemgetter(0)) | MapValues(list) | Pipe(list)
 [(0, [(0, 'a'), (0, 'b')]), (1, [(1, 'c')]), (2, [(2, 'd')])]
 
 >>> ['ab', 'cd', 'e', 'f', 'gh', 'ij'] | GroupBy(len) | MapValues(list) | Pipe(list)
-[(2, ['ab', 'cd']), (1, ['e', 'f']), (2, ['gh', 'ij'])]
+[(1, ['e', 'f']), (2, ['ab', 'cd', 'gh', 'ij'])]
 
 ```
 
@@ -279,23 +298,6 @@ False
 True
 >>> '0113' | IsUnique(int)
 False
-
-```
-
-## Sorted
-
-```py
->>> '3510' | Sorted()
-['0', '1', '3', '5']
-
->>> '3510' | Sorted(reverse=True)
-['5', '3', '1', '0']
-
->>> '!*&)#' | Sorted(key=ord)
-['!', '#', '&', ')', '*']
-
->>> '!*&)#' | Sorted(key=ord, reverse=True)
-['*', ')', '&', '#', '!']
 
 ```
 
