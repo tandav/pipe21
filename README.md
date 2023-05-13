@@ -121,3 +121,4 @@ import pipe21 as P
 
 - [all available methods reference](reference.md)
 - [review of similar tools / alternatives](similar-tools.md)
+- written in pure python (70 LOC), no dependencies
