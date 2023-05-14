@@ -6,7 +6,7 @@
 ```
 
 ## Pipe
-Put a value into a function as 1 argument
+Put a value into a function as 1st argument
 
 ```py
 >>> range(5) | Pipe(list)
