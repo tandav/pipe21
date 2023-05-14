@@ -37,7 +37,7 @@ class Chunked      (B): __ror__ = lambda self, it: iter(functools.partial(lambda
 class Sorted       (B): __ror__ = lambda self, it: sorted(it, **self.kw)
 class GroupBy      (B): __ror__ = lambda self, it: itertools.groupby(it | Sorted(key=self.f), key=self.f)
 class IsUnique     (B): __ror__ = lambda self, seq: len(seq) == len(set(seq if self.f is None else map(self.f, seq)))
-class ReduceByKey  (B): __ror__ = lambda self, it: it | Sorted(lambda kv: kv[0]) | GroupBy(lambda kv: kv[0]) | MapValues(lambda kv: kv | Values() | Reduce(self.f)) | Pipe(list)
+class ReduceByKey  (B): __ror__ = lambda self, it: it | GroupBy(lambda kv: kv[0]) | MapValues(lambda kv: kv | Values() | Reduce(self.f)) | Pipe(list)
 class PipeArgs     (B): __ror__ = lambda self, x: self.f(*x)
 class StarMap      (B): __ror__ = lambda self, x: x | Map(lambda y: y | PipeArgs(self.f))
 class MapApply     (B): __ror__ = lambda self, it: it | Map(lambda x: x | Apply(self.f))
