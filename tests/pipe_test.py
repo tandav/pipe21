@@ -24,6 +24,11 @@ def test_pipe(it):
     assert it | Pipe(list) == list(it)
 
 
+def test_pipe_args_kwargs():
+    assert 'FF' | Pipe(int, 16) == 255
+    assert 2 | Pipe(pow, exp=8) == 256
+
+
 @given(st.lists(st.integers() | st.characters() | st.floats() | st.booleans() | st.binary()))
 def test_map(it):
     assert it | Map(str) | Pipe(list) == list(map(str, it))

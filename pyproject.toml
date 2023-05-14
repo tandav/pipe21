@@ -108,7 +108,7 @@ ignore = [
 
 [tool.ruff.per-file-ignores]
 "examples/*" = ["INP001"]
-"tests/*" = ["S101"]
+"tests/*" = ["S101", "PLR2004"]
 
 [tool.ruff.isort]
 force-single-line = true

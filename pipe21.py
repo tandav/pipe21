@@ -12,7 +12,7 @@ class B:
         self.kw = kw
 
 
-class Pipe         (B): __ror__ = lambda self, x: self.f(x)
+class Pipe         (B): __ror__ = lambda self, x: self.f(x, *self.args, **self.kw)
 class Map          (B): __ror__ = lambda self, it: map(self.f, it)
 class Filter       (B): __ror__ = lambda self, it: filter(self.f, it)
 class Reduce       (B): __ror__ = lambda self, it: functools.reduce(self.f, it, *self.args)

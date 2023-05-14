@@ -6,12 +6,18 @@
 ```
 
 ## Pipe
-Put a value into a function with 1 argument.
+Put a value into a function as 1 argument
 
 Examples:
 ```py
 >>> range(5) | Pipe(list)
 [0, 1, 2, 3, 4]
+
+>>> 'FF' | Pipe(int, 16)
+255
+
+>>> 2 | Pipe(pow, exp=8)
+256
 
 ```
 
