@@ -123,6 +123,10 @@ Same as `FilterKeys` but for `v` in `(k, v)` pairs
 >>> [("a", ["x", "y", "z"]), ("b", ["p", "r"])] | FlatMapValues(lambda x: x) | Pipe(list)
 [('a', 'x'), ('a', 'y'), ('a', 'z'), ('b', 'p'), ('b', 'r')]
 
+>>> keep_even = lambda it: it | Filter(lambda x: x % 2 == 0)
+>>> [('a', [0, 1, 2]), ('b', [3, 4])] | FlatMapValues(keep_even) | Pipe(list)
+[('a', 0), ('a', 2), ('b', 4)]
+
 ```
 
 ## KeyBy

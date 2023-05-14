@@ -114,6 +114,7 @@ def test_flat_map(it, f, expected):
 @pytest.mark.parametrize(
     ('it', 'f', 'expected'), [
         ([('a', ['x', 'y', 'z']), ('b', ['p', 'r'])], lambda x: x, [('a', 'x'), ('a', 'y'), ('a', 'z'), ('b', 'p'), ('b', 'r')]),
+        ([('a', [0, 1, 2]), ('b', [3, 4])], yield_even, [('a', 0), ('a', 2), ('b', 4)]),
     ],
 )
 def test_flat_map_values(it, f, expected):
