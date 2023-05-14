@@ -61,6 +61,8 @@ Examples:
 
 ## FilterKeys
 
+Take `(k, v)` pairs iterable and keep only elements for which `predicate(k) == True`. If no predicate function is provided - default function `bool` will be used.
+
 ```py
 >>> [(0, 2), (3, 0)] | FilterKeys() | Pipe(list)
 [(3, 0)]
@@ -71,6 +73,8 @@ Examples:
 ```
 
 ## FilterValues
+
+Same as `FilterKeys` but for `v` in `(k, v)` pairs
 
 ```py
 >>> [(0, 2), (3, 0)] | FilterValues() | Pipe(list)
