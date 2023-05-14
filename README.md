@@ -27,6 +27,8 @@ pip install pipe21
 #### little docs
 
 ```py
+from pipe21 import *
+
 x | Pipe(f)   == f     (x   )
 x | Map(f)    == map   (f, x)
 x | Filter(f) == filter(f, x)
@@ -69,7 +71,6 @@ Output:
 ## Extended version
 ```py
 import pipe21 as P
-# from pipe21 import * # or use this to use Map, Filter, etc (without P.)
 ```
 
 #### FizzBuzz
