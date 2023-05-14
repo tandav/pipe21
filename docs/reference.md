@@ -59,6 +59,15 @@ Examples:
 
 ```
 
+## FilterFalse
+Same as `Filter` but negative
+
+```py
+>>> range(5) | FilterFalse(lambda x: x % 2 == 0) | Pipe(list)
+[1, 3]
+
+```
+
 ## FilterKeys
 
 Take `(k, v)` pairs iterable and keep only elements for which `predicate(k) == True`. If no predicate function is provided - default function `bool` will be used.
@@ -250,17 +259,26 @@ Note: `GroupBy` sorts iterable before grouping. If you pass key function, eg `Gr
 
 ```
 
-## IterLines
+## IsUnique
 
 ```py
->>> import tempfile
->>> f = tempfile.NamedTemporaryFile('w+')
->>> f.write('hello\nworld\n')
-12
->>> f.seek(0)
-0
->>> f.name | IterLines() | Pipe(list)
-['hello\n', 'world\n']
+>>> [0, 1, 2, 3] | IsUnique()
+True
+>>> [0, 1, 1, 3] | IsUnique()
+False
+>>> '0123' | IsUnique(int)
+True
+>>> '0113' | IsUnique(int)
+False
+
+```
+
+## ReduceByKey
+
+```py
+>>> import operator
+>>> [('a', 1), ('b', 1), ('a', 1)] | ReduceByKey(operator.add)
+[('a', 2), ('b', 1)]
 
 ```
 
@@ -291,17 +309,20 @@ Note: `GroupBy` sorts iterable before grouping. If you pass key function, eg `Gr
 
 ```
 
-## IsUnique
+## MapApply
 
 ```py
->>> [0, 1, 2, 3] | IsUnique()
-True
->>> [0, 1, 1, 3] | IsUnique()
-False
->>> '0123' | IsUnique(int)
-True
->>> '0113' | IsUnique(int)
-False
+>>> import random
+>>> random.seed(42)
+>>> range(3, 5) | Map(range) | Map(list) | MapApply(random.shuffle) | Pipe(list)
+[[1, 0, 2], [3, 1, 2, 0]]
+
+>>> def setitem(key, value):
+...     def inner(x):
+...         x[key] = value
+...     return inner
+>>> [{'hello': 'world'}] | MapApply(setitem('foo', 'bar')) | Pipe(list)
+[{'hello': 'world', 'foo': 'bar'}]
 
 ```
 
@@ -326,28 +347,16 @@ False
 
 ```
 
-## MapApply
+## IterLines
 
 ```py
->>> import random
->>> random.seed(42)
->>> range(3, 5) | Map(range) | Map(list) | MapApply(random.shuffle) | Pipe(list)
-[[1, 0, 2], [3, 1, 2, 0]]
-
->>> def setitem(key, value):
-...     def inner(x):
-...         x[key] = value
-...     return inner
->>> [{'hello': 'world'}] | MapApply(setitem('foo', 'bar')) | Pipe(list)
-[{'hello': 'world', 'foo': 'bar'}]
-
-```
-
-## ReduceByKey
-
-```py
->>> import operator
->>> [('a', 1), ('b', 1), ('a', 1)] | ReduceByKey(operator.add)
-[('a', 2), ('b', 1)]
+>>> import tempfile
+>>> f = tempfile.NamedTemporaryFile('w+')
+>>> f.write('hello\nworld\n')
+12
+>>> f.seek(0)
+0
+>>> f.name | IterLines() | Pipe(list)
+['hello\n', 'world\n']
 
 ```

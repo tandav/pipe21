@@ -16,8 +16,8 @@ class Pipe         (B): __ror__ = lambda self, x: self.f(x)
 class Map          (B): __ror__ = lambda self, it: map(self.f, it)
 class Filter       (B): __ror__ = lambda self, it: filter(self.f, it)
 class Reduce       (B): __ror__ = lambda self, it: functools.reduce(self.f, it, *self.args)
-class MapValues    (B): __ror__ = lambda self, it: it | Map(lambda kv: (kv[0], self.f(kv[1])))
 class MapKeys      (B): __ror__ = lambda self, it: it | Map(lambda kv: (self.f(kv[0]), kv[1]))
+class MapValues    (B): __ror__ = lambda self, it: it | Map(lambda kv: (kv[0], self.f(kv[1])))
 class FilterFalse  (B): __ror__ = lambda self, it: it | Filter(lambda x: not self.f(x))
 class FilterKeys   (B): __ror__ = lambda self, it: it | Filter(lambda kv: kv[0] | Pipe(self.f or bool))
 class FilterValues (B): __ror__ = lambda self, it: it | Filter(lambda kv: kv[1] | Pipe(self.f or bool))
@@ -36,11 +36,11 @@ class Take         (B): __ror__ = lambda self, it: it | Slice(self.f) | Pipe(tup
 class Chunked      (B): __ror__ = lambda self, it: iter(functools.partial(lambda n, i: i | Take(n), self.f, iter(it)), ())
 class Sorted       (B): __ror__ = lambda self, it: sorted(it, **self.kw)
 class GroupBy      (B): __ror__ = lambda self, it: itertools.groupby(it | Sorted(key=self.f), key=self.f)
+class IsUnique     (B): __ror__ = lambda self, seq: len(seq) == len(set(seq if self.f is None else map(self.f, seq)))
+class ReduceByKey  (B): __ror__ = lambda self, it: it | Sorted(lambda kv: kv[0]) | GroupBy(lambda kv: kv[0]) | MapValues(lambda kv: kv | Values() | Reduce(self.f)) | Pipe(list)
 class PipeArgs     (B): __ror__ = lambda self, x: self.f(*x)
 class StarMap      (B): __ror__ = lambda self, x: x | Map(lambda y: y | PipeArgs(self.f))
-class IsUnique     (B): __ror__ = lambda self, seq: len(seq) == len(set(seq if self.f is None else map(self.f, seq)))
 class MapApply     (B): __ror__ = lambda self, it: it | Map(lambda x: x | Apply(self.f))
-class ReduceByKey  (B): __ror__ = lambda self, it: it | Sorted(lambda kv: kv[0]) | GroupBy(lambda kv: kv[0]) | MapValues(lambda kv: kv | Values() | Reduce(self.f)) | Pipe(list)
 
 
 class Unique(B):

@@ -103,6 +103,7 @@ ignore = [
     "Q", # quotes
     "ARG005", # Unused lambda argument
     "PTH123", # `open()` should be replaced by `Path.open()`
+    "N812", # lowercase imported as non lowercase
 ]
 
 [tool.ruff.per-file-ignores]
