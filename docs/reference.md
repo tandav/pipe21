@@ -8,7 +8,6 @@
 ## Pipe
 Put a value into a function as 1 argument
 
-Examples:
 ```py
 >>> range(5) | Pipe(list)
 [0, 1, 2, 3, 4]
