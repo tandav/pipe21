@@ -1,4 +1,6 @@
 import functools
+import itertools
+import math
 import operator
 import random
 
@@ -25,8 +27,15 @@ def test_pipe(it):
 
 
 def test_pipe_args_kwargs():
-    assert 'FF' | Pipe(int, 16) == 255
-    assert 2 | Pipe(pow, exp=8) == 256
+    assert 2 | Pipe(pow, 8) == 256
+    assert 'FF' | Pipe(int, base=16) == 255
+    assert b'\x02\x00' | Pipe(int.from_bytes, byteorder='big') == 512
+    assert 'ab' | Pipe(enumerate, start=0) | Pipe(list) == [(0, 'a'), (1, 'b')]
+    assert 5.01 | Pipe(math.isclose, 5, abs_tol=0.01) is True
+    random.seed(44)
+    assert [0, 1, 2] | Pipe(random.choices, [0.8, 0.15, 0.05], k=20) == [0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 1, 0, 0]
+    assert [0, 1, 2] | Pipe(itertools.zip_longest, 'ab', fillvalue=None) | Pipe(list) == [(0, 'a'), (1, 'b'), (2, None)]
+    assert [0, 1, 2] | Pipe(itertools.accumulate, operator.add, initial=100) | Pipe(list) == [100, 100, 101, 103]
 
 
 @given(st.lists(st.integers() | st.characters() | st.floats() | st.booleans() | st.binary()))
