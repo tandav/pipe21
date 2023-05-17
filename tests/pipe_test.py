@@ -329,3 +329,12 @@ def test_iter_lines(tmp_path):
     file = tmp_path / 'file.txt'
     file.write_text('hello\nworld\n')
     assert file | IterLines() | Pipe(list) == ['hello\n', 'world\n']
+
+
+def test_descriptors():
+    assert {'hello': 'world'} | GetItem('hello') == 'world'
+    assert {'hello': 'world'} | SetItem('foo', 'bar') == {'hello': 'world', 'foo': 'bar'}
+    assert {'hello': 'world'} | DelItem('hello') == {}
+    assert [{'hello': 'world'}] | MapGetItem('hello') | Pipe(list) == ['world']
+    assert [{'hello': 'world'}] | MapSetItem('foo', 'bar') | Pipe(list) == [{'hello': 'world', 'foo': 'bar'}]
+    assert [{'hello': 'world'}] | MapDelItem('hello') | Pipe(list) == [{}]

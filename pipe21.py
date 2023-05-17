@@ -65,3 +65,23 @@ class IterLines(B):
     def __ror__(self, fn):
         with open(fn) as f:
             yield from f
+
+
+class GetItem      (B): __ror__ = lambda self, x: x[self.f]
+
+
+class SetItem(B):
+    def __ror__(self, x):
+        x[self.f] = self.args[0]
+        return x
+
+
+class DelItem(B):
+    def __ror__(self, x):
+        del x[self.f]
+        return x
+
+
+class MapGetItem   (B): __ror__ = lambda self, it: it | Map(lambda kv: kv | GetItem(self.f))
+class MapSetItem   (B): __ror__ = lambda self, it: it | Map(lambda kv: kv | SetItem(self.f, self.args[0]))
+class MapDelItem   (B): __ror__ = lambda self, it: it | Map(lambda kv: kv | DelItem(self.f))
