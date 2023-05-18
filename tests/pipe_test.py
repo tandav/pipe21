@@ -3,6 +3,7 @@ import itertools
 import math
 import operator
 import random
+from types import SimpleNamespace
 
 import hypothesis.strategies as st
 import pytest
@@ -329,3 +330,18 @@ def test_iter_lines(tmp_path):
     file = tmp_path / 'file.txt'
     file.write_text('hello\nworld\n')
     assert file | IterLines() | Pipe(list) == ['hello\n', 'world\n']
+
+
+def test_descriptors():
+    assert {'a': 'b'} | GetItem('a') == 'b'
+    assert {'a': 'b'} | SetItem('foo', 'bar') == {'a': 'b', 'foo': 'bar'}
+    assert {'a': 'b'} | DelItem('a') == {}
+    assert [{'a': 'b'}] | MapGetItem('a') | Pipe(list) == ['b']
+    assert [{'a': 'b'}] | MapSetItem('foo', 'bar') | Pipe(list) == [{'a': 'b', 'foo': 'bar'}]
+    assert [{'a': 'b'}] | MapDelItem('a') | Pipe(list) == [{}]
+    assert SimpleNamespace(a='b') | GetAttr('a') == 'b'
+    assert SimpleNamespace(a='b') | SetAttr('foo', 'bar') == SimpleNamespace(a='b', foo='bar')
+    assert SimpleNamespace(a='b') | DelAttr('a') == SimpleNamespace()
+    assert [SimpleNamespace(a='b')] | MapGetAttr('a') | Pipe(list) == ['b']
+    assert [SimpleNamespace(a='b')] | MapSetAttr('foo', 'bar') | Pipe(list) == [SimpleNamespace(a='b', foo='bar')]
+    assert [SimpleNamespace(a='b')] | MapDelAttr('a') | Pipe(list) == [SimpleNamespace()]

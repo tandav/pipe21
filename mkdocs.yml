@@ -8,11 +8,7 @@ extra_css:
 theme:
   name: material
   favicon: images/favicon.ico
-  icon:
-    logo: material/pipe
-    repo: fontawesome/brands/github
-    edit: material/pencil
-    view: material/eye
+  logo: images/logo.png
   features:
     - navigation.instant
     - content.action.edit
@@ -22,8 +18,8 @@ theme:
     # Palette toggle for light mode
     - media: "(prefers-color-scheme: light)"
       scheme: default
-      primary: indigo
-      accent: indigo
+      primary: custom
+      accent: teal
       toggle:
         icon: material/brightness-7
         name: Switch to dark mode
@@ -31,8 +27,8 @@ theme:
     # Palette toggle for dark mode
     - media: "(prefers-color-scheme: dark)"
       scheme: slate
-      primary: yellow
-      accent: yellow
+      primary: custom
+      accent: custom
       toggle:
         icon: material/brightness-4
         name: Switch to system preference
