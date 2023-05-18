@@ -338,3 +338,10 @@ def test_descriptors():
     assert [{'hello': 'world'}] | MapGetItem('hello') | Pipe(list) == ['world']
     assert [{'hello': 'world'}] | MapSetItem('foo', 'bar') | Pipe(list) == [{'hello': 'world', 'foo': 'bar'}]
     assert [{'hello': 'world'}] | MapDelItem('hello') | Pipe(list) == [{}]
+
+    # assert {'hello': 'world'} | Item.get('hello') == 'world'
+    # assert {'hello': 'world'} | SetItem('foo', 'bar') == {'hello': 'world', 'foo': 'bar'}
+    # assert {'hello': 'world'} | DelItem('hello') == {}
+    # assert [{'hello': 'world'}] | MapGetItem('hello') | Pipe(list) == ['world']
+    # assert [{'hello': 'world'}] | MapSetItem('foo', 'bar') | Pipe(list) == [{'hello': 'world', 'foo': 'bar'}]
+    # assert [{'hello': 'world'}] | MapDelItem('hello') | Pipe(list) == [{}]

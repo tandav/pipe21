@@ -1,5 +1,6 @@
 import functools
 import itertools
+import operator
 import re
 
 __version__ = '1.10.0'
@@ -43,6 +44,14 @@ class StarMap      (B): __ror__ = lambda self, x: x | Map(lambda y: y | PipeArgs
 class MapApply     (B): __ror__ = lambda self, it: it | Map(lambda x: x | Apply(self.f))
 
 
+class GetItem      (B): __ror__ = lambda self, x: operator.getitem(x, self.f)
+class SetItem      (B): __ror__ = lambda self, x: x | Apply(lambda y: operator.setitem(y, self.f, self.args[0]))
+class DelItem      (B): __ror__ = lambda self, x: x | Apply(lambda y: operator.delitem(y, self.f))
+class MapGetItem   (B): __ror__ = lambda self, it: it | Map(lambda kv: kv | GetItem(self.f))
+class MapSetItem   (B): __ror__ = lambda self, it: it | Map(lambda kv: kv | SetItem(self.f, self.args[0]))
+class MapDelItem   (B): __ror__ = lambda self, it: it | Map(lambda kv: kv | DelItem(self.f))
+
+
 class Unique(B):
     def __ror__(self, it):
         key = self.f or (lambda x: x)
@@ -67,21 +76,30 @@ class IterLines(B):
             yield from f
 
 
-class GetItem      (B): __ror__ = lambda self, x: x[self.f]
+class Item(B):
+    def __init__(self, ror, f, *args, **kw):
+        super().__init__(f, *args, **kw)
+        self.ror = ror
 
-
-class SetItem(B):
     def __ror__(self, x):
-        x[self.f] = self.args[0]
-        return x
+        return self.ror(x)
 
+    @classmethod
+    def get(cls, f, *args, **kw):
+        def ror(self, x):
+            return x[self.f]
+        return cls(ror, f, *args, **kw)
 
-class DelItem(B):
-    def __ror__(self, x):
-        del x[self.f]
-        return x
+    @classmethod
+    def set(cls, f, *args, **kw):
+        def ror(self, x):
+            x[self.f] = self.args[0]
+            return x
+        return cls(ror, f, *args, **kw)
 
-
-class MapGetItem   (B): __ror__ = lambda self, it: it | Map(lambda kv: kv | GetItem(self.f))
-class MapSetItem   (B): __ror__ = lambda self, it: it | Map(lambda kv: kv | SetItem(self.f, self.args[0]))
-class MapDelItem   (B): __ror__ = lambda self, it: it | Map(lambda kv: kv | DelItem(self.f))
+    @classmethod
+    def delete(cls, f, *args, **kw):
+        def ror(self, x):
+            del x[self.f]
+            return x
+        return cls(ror, f, *args, **kw)
