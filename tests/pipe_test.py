@@ -3,6 +3,7 @@ import itertools
 import math
 import operator
 import random
+from types import SimpleNamespace
 
 import hypothesis.strategies as st
 import pytest
@@ -332,16 +333,15 @@ def test_iter_lines(tmp_path):
 
 
 def test_descriptors():
-    assert {'hello': 'world'} | GetItem('hello') == 'world'
-    assert {'hello': 'world'} | SetItem('foo', 'bar') == {'hello': 'world', 'foo': 'bar'}
-    assert {'hello': 'world'} | DelItem('hello') == {}
-    assert [{'hello': 'world'}] | MapGetItem('hello') | Pipe(list) == ['world']
-    assert [{'hello': 'world'}] | MapSetItem('foo', 'bar') | Pipe(list) == [{'hello': 'world', 'foo': 'bar'}]
-    assert [{'hello': 'world'}] | MapDelItem('hello') | Pipe(list) == [{}]
-
-    # assert {'hello': 'world'} | Item.get('hello') == 'world'
-    # assert {'hello': 'world'} | SetItem('foo', 'bar') == {'hello': 'world', 'foo': 'bar'}
-    # assert {'hello': 'world'} | DelItem('hello') == {}
-    # assert [{'hello': 'world'}] | MapGetItem('hello') | Pipe(list) == ['world']
-    # assert [{'hello': 'world'}] | MapSetItem('foo', 'bar') | Pipe(list) == [{'hello': 'world', 'foo': 'bar'}]
-    # assert [{'hello': 'world'}] | MapDelItem('hello') | Pipe(list) == [{}]
+    assert {'a': 'b'} | GetItem('a') == 'b'
+    assert {'a': 'b'} | SetItem('foo', 'bar') == {'a': 'b', 'foo': 'bar'}
+    assert {'a': 'b'} | DelItem('a') == {}
+    assert [{'a': 'b'}] | MapGetItem('a') | Pipe(list) == ['b']
+    assert [{'a': 'b'}] | MapSetItem('foo', 'bar') | Pipe(list) == [{'a': 'b', 'foo': 'bar'}]
+    assert [{'a': 'b'}] | MapDelItem('a') | Pipe(list) == [{}]
+    assert SimpleNamespace(a='b') | GetAttr('a') == 'b'
+    assert SimpleNamespace(a='b') | SetAttr('foo', 'bar') == SimpleNamespace(a='b', foo='bar')
+    assert SimpleNamespace(a='b') | DelAttr('a') == SimpleNamespace()
+    assert [SimpleNamespace(a='b')] | MapGetAttr('a') | Pipe(list) == ['b']
+    assert [SimpleNamespace(a='b')] | MapSetAttr('foo', 'bar') | Pipe(list) == [SimpleNamespace(a='b', foo='bar')]
+    assert [SimpleNamespace(a='b')] | MapDelAttr('a') | Pipe(list) == [SimpleNamespace()]

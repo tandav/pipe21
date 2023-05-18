@@ -358,6 +358,104 @@ False
 
 ```
 
+## GetItem
+
+```py
+>>> {'a': 'b'} | GetItem('a')
+'b'
+
+```
+
+## SetItem
+
+```py
+>>> {'a': 'b'} | SetItem('foo', 'bar')
+{'a': 'b', 'foo': 'bar'}
+
+```
+
+## DelItem
+
+```py
+>>> {'a': 'b'} | DelItem('a')
+{}
+
+```
+
+## GetAttr
+
+```py
+>>> from types import SimpleNamespace
+>>> SimpleNamespace(a='b') | GetAttr('a')
+'b'
+
+```
+
+## SetAttr
+
+```py
+>>> SimpleNamespace(a='b') | SetAttr('foo', 'bar')
+namespace(a='b', foo='bar')
+
+```
+
+## DelAttr
+
+```py
+>>> SimpleNamespace(a='b') | DelAttr('a')
+namespace()
+
+```
+
+## MapGetItem
+
+```py
+>>> [{'a': 'b'}] | MapGetItem('a') | Pipe(list)
+['b']
+
+```
+
+## MapSetItem
+
+```py
+>>> [{'a': 'b'}] | MapSetItem('foo', 'bar') | Pipe(list)
+[{'a': 'b', 'foo': 'bar'}]
+
+```
+
+## MapDelItem
+
+```py
+>>> [{'a': 'b'}] | MapDelItem('a') | Pipe(list)
+[{}]
+
+```
+
+## MapGetAttr
+
+```py
+>>> [SimpleNamespace(a='b')] | MapGetAttr('a') | Pipe(list)
+['b']
+
+```
+
+## MapSetAttr
+
+```py
+>>> [SimpleNamespace(a='b')] | MapSetAttr('foo', 'bar') | Pipe(list)
+[namespace(a='b', foo='bar')]
+
+```
+
+## MapDelAttr
+
+```py
+>>> [SimpleNamespace(a='b')] | MapDelAttr('a') | Pipe(list)
+[namespace()]
+
+```
+
+
 ## Unique
 
 ```py

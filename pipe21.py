@@ -47,9 +47,15 @@ class MapApply     (B): __ror__ = lambda self, it: it | Map(lambda x: x | Apply(
 class GetItem      (B): __ror__ = lambda self, x: operator.getitem(x, self.f)
 class SetItem      (B): __ror__ = lambda self, x: x | Apply(lambda y: operator.setitem(y, self.f, self.args[0]))
 class DelItem      (B): __ror__ = lambda self, x: x | Apply(lambda y: operator.delitem(y, self.f))
+class GetAttr      (B): __ror__ = lambda self, x: getattr(x, self.f)
+class SetAttr      (B): __ror__ = lambda self, x: x | Apply(lambda y: setattr(y, self.f, self.args[0]))
+class DelAttr      (B): __ror__ = lambda self, x: x | Apply(lambda y: delattr(y, self.f))
 class MapGetItem   (B): __ror__ = lambda self, it: it | Map(lambda kv: kv | GetItem(self.f))
 class MapSetItem   (B): __ror__ = lambda self, it: it | Map(lambda kv: kv | SetItem(self.f, self.args[0]))
 class MapDelItem   (B): __ror__ = lambda self, it: it | Map(lambda kv: kv | DelItem(self.f))
+class MapGetAttr   (B): __ror__ = lambda self, it: it | Map(lambda kv: kv | GetAttr(self.f))
+class MapSetAttr   (B): __ror__ = lambda self, it: it | Map(lambda kv: kv | SetAttr(self.f, self.args[0]))
+class MapDelAttr   (B): __ror__ = lambda self, it: it | Map(lambda kv: kv | DelAttr(self.f))
 
 
 class Unique(B):
@@ -74,32 +80,3 @@ class IterLines(B):
     def __ror__(self, fn):
         with open(fn) as f:
             yield from f
-
-
-class Item(B):
-    def __init__(self, ror, f, *args, **kw):
-        super().__init__(f, *args, **kw)
-        self.ror = ror
-
-    def __ror__(self, x):
-        return self.ror(x)
-
-    @classmethod
-    def get(cls, f, *args, **kw):
-        def ror(self, x):
-            return x[self.f]
-        return cls(ror, f, *args, **kw)
-
-    @classmethod
-    def set(cls, f, *args, **kw):
-        def ror(self, x):
-            x[self.f] = self.args[0]
-            return x
-        return cls(ror, f, *args, **kw)
-
-    @classmethod
-    def delete(cls, f, *args, **kw):
-        def ror(self, x):
-            del x[self.f]
-            return x
-        return cls(ror, f, *args, **kw)
