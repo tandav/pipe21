@@ -329,7 +329,8 @@ def test_apply():
 def test_iter_lines(tmp_path):
     file = tmp_path / 'file.txt'
     file.write_text('hello\nworld\n')
-    assert file | IterLines() | Pipe(list) == ['hello\n', 'world\n']
+    assert file | IterLines() | Pipe(list) == ['hello', 'world']
+    assert file | IterLines(strip=False) | Pipe(list) == ['hello\n', 'world\n']
 
 
 def test_descriptors():

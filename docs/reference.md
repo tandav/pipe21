@@ -217,6 +217,23 @@ Same as `FilterKeys` but for `v` in `(k, v)` pairs
 
 ```
 
+## IterLines
+
+```py
+>>> import tempfile
+>>> f = tempfile.NamedTemporaryFile('w+')
+>>> f.write('hello\nworld\n')
+12
+>>> f.seek(0)
+0
+>>> f.name | IterLines() | Pipe(list)
+['hello', 'world']
+
+>>> f.name | IterLines(strip=False) | Pipe(list)
+['hello\n', 'world\n']
+
+```
+
 ## Count
 
 useful for objects that don't have `__len__` method:
@@ -474,19 +491,5 @@ namespace()
 >>> random.seed(42)
 >>> range(5) | Pipe(list) | Apply(random.shuffle)
 [3, 1, 2, 4, 0]
-
-```
-
-## IterLines
-
-```py
->>> import tempfile
->>> f = tempfile.NamedTemporaryFile('w+')
->>> f.write('hello\nworld\n')
-12
->>> f.seek(0)
-0
->>> f.name | IterLines() | Pipe(list)
-['hello\n', 'world\n']
 
 ```

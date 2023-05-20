@@ -31,6 +31,7 @@ class Keys         (B): __ror__ = lambda self, it: it | Map(lambda kv: kv[0])
 class Values       (B): __ror__ = lambda self, it: it | Map(lambda kv: kv[1])
 class Grep         (B): __ror__ = lambda self, it: it | Filter(lambda x: re.search(self.f, x))
 class GrepV        (B): __ror__ = lambda self, it: it | FilterFalse(lambda x: re.search(self.f, x))
+class IterLines    (B): __ror__ = lambda self, p: p | Pipe(open) | Pipe(lambda t: map(str.strip, t) if self.kw.get('strip', True) else t)
 class Count        (B): __ror__ = lambda self, it: sum(1 for _ in it)
 class Slice        (B): __ror__ = lambda self, it: itertools.islice(it, self.f, *self.args)
 class Take         (B): __ror__ = lambda self, it: it | Slice(self.f) | Pipe(tuple)
@@ -74,9 +75,3 @@ class Apply(B):
     def __ror__(self, x):
         self.f(x)
         return x
-
-
-class IterLines(B):
-    def __ror__(self, fn):
-        with open(fn) as f:
-            yield from f
