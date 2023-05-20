@@ -1,7 +1,7 @@
 [![PyPI version](https://img.shields.io/pypi/v/pipe21.svg?logo=pypi&logoColor=FFE873)](https://pypi.org/project/pipe21/)
 [![Coverage Status](https://coveralls.io/repos/github/tandav/pipe21/badge.svg?branch=coveralls-bage)](https://coveralls.io/github/tandav/pipe21?branch=coveralls-bage)
 
-<img src="https://github.com/tandav/pipe21/assets/5549677/9eb13b00-b0fb-4676-baed-be77f0ad6f85" height="100">
+<img src="https://github.com/tandav/pipe21/assets/5549677/40544d91-475b-4c80-be55-c516810966c3" height="100">
 
 # pipe21 - simple functional pipes [[docs]](https://tandav.github.io/pipe21)
 
