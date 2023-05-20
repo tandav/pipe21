@@ -185,6 +185,13 @@ def test_grep_v(it, grep, expected):
     assert it | GrepV(grep) | Pipe(list) == expected
 
 
+def test_iter_lines(tmp_path):
+    file = tmp_path / 'file.txt'
+    file.write_text('hello\nworld\n')
+    assert file | IterLines() | Pipe(list) == ['hello', 'world']
+    assert file | IterLines(strip=False) | Pipe(list) == ['hello\n', 'world\n']
+
+
 @pytest.mark.parametrize(
     ('it', 'expected'), [
         (range(3), 3),
@@ -324,13 +331,6 @@ def test_unique(seq, key, expected):
 def test_apply():
     random.seed(42)
     assert range(5) | Pipe(list) | Apply(random.shuffle) == [3, 1, 2, 4, 0]
-
-
-def test_iter_lines(tmp_path):
-    file = tmp_path / 'file.txt'
-    file.write_text('hello\nworld\n')
-    assert file | IterLines() | Pipe(list) == ['hello', 'world']
-    assert file | IterLines(strip=False) | Pipe(list) == ['hello\n', 'world\n']
 
 
 def test_descriptors():
