@@ -3,7 +3,7 @@ import itertools
 import operator
 import re
 
-__version__ = '1.13.0'
+__version__ = '1.13.1'
 
 
 class B:
