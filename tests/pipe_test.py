@@ -315,19 +315,6 @@ def test_reduce_by_key(it, f, expected):
     assert it | ReduceByKey(f) == expected
 
 
-@pytest.mark.parametrize(
-    ('seq', 'key', 'expected'), [
-        ([0, 1, 1, 2], None, [0, 1, 2]),
-        ('0112', int, ['0', '1', '2']),
-        (range(10), lambda x: x % 3, [0, 1, 2]),
-        (['a', 'cd', 'cd', 'e', 'fgh'], None, ['a', 'cd', 'e', 'fgh']),
-        (['a', 'cd', 'cd', 'e', 'fgh'], len, ['a', 'cd', 'fgh']),
-    ],
-)
-def test_unique(seq, key, expected):
-    assert seq | Unique(key) | Pipe(list) == expected
-
-
 def test_apply():
     random.seed(42)
     assert range(5) | Pipe(list) | Apply(random.shuffle) == [3, 1, 2, 4, 0]
@@ -346,3 +333,40 @@ def test_descriptors():
     assert [SimpleNamespace(a='b')] | MapGetAttr('a') | Pipe(list) == ['b']
     assert [SimpleNamespace(a='b')] | MapSetAttr('foo', 'bar') | Pipe(list) == [SimpleNamespace(a='b', foo='bar')]
     assert [SimpleNamespace(a='b')] | MapDelAttr('a') | Pipe(list) == [SimpleNamespace()]
+
+
+@pytest.mark.parametrize(
+    ('seq', 'key', 'expected'), [
+        ([0, 1, 1, 2], None, [0, 1, 2]),
+        ('0112', int, ['0', '1', '2']),
+        (range(10), lambda x: x % 3, [0, 1, 2]),
+        (['a', 'cd', 'cd', 'e', 'fgh'], None, ['a', 'cd', 'e', 'fgh']),
+        (['a', 'cd', 'cd', 'e', 'fgh'], len, ['a', 'cd', 'fgh']),
+    ],
+)
+def test_unique(seq, key, expected):
+    assert seq | Unique(key) | Pipe(list) == expected
+
+
+def test_exec():
+    v = 42
+
+    random.seed(42)
+    x = [0, 1, 2]
+    assert v | Exec(lambda: random.shuffle(x)) == v
+    assert x == [1, 0, 2]
+
+    random.seed(42)
+    x = [0, 1, 2]
+    assert v | Exec(random.shuffle, x) == v
+    assert x == [1, 0, 2]
+
+    u = []
+    assert v | Exec(lambda: u.append(1)) == v
+    assert u == [1]
+
+    assert v | Exec(u.append, 2) == v
+    assert u == [1, 2]
+
+    x = [2, 0, 1]
+    assert x | Exec(x.sort, reverse=True) == [2, 1, 0]

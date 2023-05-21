@@ -40,6 +40,7 @@ class Sorted       (B): __ror__ = lambda self, it: sorted(it, **self.kw)
 class GroupBy      (B): __ror__ = lambda self, it: it | Sorted(key=self.f) | Pipe(itertools.groupby, key=self.f)
 class IsUnique     (B): __ror__ = lambda self, seq: len(seq) == len(set(seq if self.f is None else map(self.f, seq)))
 class ReduceByKey  (B): __ror__ = lambda self, it: it | GroupBy(lambda kv: kv[0]) | MapValues(lambda kv: kv | Values() | Reduce(self.f)) | Pipe(list)
+class Apply        (B): __ror__ = lambda self, x: x | Exec(lambda: self.f(x))
 class PipeArgs     (B): __ror__ = lambda self, x: self.f(*x)
 class StarMap      (B): __ror__ = lambda self, x: x | Map(lambda y: y | PipeArgs(self.f))
 class MapApply     (B): __ror__ = lambda self, it: it | Map(lambda x: x | Apply(self.f))
@@ -71,7 +72,7 @@ class Unique(B):
             yield item
 
 
-class Apply(B):
+class Exec(B):
     def __ror__(self, x):
-        self.f(x)
+        self.f(*self.args, **self.kw)
         return x

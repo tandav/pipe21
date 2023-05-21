@@ -331,6 +331,16 @@ False
 
 ```
 
+## Apply
+
+```py
+>>> import random
+>>> random.seed(42)
+>>> range(5) | Pipe(list) | Apply(random.shuffle)
+[3, 1, 2, 4, 0]
+
+```
+
 ## PipeArgs
 
 ```py
@@ -484,12 +494,35 @@ namespace()
 
 ```
 
-## Apply
+## Exec
 
 ```py
->>> import random
+>>> v = 42
 >>> random.seed(42)
->>> range(5) | Pipe(list) | Apply(random.shuffle)
-[3, 1, 2, 4, 0]
+>>> x = [0, 1, 2]
+
+>>> v | Exec(lambda: random.shuffle(x))
+42
+>>> x
+[1, 0, 2]
+
+>>> random.seed(42)
+>>> x = [0, 1, 2]
+>>> v | Exec(random.shuffle, x)
+42
+>>> x
+[1, 0, 2]
+>>> u = []
+>>> v | Exec(lambda: u.append(1))
+42
+>>> u
+[1]
+>>> v | Exec(u.append, 2)
+42
+>>> u
+[1, 2]
+>>> x = [2, 0, 1]
+>>> x | Exec(x.sort, reverse=True)
+[2, 1, 0]
 
 ```
