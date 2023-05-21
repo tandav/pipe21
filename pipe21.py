@@ -47,11 +47,11 @@ class MapApply     (B): __ror__ = lambda self, it: it | Map(lambda x: x | Apply(
 
 
 class GetItem      (B): __ror__ = lambda self, x: operator.getitem(x, self.f)
-class SetItem      (B): __ror__ = lambda self, x: x | Apply(lambda y: operator.setitem(y, self.f, self.args[0]))
-class DelItem      (B): __ror__ = lambda self, x: x | Apply(lambda y: operator.delitem(y, self.f))
+class SetItem      (B): __ror__ = lambda self, x: x | Exec(operator.setitem, x, self.f, self.args[0])
+class DelItem      (B): __ror__ = lambda self, x: x | Exec(operator.delitem, x, self.f)
 class GetAttr      (B): __ror__ = lambda self, x: getattr(x, self.f)
-class SetAttr      (B): __ror__ = lambda self, x: x | Apply(lambda y: setattr(y, self.f, self.args[0]))
-class DelAttr      (B): __ror__ = lambda self, x: x | Apply(lambda y: delattr(y, self.f))
+class SetAttr      (B): __ror__ = lambda self, x: x | Exec(setattr, x, self.f, self.args[0])
+class DelAttr      (B): __ror__ = lambda self, x: x | Exec(delattr, x, self.f)
 class MapGetItem   (B): __ror__ = lambda self, it: it | Map(lambda kv: kv | GetItem(self.f))
 class MapSetItem   (B): __ror__ = lambda self, it: it | Map(lambda kv: kv | SetItem(self.f, self.args[0]))
 class MapDelItem   (B): __ror__ = lambda self, it: it | Map(lambda kv: kv | DelItem(self.f))
