@@ -366,6 +366,21 @@ def test_descriptors():
     assert [SimpleNamespace(a='b')] | MapDelAttr('a') | Pipe(list) == [SimpleNamespace()]
 
 
+class K:
+    def hello(self):
+        return 'hello'
+
+    def increment(self, i, add=1):
+        return i + add
+
+
+def test_methodcaller():
+    k = K()
+    assert k | MethodCaller('hello') == 'hello'
+    assert k | MethodCaller('increment', 1) == 2
+    assert k | MethodCaller('increment', 1, add=2) == 3
+
+
 @pytest.mark.parametrize(
     ('seq', 'key', 'expected'), [
         ([0, 1, 1, 2], None, [0, 1, 2]),

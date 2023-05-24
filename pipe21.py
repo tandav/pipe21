@@ -60,6 +60,7 @@ class MapDelItem   (B): __ror__ = lambda self, it: it | Map(lambda kv: kv | DelI
 class MapGetAttr   (B): __ror__ = lambda self, it: it | Map(lambda kv: kv | GetAttr(self.f))
 class MapSetAttr   (B): __ror__ = lambda self, it: it | Map(lambda kv: kv | SetAttr(self.f, self.args[0]))
 class MapDelAttr   (B): __ror__ = lambda self, it: it | Map(lambda kv: kv | DelAttr(self.f))
+class MethodCaller (B): __ror__ = lambda self, x: operator.methodcaller(self.f, *self.args, **self.kw)(x)
 
 
 class Unique(B):

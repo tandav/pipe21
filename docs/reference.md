@@ -514,6 +514,23 @@ namespace()
 
 ```
 
+## MethodCaller
+
+```py
+>>> class K:
+...     def hello(self):
+...         return 'hello'
+...     def increment(self, i, add=1):
+...         return i + add
+>>> k = K()
+>>> k | MethodCaller('hello')
+'hello'
+>>> k | MethodCaller('increment', 1)
+2
+>>> k | MethodCaller('increment', 1, add=2)
+3
+
+```
 
 ## Unique
 
