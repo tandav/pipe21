@@ -12,3 +12,7 @@ code {
 .md-typeset h1, .md-typeset h2, .md-typeset h3, .md-typeset h4, .md-typeset h5, .md-typeset h6 {
     font-weight: 500;
 }
+
+.md-nav__source {
+    background-color: var(--md-primary-fg-color);
+}
