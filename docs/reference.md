@@ -385,6 +385,38 @@ False
 
 ```
 
+## Switch
+
+```py
+>>> cases = [
+...     (lambda i: i % 3 == i % 5 == 0, lambda x: 'FizzBuzz'),
+...     (lambda i: i % 3 == 0, lambda x: 'Fizz'),
+...     (lambda i: i % 5 == 0, lambda x: 'Buzz'),
+...     (lambda i: i > 100, lambda x: f'{x} is large'),
+... ]
+>>> 1 | Switch(cases)
+1
+>>> 3 | Switch(cases)
+'Fizz'
+>>> 5 | Switch(cases)
+'Buzz'
+>>> 15 | Switch(cases)
+'FizzBuzz'
+>>> 101 | Switch(cases)
+'101 is large'
+
+```
+
+## MapSwitch
+
+```py
+>>> range(1, 20) | MapSwitch(cases) | Pipe(list)
+[1, 2, 'Fizz', 4, 'Buzz', 'Fizz', 7, 8, 'Fizz', 'Buzz', 11, 'Fizz', 13, 14, 'FizzBuzz', 16, 17, 'Fizz', 19]
+>>> range(5) | MapSwitch([(lambda x: x % 2 == 0, lambda x: x * 100)]) | Pipe(list)
+[0, 1, 200, 3, 400]
+
+```
+
 ## GetItem
 
 ```py

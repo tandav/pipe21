@@ -108,7 +108,11 @@ ignore = [
 
 [tool.ruff.per-file-ignores]
 "examples/*" = ["INP001"]
-"tests/*" = ["S101", "PLR2004"]
+"tests/*" = [
+    "S101",
+    "PLR2004",
+    "PT001",
+]
 
 [tool.ruff.isort]
 force-single-line = true
@@ -137,7 +141,7 @@ disable = [
 ]
 
 [tool.pylint-per-file-ignores]
-"/tests/" = "import-error"
+"/tests/" = "import-error,redefined-outer-name"
 
 # ==============================================================================
 

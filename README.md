@@ -78,14 +78,13 @@ import pipe21 as P
 #### FizzBuzz
 
 ```py
-import itertools
-import pipe21 as P
-
 (
     range(1, 100)
-    | P.Map(lambda i: (i, itertools.compress(('Fizz', 'Buzz'), (i % 3 == 0, i % 5 == 0))))
-    | P.MapValues(''.join)
-    | P.Map(lambda kv: kv[1] or kv[0])
+    | P.MapSwitch([
+        (lambda i: i % 3 == i % 5 == 0, lambda x: 'FizzBuzz'),
+        (lambda i: i % 3 == 0, lambda x: 'Fizz'),
+        (lambda i: i % 5 == 0, lambda x: 'Buzz'),
+    ])
     | P.Pipe(list)
 )
 
