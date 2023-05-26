@@ -50,34 +50,35 @@ def test_filter(it):
 
 
 @pytest.mark.parametrize(
-    ('it', 'initializer'), [
-        ([], 0),
-        ([], None),
-        ([1, 2, 3], 0),
-        ([1, 2, 3], 1),
-        ([1, 2, 3], None),
-        (range(0), 0),
-        (range(10), 0),
-        (range(10), 1),
-        (range(10), None),
-        (list('abc'), ''),
-        (list('abc'), 'd'),
-        (list('abc'), None),
-        (list(''), ''),
-        (list(''), 'd'),
-        (list(''), None),
+    ('it', 'f', 'initializer'), [
+        ([], operator.add, 0),
+        ([], operator.add, None),
+        ([1, 2, 3], operator.add, 0),
+        ([1, 2, 3], operator.add, 1),
+        ([1, 2, 3], operator.add, None),
+        (range(0), operator.add, 0),
+        (range(10), operator.add, 0),
+        (range(10), operator.add, 1),
+        (range(10), operator.add, None),
+        (list('abc'), operator.add, ''),
+        (list('abc'), operator.add, 'd'),
+        (list('abc'), operator.add, None),
+        (list(''), operator.add, ''),
+        (list(''), operator.add, 'd'),
+        (list(''), operator.add, None),
+        ([{1, 2}, {3, 4, 5}, {4, 5}], operator.or_, {1, 2, 3, 4, 5}),
     ],
 )
-def test_reduce(it, initializer):
+def test_reduce(it, f, initializer):
     if len(it) == 0 and initializer is None:
         with pytest.raises(TypeError):
-            it | Reduce(operator.add)  # pylint: disable=W0106
+            it | Reduce(f)  # pylint: disable=W0106
         return
 
     if initializer is None:
-        assert it | Reduce(operator.add) == functools.reduce(operator.add, it)
+        assert it | Reduce(f) == functools.reduce(f, it)
         return
-    assert it | Reduce(operator.add, initializer) == functools.reduce(operator.add, it, initializer)
+    assert it | Reduce(f, initializer) == functools.reduce(f, it, initializer)
 
 
 def test_map_keys_map_values():

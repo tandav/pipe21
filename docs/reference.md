@@ -69,6 +69,9 @@ True
 >>> range(5) | Reduce(operator.add, 5)  # with initial value
 15
 
+>>> [{1, 2}, {2, 3, 4}, {4, 5}] | Reduce(operator.or_)
+{1, 2, 3, 4, 5}
+
 ```
 
 ## MapKeys
