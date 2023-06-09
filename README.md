@@ -107,7 +107,7 @@ import pipe21 as P
 
 (
     pathlib.Path.home() / 'docs/knowledge/music'               # take a directory
-    | P.Pipe(lambda x: x.rglob('*.md'))                        # find all markdown files
+    | P.MethodCaller('rglob', '*.md')                        # find all markdown files
     | P.FlatMap(lambda p: p | P.IterLines())                   # read all lines from all files and flatten into a single iterable
     | P.FlatMap(lambda l: re.findall(r'\[(.+)\]\((.+)\)', l))  # keep only lines with a markdown link
     | P.Map(operator.itemgetter(1))                            # extract a link
