@@ -201,22 +201,30 @@ Same as `FilterKeys` but for `v` in `(k, v)` pairs
 ## Grep
 
 ```py
->>> ['hello 42 bro', 'world', 'awesome 42'] | Grep('42') | Pipe(list)
-['hello 42 bro', 'awesome 42']
+>>> ['hello foo', 'world', 'awesome FOo'] | Grep('foo') | Pipe(list)
+['hello foo']
 
 # regex is supported (passed to re.search)
 >>> ['foo1', 'foo2', '3foo', 'bar1'] | Grep('^foo.*') | Pipe(list)
 ['foo1', 'foo2']
+
+# case-insensitive
+>>> ['hello foo', 'world', 'awesome FOo'] | Grep('foo', i=True) | Pipe(list)
+['hello foo', 'awesome foo']
 
 ```
 
 ## GrepV
 
 ```py
->>> ['hello 42 bro', 'world', 'awesome 42'] | GrepV('42') | Pipe(list)
-['world']
+>>> ['hello foo', 'world', 'awesome FOo'] | GrepV('foo') | Pipe(list)
+['world', 'awesome FOo']
 >>> ['foo1', 'foo2', '3foo', 'bar1'] | GrepV('^foo.*') | Pipe(list)
 ['3foo', 'bar1']
+
+# case-insensitive
+>>> ['hello foo', 'world', 'awesome FOo'] | GrepV('foo', i=True) | Pipe(list)
+['world']
 
 ```
 
