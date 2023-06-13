@@ -211,6 +211,8 @@ Same as `FilterKeys` but for `v` in `(k, v)` pairs
 # case-insensitive
 >>> ['hello foo', 'world', 'awesome FOo'] | Grep('foo', i=True) | Pipe(list)
 ['hello foo', 'awesome foo']
+>>> ['hello foo', 'world', 'awesome FOo'] | Grep('Foo', i=True) | Pipe(list)
+['hello foo', 'awesome foo']
 
 ```
 
@@ -224,6 +226,8 @@ Same as `FilterKeys` but for `v` in `(k, v)` pairs
 
 # case-insensitive
 >>> ['hello foo', 'world', 'awesome FOo'] | GrepV('foo', i=True) | Pipe(list)
+['world']
+>>> ['hello foo', 'world', 'awesome FOo'] | GrepV('Foo', i=True) | Pipe(list)
 ['world']
 
 ```

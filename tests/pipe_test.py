@@ -190,8 +190,10 @@ def test_grep_v(it, grep, expected):
     ('it', 'op', 'grep', 'i', 'expected'), [
         (['hello foo', 'world', 'awesome FOo'], Grep, 'foo', False, ['hello foo']),
         (['hello foo', 'world', 'awesome FOo'], Grep, 'foo', True, ['hello foo', 'awesome foo']),
+        (['hello foo', 'world', 'awesome FOo'], Grep, 'Foo', True, ['hello foo', 'awesome foo']),
         (['hello foo', 'world', 'awesome FOo'], GrepV, 'foo', False, ['world', 'awesome FOo']),
         (['hello foo', 'world', 'awesome FOo'], GrepV, 'foo', True, ['world']),
+        (['hello foo', 'world', 'awesome FOo'], GrepV, 'Foo', True, ['world']),
     ],
 )
 def test_grep_i(it, op, grep, i, expected):
