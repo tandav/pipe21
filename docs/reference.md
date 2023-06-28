@@ -547,6 +547,14 @@ namespace()
 
 ```
 
+## MapMethodCaller
+
+```py
+>>> [k] | MapMethodCaller('hello') | Pipe(list)
+['hello']
+
+```
+
 ## Unique
 
 ```py

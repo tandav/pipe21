@@ -394,6 +394,7 @@ def test_methodcaller():
     assert k | MethodCaller('hello') == 'hello'
     assert k | MethodCaller('increment', 1) == 2
     assert k | MethodCaller('increment', 1, add=2) == 3
+    assert [k] | MapMethodCaller('hello') | Pipe(list) == ['hello']
 
 
 @pytest.mark.parametrize(

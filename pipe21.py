@@ -48,19 +48,20 @@ class Switch       (B): __ror__ = lambda self, x: self.f | FilterKeys(lambda p: 
 class MapSwitch    (B): __ror__ = lambda self, it: it | Map(lambda x: x | Switch(self.f))
 
 
-class GetItem      (B): __ror__ = lambda self, x: operator.getitem(x, self.f)
-class SetItem      (B): __ror__ = lambda self, x: x | Exec(operator.setitem, x, self.f, self.args[0])
-class DelItem      (B): __ror__ = lambda self, x: x | Exec(operator.delitem, x, self.f)
-class GetAttr      (B): __ror__ = lambda self, x: getattr(x, self.f)
-class SetAttr      (B): __ror__ = lambda self, x: x | Exec(setattr, x, self.f, self.args[0])
-class DelAttr      (B): __ror__ = lambda self, x: x | Exec(delattr, x, self.f)
-class MapGetItem   (B): __ror__ = lambda self, it: it | Map(lambda kv: kv | GetItem(self.f))
-class MapSetItem   (B): __ror__ = lambda self, it: it | Map(lambda kv: kv | SetItem(self.f, self.args[0]))
-class MapDelItem   (B): __ror__ = lambda self, it: it | Map(lambda kv: kv | DelItem(self.f))
-class MapGetAttr   (B): __ror__ = lambda self, it: it | Map(lambda kv: kv | GetAttr(self.f))
-class MapSetAttr   (B): __ror__ = lambda self, it: it | Map(lambda kv: kv | SetAttr(self.f, self.args[0]))
-class MapDelAttr   (B): __ror__ = lambda self, it: it | Map(lambda kv: kv | DelAttr(self.f))
-class MethodCaller (B): __ror__ = lambda self, x: operator.methodcaller(self.f, *self.args, **self.kw)(x)
+class GetItem        (B): __ror__ = lambda self, x: operator.getitem(x, self.f)
+class SetItem        (B): __ror__ = lambda self, x: x | Exec(operator.setitem, x, self.f, self.args[0])
+class DelItem        (B): __ror__ = lambda self, x: x | Exec(operator.delitem, x, self.f)
+class GetAttr        (B): __ror__ = lambda self, x: getattr(x, self.f)
+class SetAttr        (B): __ror__ = lambda self, x: x | Exec(setattr, x, self.f, self.args[0])
+class DelAttr        (B): __ror__ = lambda self, x: x | Exec(delattr, x, self.f)
+class MapGetItem     (B): __ror__ = lambda self, it: it | Map(lambda kv: kv | GetItem(self.f))
+class MapSetItem     (B): __ror__ = lambda self, it: it | Map(lambda kv: kv | SetItem(self.f, self.args[0]))
+class MapDelItem     (B): __ror__ = lambda self, it: it | Map(lambda kv: kv | DelItem(self.f))
+class MapGetAttr     (B): __ror__ = lambda self, it: it | Map(lambda kv: kv | GetAttr(self.f))
+class MapSetAttr     (B): __ror__ = lambda self, it: it | Map(lambda kv: kv | SetAttr(self.f, self.args[0]))
+class MapDelAttr     (B): __ror__ = lambda self, it: it | Map(lambda kv: kv | DelAttr(self.f))
+class MethodCaller   (B): __ror__ = lambda self, x: operator.methodcaller(self.f, *self.args, **self.kw)(x)
+class MapMethodCaller(B): __ror__ = lambda self, it: it | Map(lambda x: x | MethodCaller(self.f, *self.args, **self.kw))
 
 
 class Unique(B):
