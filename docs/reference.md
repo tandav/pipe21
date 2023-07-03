@@ -141,6 +141,9 @@ Same as `FilterKeys` but for `v` in `(k, v)` pairs
 >>> [range(0, 5), range(100, 105)] | FlatMap(yield_even) | Pipe(list)
 [0, 2, 4, 100, 102, 104]
 
+>>> [range(0, 5), range(100, 105)] | FlatMap(lambda it: (x for x in it if x % 2 == 0)) | Pipe(list)
+[0, 2, 4, 100, 102, 104]
+
 ```
 
 ## FlatMapValues

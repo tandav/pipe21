@@ -116,6 +116,7 @@ def test_filter_values(it, f, expected):
         ([0, 2, 3, 0, 4], range, [0, 1, 0, 1, 2, 0, 1, 2, 3]),
         ([2, 3, 4], lambda x: [(x, x), (x, x)], [(2, 2), (2, 2), (3, 3), (3, 3), (4, 4), (4, 4)]),
         ([range(0, 5), range(100, 105)], yield_even, [0, 2, 4, 100, 102, 104]),
+        ([range(0, 5), range(100, 105)], lambda it: (x for x in it if x % 2 == 0), [0, 2, 4, 100, 102, 104]),
     ],
 )
 def test_flat_map(it, f, expected):
