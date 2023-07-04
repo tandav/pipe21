@@ -367,6 +367,17 @@ def test_yield_if(it, f, key, expected):
 
 
 @pytest.mark.parametrize(
+    ('a', 'b', 'key', 'expected'), [
+        (range(5), range(2, 5), None, [(2, 2), (3, 3), (4, 4)]),
+        (range(1, 7), range(2, 6), lambda x, y: x % y == 0, [(2, 2), (3, 3), (4, 2), (4, 4), (5, 5), (6, 2), (6, 3)]),
+    ],
+)
+def test_join(a, b, key, expected):
+    j = Join(b) if key is None else Join(b, key=key)
+    assert a | j | Pipe(list) == expected
+
+
+@pytest.mark.parametrize(
     ('it', 'f', 'expected'), [
         ([('a', 1), ('b', 1), ('a', 1)], operator.add, [('a', 2), ('b', 1)]),
     ],

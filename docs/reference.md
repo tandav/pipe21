@@ -450,6 +450,16 @@ Takes a function to map values (optional, by default there's no mapping) and a k
 
 ```
 
+## Join
+```py
+>>> range(5) | Join(range(2, 5)) | Pipe(list)
+[(2, 2), (3, 3), (4, 4)]
+
+>>> range(1, 7) | Join(range(2, 6), key=lambda x, y: x % y == 0) | Pipe(list)
+[(2, 2), (3, 3), (4, 2), (4, 4), (5, 5), (6, 2), (6, 3)]
+
+```
+
 ## GetItem
 
 ```py
