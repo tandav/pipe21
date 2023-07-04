@@ -435,6 +435,21 @@ False
 
 ```
 
+## YieldIf
+Takes a function to map values (optional, by default there's no mapping) and a key. If key is false, value will not be yielded. Key is optional, default is `bool`
+
+```py
+>>> range(5) | YieldIf(lambda x: x * 100) | Pipe(list)
+[100, 200, 300, 400]
+>>> range(5) | YieldIf(lambda x: x * 100, key=lambda x: x % 2 == 0) | Pipe(list)
+[0, 200, 400]
+>>> range(5) | YieldIf(key=lambda x: x % 2 == 0) | Pipe(list)
+[0, 2, 4]
+>>> range(5) | YieldIf() | Pipe(list)
+[1, 2, 3, 4]
+
+```
+
 ## GetItem
 
 ```py

@@ -46,6 +46,7 @@ class StarMap      (B): __ror__ = lambda self, x: x | Map(lambda y: y | PipeArgs
 class MapApply     (B): __ror__ = lambda self, it: it | Map(lambda x: x | Apply(self.f))
 class Switch       (B): __ror__ = lambda self, x: self.f | FilterKeys(lambda p: p(x)) | Values() | Map(lambda f: f(x)) | Pipe(next, x)
 class MapSwitch    (B): __ror__ = lambda self, it: it | Map(lambda x: x | Switch(self.f))
+class YieldIf        (B): __ror__ = lambda self, it: ((self.f or (lambda z: z))(x) for x in it if self.kw.get('key', bool)(x))
 
 
 class GetItem        (B): __ror__ = lambda self, x: operator.getitem(x, self.f)

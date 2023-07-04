@@ -354,6 +354,19 @@ def test_map_switch(it, cases, expected):
 
 
 @pytest.mark.parametrize(
+    ('it', 'f', 'key', 'expected'), [
+        (range(5), lambda x: x * 100, None, [100, 200, 300, 400]),
+        (range(5), lambda x: x * 100, lambda x: x % 2 == 0, [0, 200, 400]), (range(5), None, None, [1, 2, 3, 4]),
+        (range(5), None, lambda x: x % 2 == 0, [0, 2, 4]),
+        (range(5), None, None, [1, 2, 3, 4]),
+    ],
+)
+def test_yield_if(it, f, key, expected):
+    y = YieldIf(f) if key is None else YieldIf(f, key=key)
+    assert it | y | Pipe(list) == expected
+
+
+@pytest.mark.parametrize(
     ('it', 'f', 'expected'), [
         ([('a', 1), ('b', 1), ('a', 1)], operator.add, [('a', 2), ('b', 1)]),
     ],
