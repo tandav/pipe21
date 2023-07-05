@@ -43,6 +43,7 @@ class ReduceByKey  (B): __ror__ = lambda self, it: it | GroupBy(lambda kv: kv[0]
 class Apply        (B): __ror__ = lambda self, x: x | Exec(self.f, x)
 class PipeArgs     (B): __ror__ = lambda self, x: self.f(*x)
 class StarMap      (B): __ror__ = lambda self, x: x | Map(lambda y: y | PipeArgs(self.f))
+class StarFlatMap  (B): __ror__ = lambda self, x: x | FlatMap(lambda y: y | PipeArgs(self.f))
 class MapApply     (B): __ror__ = lambda self, it: it | Map(lambda x: x | Apply(self.f))
 class Switch       (B): __ror__ = lambda self, x: self.f | FilterKeys(lambda p: p(x)) | Values() | Map(lambda f: f(x)) | Pipe(next, x)
 class MapSwitch    (B): __ror__ = lambda self, it: it | Map(lambda x: x | Switch(self.f))

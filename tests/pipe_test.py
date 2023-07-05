@@ -292,6 +292,15 @@ def test_star_map(it, f, expected):
 
 
 @pytest.mark.parametrize(
+    ('it', 'f', 'expected'), [
+        (range(2, 10) | Pipe(itertools.permutations, r=2), lambda a, b: [(a, b)] if a % b == 0 else [], [(4, 2), (6, 2), (6, 3), (8, 2), (8, 4), (9, 3)]),
+    ],
+)
+def test_star_flatmap(it, f, expected):
+    assert it | StarFlatMap(f) | Pipe(list) == expected
+
+
+@pytest.mark.parametrize(
     ('seq', 'key', 'expected'), [
         ([0, 1, 2, 3], None, True),
         ([0, 1, 1, 3], None, False),

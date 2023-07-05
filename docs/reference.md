@@ -386,6 +386,14 @@ False
 
 ```
 
+## StarFlatMap
+
+```py
+>>> range(2, 10) | Pipe(itertools.permutations, r=2) | StarFlatMap(lambda a, b: [(a, b)] if a % b == 0 else []) | Pipe(list)
+[(4, 2), (6, 2), (6, 3), (8, 2), (8, 4), (9, 3)]
+
+```
+
 ## MapApply
 
 ```py
