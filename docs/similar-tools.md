@@ -18,3 +18,7 @@
 - [machow/siuba: Python library for using dplyr like syntax with pandas and SQL](https://github.com/machow/siuba)
 - [pipeop · PyPI](https://pypi.org/project/pipeop/)
 - [Suor/funcy: A fancy and practical functional tools](https://github.com/Suor/funcy)
+- [igrishaev/f: Functional stuff for Python](https://github.com/igrishaev/f)
+- [Language Integrated Query (LINQ) in C# | Microsoft Learn](https://learn.microsoft.com/en-us/dotnet/csharp/linq/)
+- [chain-ops-python: Simple chaining of operations (a.k.a. pipe operator) in python](https://sr.ht/~tpapastylianou/chain-ops-python/)
+- [sammyrulez/typed-monads: Easy functional monads for your python code](https://github.com/sammyrulez/typed-monads)
