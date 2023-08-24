@@ -1,8 +1,10 @@
 # similar tools
 - [pytoolz/toolz: A functional standard library for Python.](https://github.com/pytoolz/toolz/)
+    - [Арсений Сапелкин — Функциональное программирование в Python: ежедневные рецепты - YouTube](https://www.youtube.com/watch?v=eFkp1e4ex5s)
 - [nekitdev/iters.py: Rich Iterators for Python.](https://github.com/nekitdev/iters.py)
 - [R adds native pipe and lambda syntax | Hacker News](https://news.ycombinator.com/item?id=25316608)
 - [mpypl - Google Search](https://www.google.com/search?q=mpypl&oq=mpypl&aqs=chrome..69i57j0l6j69i60.1343j0j7&sourceid=chrome&ie=UTF-8)
+    - [Дмитрий Сошников — mPyPl: функциональный способ организовать обработку данных в Python - YouTube](https://www.youtube.com/watch?v=UO2NBluBG_g)
 - [JulienPalard/Pipe: A Python library to use infix notation in Python](https://github.com/JulienPalard/Pipe)
 - [Pydash: A Kitchen Sink of Missing Python Utilities | by Khuyen Tran | Towards Data Science](https://towardsdatascience.com/pydash-a-bucket-of-missing-python-utilities-5d10365be4fc)
 - [Write Clean Python Code Using Pipes | by Khuyen Tran | Oct, 2021 | Towards Data Science](https://towardsdatascience.com/write-clean-python-code-using-pipes-1239a0f3abf5)
@@ -22,3 +24,6 @@
 - [Language Integrated Query (LINQ) in C# | Microsoft Learn](https://learn.microsoft.com/en-us/dotnet/csharp/linq/)
 - [chain-ops-python: Simple chaining of operations (a.k.a. pipe operator) in python](https://sr.ht/~tpapastylianou/chain-ops-python/)
 - [sammyrulez/typed-monads: Easy functional monads for your python code](https://github.com/sammyrulez/typed-monads)
+- [PRQL/prql: PRQL is a modern language for transforming data — a simple, powerful, pipelined SQL replacement](https://github.com/PRQL/prql)
+- [viralogic/py-enumerable: A Python module used for interacting with collections of objects using LINQ syntax](https://github.com/viralogic/py-enumerable)- [jmfernandes/pyLINQ: a simple and easy way to filter and sort lists.](https://github.com/jmfernandes/pyLINQ)
+- [evhub/coconut: Simple, elegant, Pythonic functional programming.](https://github.com/evhub/coconut)
