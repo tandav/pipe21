@@ -359,19 +359,19 @@ False
 
 ```
 
-## StarArgs
+## StarPipe
 
 ```py
->>> (1, 2) | StarArgs(operator.add)
+>>> (1, 2) | StarPipe(operator.add)
 3
 
->>> ('FF', 16) | StarArgs(int)
+>>> ('FF', 16) | StarPipe(int)
 255
 
->>> ([1, 2], 'A') | StarArgs(dict.fromkeys)
+>>> ([1, 2], 'A') | StarPipe(dict.fromkeys)
 {1: 'A', 2: 'A'}
 
->>> ({1, 2}, {3, 4, 5}) | StarArgs(set.union)
+>>> ({1, 2}, {3, 4, 5}) | StarPipe(set.union)
 {1, 2, 3, 4, 5}
 
 ```
