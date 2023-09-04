@@ -359,19 +359,19 @@ False
 
 ```
 
-## PipeArgs
+## StarArgs
 
 ```py
->>> (1, 2) | PipeArgs(operator.add)
+>>> (1, 2) | StarArgs(operator.add)
 3
 
->>> ('FF', 16) | PipeArgs(int)
+>>> ('FF', 16) | StarArgs(int)
 255
 
->>> ([1, 2], 'A') | PipeArgs(dict.fromkeys)
+>>> ([1, 2], 'A') | StarArgs(dict.fromkeys)
 {1: 'A', 2: 'A'}
 
->>> ({1, 2}, {3, 4, 5}) | PipeArgs(set.union)
+>>> ({1, 2}, {3, 4, 5}) | StarArgs(set.union)
 {1, 2, 3, 4, 5}
 
 ```

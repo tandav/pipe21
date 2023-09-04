@@ -277,8 +277,8 @@ def test_groupby(it, f, expected):
         (({1, 2}, {3, 4, 5}), set.union, {1, 2, 3, 4, 5}),
     ],
 )
-def test_pipe_args(it, f, expected):
-    assert it | PipeArgs(f) == expected
+def test_star_args(it, f, expected):
+    assert it | StarArgs(f) == expected
 
 
 @pytest.mark.parametrize(
