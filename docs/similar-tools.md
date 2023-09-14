@@ -27,3 +27,4 @@
 - [PRQL/prql: PRQL is a modern language for transforming data — a simple, powerful, pipelined SQL replacement](https://github.com/PRQL/prql)
 - [viralogic/py-enumerable: A Python module used for interacting with collections of objects using LINQ syntax](https://github.com/viralogic/py-enumerable)- [jmfernandes/pyLINQ: a simple and easy way to filter and sort lists.](https://github.com/jmfernandes/pyLINQ)
 - [evhub/coconut: Simple, elegant, Pythonic functional programming.](https://github.com/evhub/coconut)
+- [petl-developers/petl: Python Extract Transform and Load Tables of Data](https://github.com/petl-developers/petl)
