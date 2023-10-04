@@ -326,20 +326,6 @@ Note: `GroupBy` sorts iterable before grouping. If you pass key function, eg `Gr
 
 ```
 
-## IsUnique
-
-```py
->>> [0, 1, 2, 3] | IsUnique()
-True
->>> [0, 1, 1, 3] | IsUnique()
-False
->>> '0123' | IsUnique(int)
-True
->>> '0113' | IsUnique(int)
-False
-
-```
-
 ## ReduceByKey
 
 ```py

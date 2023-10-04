@@ -301,18 +301,6 @@ def test_star_flatmap(it, f, expected):
 
 
 @pytest.mark.parametrize(
-    ('seq', 'key', 'expected'), [
-        ([0, 1, 2, 3], None, True),
-        ([0, 1, 1, 3], None, False),
-        ('0123', int, True),
-        ('0113', int, False),
-    ],
-)
-def test_is_unique(seq, key, expected):
-    assert seq | IsUnique(key) == expected
-
-
-@pytest.mark.parametrize(
     ('it', 'kw'), [
         ([3, 5, 1, 0], {}),
         ([3, 5, 1, 0], {'reverse': True}),

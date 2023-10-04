@@ -38,7 +38,6 @@ class Take         (B): __ror__ = lambda self, it: it | Slice(self.f) | Pipe(tup
 class Chunked      (B): __ror__ = lambda self, it: iter(functools.partial(lambda n, i: i | Take(n), self.f, iter(it)), ())
 class Sorted       (B): __ror__ = lambda self, it: sorted(it, **self.kw)
 class GroupBy      (B): __ror__ = lambda self, it: it | Sorted(key=self.f) | Pipe(itertools.groupby, key=self.f)
-class IsUnique     (B): __ror__ = lambda self, seq: len(seq) == len(set(seq if self.f is None else map(self.f, seq)))
 class ReduceByKey  (B): __ror__ = lambda self, it: it | GroupBy(lambda kv: kv[0]) | MapValues(lambda kv: kv | Values() | Reduce(self.f)) | Pipe(list)
 class Apply        (B): __ror__ = lambda self, x: x | Exec(self.f, x)
 class StarPipe     (B): __ror__ = lambda self, x: self.f(*x)
