@@ -1,6 +1,7 @@
 # similar tools
 - [pytoolz/toolz: A functional standard library for Python.](https://github.com/pytoolz/toolz/)
     - [Арсений Сапелкин — Функциональное программирование в Python: ежедневные рецепты - YouTube](https://www.youtube.com/watch?v=eFkp1e4ex5s)
+- [more-itertools/more-itertools: More routines for operating on iterables, beyond itertools](https://github.com/more-itertools/more-itertools)
 - [nekitdev/iters.py: Rich Iterators for Python.](https://github.com/nekitdev/iters.py)
 - [R adds native pipe and lambda syntax | Hacker News](https://news.ycombinator.com/item?id=25316608)
 - [mpypl - Google Search](https://www.google.com/search?q=mpypl&oq=mpypl&aqs=chrome..69i57j0l6j69i60.1343j0j7&sourceid=chrome&ie=UTF-8)
@@ -28,3 +29,5 @@
 - [viralogic/py-enumerable: A Python module used for interacting with collections of objects using LINQ syntax](https://github.com/viralogic/py-enumerable)- [jmfernandes/pyLINQ: a simple and easy way to filter and sort lists.](https://github.com/jmfernandes/pyLINQ)
 - [evhub/coconut: Simple, elegant, Pythonic functional programming.](https://github.com/evhub/coconut)
 - [petl-developers/petl: Python Extract Transform and Load Tables of Data](https://github.com/petl-developers/petl)
+- [Show HN: Pypipe – A Python command-line tool for pipeline processing | Hacker News](https://news.ycombinator.com/item?id=37981683)
+- [Marcel the Shell | Hacker News](https://news.ycombinator.com/item?id=37991746)
