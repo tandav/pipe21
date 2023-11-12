@@ -586,6 +586,9 @@ namespace()
 >>> ['a', 'cd', 'cd', 'e', 'fgh'] | Unique(len) | Pipe(list)
 ['a', 'cd', 'fgh']
 
+>>> [{'a': 1}, {'a': 2}, {'a': 1}] | Unique(operator.itemgetter('a')) | Pipe(list)
+[{'a': 1}, {'a': 2}]
+
 ```
 
 ## Exec

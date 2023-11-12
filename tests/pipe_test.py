@@ -426,6 +426,7 @@ def test_methodcaller():
         (range(10), lambda x: x % 3, [0, 1, 2]),
         (['a', 'cd', 'cd', 'e', 'fgh'], None, ['a', 'cd', 'e', 'fgh']),
         (['a', 'cd', 'cd', 'e', 'fgh'], len, ['a', 'cd', 'fgh']),
+        ([{'a': 1}, {'a': 2}, {'a': 1}], operator.itemgetter('a'), [{'a': 1}, {'a': 2}]),
     ],
 )
 def test_unique(seq, key, expected):
