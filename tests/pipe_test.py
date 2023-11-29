@@ -184,21 +184,21 @@ def test_grep(it, grep, expected):
     ],
 )
 def test_grep_v(it, grep, expected):
-    assert it | GrepV(grep) | Pipe(list) == expected
+    assert it | Grep(grep, v=True) | Pipe(list) == expected
 
 
 @pytest.mark.parametrize(
-    ('it', 'op', 'grep', 'i', 'expected'), [
-        (['hello foo', 'world', 'awesome FOo'], Grep, 'foo', False, ['hello foo']),
-        (['hello foo', 'world', 'awesome FOo'], Grep, 'foo', True, ['hello foo', 'awesome foo']),
-        (['hello foo', 'world', 'awesome FOo'], Grep, 'Foo', True, ['hello foo', 'awesome foo']),
-        (['hello foo', 'world', 'awesome FOo'], GrepV, 'foo', False, ['world', 'awesome FOo']),
-        (['hello foo', 'world', 'awesome FOo'], GrepV, 'foo', True, ['world']),
-        (['hello foo', 'world', 'awesome FOo'], GrepV, 'Foo', True, ['world']),
+    ('it', 'grep', 'v', 'i', 'expected'), [
+        (['hello foo', 'world', 'awesome FOo'], 'foo', False, False, ['hello foo']),
+        (['hello foo', 'world', 'awesome FOo'], 'foo', False, True, ['hello foo', 'awesome foo']),
+        (['hello foo', 'world', 'awesome FOo'], 'Foo', False, True, ['hello foo', 'awesome foo']),
+        (['hello foo', 'world', 'awesome FOo'], 'foo', True, False, ['world', 'awesome FOo']),
+        (['hello foo', 'world', 'awesome FOo'], 'foo', True, True, ['world']),
+        (['hello foo', 'world', 'awesome FOo'], 'Foo', True, True, ['world']),
     ],
 )
-def test_grep_i(it, op, grep, i, expected):
-    assert it | op(grep, i=i) | Pipe(list) == expected
+def test_grep_i(it, v, grep, i, expected):
+    assert it | Grep(grep, v=v, i=i) | Pipe(list) == expected
 
 
 def test_iter_lines(tmp_path):

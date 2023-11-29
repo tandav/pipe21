@@ -217,20 +217,16 @@ Same as `FilterKeys` but for `v` in `(k, v)` pairs
 >>> ['hello foo', 'world', 'awesome FOo'] | Grep('Foo', i=True) | Pipe(list)
 ['hello foo', 'awesome foo']
 
-```
-
-## GrepV
-
-```py
->>> ['hello foo', 'world', 'awesome FOo'] | GrepV('foo') | Pipe(list)
+# invert match
+>>> ['hello foo', 'world', 'awesome FOo'] | Grep('foo', v=True) | Pipe(list)
 ['world', 'awesome FOo']
->>> ['foo1', 'foo2', '3foo', 'bar1'] | GrepV('^foo.*') | Pipe(list)
+>>> ['foo1', 'foo2', '3foo', 'bar1'] | Grep('^foo.*', v=True) | Pipe(list)
 ['3foo', 'bar1']
 
-# case-insensitive
->>> ['hello foo', 'world', 'awesome FOo'] | GrepV('foo', i=True) | Pipe(list)
+# invert match and case-insensitive
+>>> ['hello foo', 'world', 'awesome FOo'] | Grep('foo', v=True, i=True) | Pipe(list)
 ['world']
->>> ['hello foo', 'world', 'awesome FOo'] | GrepV('Foo', i=True) | Pipe(list)
+>>> ['hello foo', 'world', 'awesome FOo'] | Grep('Foo', v=True, i=True) | Pipe(list)
 ['world']
 
 ```
