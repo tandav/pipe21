@@ -104,6 +104,7 @@ ignore = [
     "ARG005", # Unused lambda argument
     "PTH123", # `open()` should be replaced by `Path.open()`
     "N812", # lowercase imported as non lowercase
+    "SIM115",
 ]
 
 [tool.ruff.per-file-ignores]
@@ -138,6 +139,7 @@ disable = [
     "unused-wildcard-import",
     "keyword-arg-before-vararg",
     "too-few-public-methods",
+    "consider-using-with",
 ]
 
 [tool.pylint-per-file-ignores]

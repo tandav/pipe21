@@ -235,10 +235,10 @@ def test_slice(it, args, expected):
 
 @pytest.mark.parametrize(
     ('it', 'n', 'expected'), [
-        (range(5), 3, (0, 1, 2)),
-        (range(5), 1, (0,)),
-        (range(5), 0, ()),
-        (range(5), 10, (0, 1, 2, 3, 4)),
+        (range(5), 3, [0, 1, 2]),
+        (range(5), 1, [0]),
+        (range(5), 0, []),
+        (range(5), 10, [0, 1, 2, 3, 4]),
     ],
 )
 def test_take(it, n, expected):
