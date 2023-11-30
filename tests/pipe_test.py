@@ -190,8 +190,8 @@ def test_grep_v(it, grep, expected):
 @pytest.mark.parametrize(
     ('it', 'grep', 'v', 'i', 'expected'), [
         (['hello foo', 'world', 'awesome FOo'], 'foo', False, False, ['hello foo']),
-        (['hello foo', 'world', 'awesome FOo'], 'foo', False, True, ['hello foo', 'awesome foo']),
-        (['hello foo', 'world', 'awesome FOo'], 'Foo', False, True, ['hello foo', 'awesome foo']),
+        (['hello foo', 'world', 'awesome FOo'], 'foo', False, True, ['hello foo', 'awesome FOo']),
+        (['hello foo', 'world', 'awesome FOo'], 'Foo', False, True, ['hello foo', 'awesome FOo']),
         (['hello foo', 'world', 'awesome FOo'], 'foo', True, False, ['world', 'awesome FOo']),
         (['hello foo', 'world', 'awesome FOo'], 'foo', True, True, ['world']),
         (['hello foo', 'world', 'awesome FOo'], 'Foo', True, True, ['world']),

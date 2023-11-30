@@ -29,7 +29,7 @@ class ValueBy      (B): __ror__ = lambda self, it: it | Map(lambda x: (x, self.f
 class Append       (B): __ror__ = lambda self, it: it | Map(lambda x: (*x, self.f(x)))
 class Keys         (B): __ror__ = lambda self, it: it | Map(lambda kv: kv[0])
 class Values       (B): __ror__ = lambda self, it: it | Map(lambda kv: kv[1])
-class Grep         (B): __ror__ = lambda self, it: it | MapSwitch([(lambda x: self.kw.setdefault('i', False), str.lower)]) | (FilterFalse if self.kw.get('v', False) else Filter)(lambda x: re.search(self.f.lower() if self.kw['i'] else self.f, x))
+class Grep         (B): __ror__ = lambda self, it: it | (FilterFalse if self.kw.get('v', False) else Filter)(re.compile(self.f, flags=re.I if self.kw.get('i', False) else 0).search)
 class IterLines    (B): __ror__ = lambda self, p: p | Pipe(open) | Pipe(lambda t: t | Map(str.strip) if self.kw.get('strip', True) else t)
 class Count        (B): __ror__ = lambda self, it: sum(1 for _ in it)
 class Slice        (B): __ror__ = lambda self, it: itertools.islice(it, self.f, *self.args)

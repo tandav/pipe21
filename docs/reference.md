@@ -213,9 +213,9 @@ Same as `FilterKeys` but for `v` in `(k, v)` pairs
 
 # case-insensitive
 >>> ['hello foo', 'world', 'awesome FOo'] | Grep('foo', i=True) | Pipe(list)
-['hello foo', 'awesome foo']
+['hello foo', 'awesome FOo']
 >>> ['hello foo', 'world', 'awesome FOo'] | Grep('Foo', i=True) | Pipe(list)
-['hello foo', 'awesome foo']
+['hello foo', 'awesome FOo']
 
 # invert match
 >>> ['hello foo', 'world', 'awesome FOo'] | Grep('foo', v=True) | Pipe(list)

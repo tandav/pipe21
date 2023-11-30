@@ -1,9 +1,6 @@
 .PHONY: test
 test:
 	pytest
-
-.PHONY: doctest
-doctest:
 	python -m doctest docs/reference.md
 
 .PHONY: coverage
