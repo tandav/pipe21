@@ -276,7 +276,7 @@ useful for objects that don't have `__len__` method:
 
 ```py
 >>> range(5) | Take(3)
-(0, 1, 2)
+[0, 1, 2]
 
 ```
 
