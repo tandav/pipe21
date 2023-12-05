@@ -282,15 +282,6 @@ useful for objects that don't have `__len__` method:
 
 ```
 
-## Chunked
-
-```py
->>> range(5) | Chunked(2) | Pipe(list)
-[(0, 1), (2, 3), (4,)]
-
->>> range(5) | Chunked(3) | Pipe(list)
-[(0, 1, 2), (3, 4)]
-
 ```
 
 ## Sorted
@@ -621,3 +612,12 @@ namespace()
 [2, 1, 0]
 
 ```
+
+## Chunked
+
+```py
+>>> range(5) | Chunked(2) | Pipe(list)
+[(0, 1), (2, 3), (4,)]
+
+>>> range(5) | Chunked(3) | Pipe(list)
+[(0, 1, 2), (3, 4)]

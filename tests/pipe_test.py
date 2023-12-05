@@ -252,11 +252,21 @@ def test_take(it, n, expected):
         (range(5), 3, [(0, 1, 2), (3, 4)]),
         (range(5), 2, [(0, 1), (2, 3), (4,)]),
         (range(5), 1, [(0,), (1,), (2,), (3,), (4,)]),
-        (range(5), 0, []),
     ],
 )
 def test_chunked(it, n, expected):
     assert it | Chunked(n) | Pipe(list) == expected
+
+
+@pytest.mark.skipif(sys.version_info >= (3, 12), reason='pre itertools.batched implementation for python<3.12')
+def test_chunked_zero_without_itertools_batched():
+    assert range(5) | Chunked(0) | Pipe(list) == []
+
+
+@pytest.mark.skipif(sys.version_info < (3, 12), reason='itertools.batched implementation for python>=3.12')
+def test_chunked_zero_itertools_batched():
+    with pytest.raises(ValueError, match='n must be at least one'):
+        assert range(5) | Chunked(0) | Pipe(list) == []
 
 
 @pytest.mark.parametrize(

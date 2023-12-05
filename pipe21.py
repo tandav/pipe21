@@ -2,6 +2,7 @@ import functools
 import itertools
 import operator
 import re
+import sys
 
 __version__ = '1.22.0'
 
@@ -34,7 +35,6 @@ class IterLines    (B): __ror__ = lambda self, f: (x.strip() if self.kw.get('str
 class Count        (B): __ror__ = lambda self, it: sum(1 for _ in it)
 class Slice        (B): __ror__ = lambda self, it: itertools.islice(it, self.f, *self.args)
 class Take         (B): __ror__ = lambda self, it: it | Slice(self.f) | Pipe(list)
-class Chunked      (B): __ror__ = lambda self, it: iter(functools.partial(lambda n, i: tuple(i | Take(n)), self.f, iter(it)), ())
 class Sorted       (B): __ror__ = lambda self, it: sorted(it, **self.kw)
 class GroupBy      (B): __ror__ = lambda self, it: itertools.groupby(sorted(it, key=self.f), key=self.f)
 class ReduceByKey  (B): __ror__ = lambda self, it: it | GroupBy(lambda kv: kv[0]) | MapValues(lambda kv: kv | Values() | Reduce(self.f)) | Pipe(list)
@@ -81,3 +81,9 @@ class Exec(B):
     def __ror__(self, x):
         self.f(*self.args, **self.kw)
         return x
+
+
+if sys.version_info >= (3, 12):
+    class Chunked(B): __ror__ = lambda self, it: itertools.batched(it, self.f)
+else:
+    class Chunked(B): __ror__ = lambda self, it: iter(functools.partial(lambda n, i: tuple(i | Take(n)), self.f, iter(it)), ())
