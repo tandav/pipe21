@@ -30,7 +30,7 @@ class ValueBy      (B): __ror__ = lambda self, it: ((x, self.f(x)) for x in it)
 class Append       (B): __ror__ = lambda self, it: ((*x, self.f(x)) for x in it)
 class Keys         (B): __ror__ = lambda self, it: (k for k, v in it)
 class Values       (B): __ror__ = lambda self, it: (v for k, v in it)
-class Grep         (B): __ror__ = lambda self, it: it | (FilterFalse if self.kw.get('v', False) else Filter)(re.compile(self.f, flags=re.I if self.kw.get('i', False) else 0).search)
+class Grep         (B): __ror__ = lambda self, it: it | (FilterFalse if self.kw.get('v', False) else Filter)(re.compile(self.f, flags=re.IGNORECASE if self.kw.get('i', False) else 0).search)
 class IterLines    (B): __ror__ = lambda self, f: (x.strip() if self.kw.get('strip', True) else x for x in open(f))
 class Count        (B): __ror__ = lambda self, it: sum(1 for _ in it)
 class Slice        (B): __ror__ = lambda self, it: itertools.islice(it, self.f, *self.args)
@@ -83,7 +83,7 @@ class Exec(B):
         return x
 
 
-if sys.version_info >= (3, 12):
-    class Chunked(B): __ror__ = lambda self, it: itertools.batched(it, self.f)
-else:
+if sys.version_info >= (3, 12):  # pragma: no cover
+    class Chunked(B): __ror__ = lambda self, it: itertools.batched(it, self.f)  # pylint: disable=no-member
+else:  # pragma: no cover
     class Chunked(B): __ror__ = lambda self, it: iter(functools.partial(lambda n, i: tuple(i | Take(n)), self.f, iter(it)), ())

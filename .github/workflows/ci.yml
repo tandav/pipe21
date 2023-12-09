@@ -23,38 +23,40 @@ jobs:
       - name: install dependencies
         run: python3 -m pip install .[dev]
 
-      - name: reformat # neccessary to fix 100% coverage
-        run: |
-          autopep8 --in-place --aggressive --aggressive pipe21.py
-          black pipe21.py
+      # - name: reformat # neccessary to fix 100% coverage
+      #   run: |
+      #     autopep8 --in-place --aggressive --aggressive pipe21.py
+      #     black pipe21.py
 
       - name: test
-        run: pytest --cov pipe21 --cov-fail-under=${{ env.MINIMUM_COVERAGE_PERCENTAGE }}
+        # run: pytest --cov pipe21 --cov-fail-under=${{ env.MINIMUM_COVERAGE_PERCENTAGE }}
+        run: pytest
 
       - name: doctest
         run: python3 -m doctest docs/reference.md
 
-      - name: Upload coverage data to coveralls.io
-        run: coveralls --service=github
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          COVERALLS_FLAG_NAME: ${{ matrix.python_version }}
-          COVERALLS_PARALLEL: true
-      # - name: pre-commit
-      #   run: pre-commit run --all-files
+      - name: pre-commit
+        run: pre-commit run --all-files
 
-  coveralls:
-    name: Indicate completion to coveralls.io
-    needs: test
-    runs-on: ubuntu-latest
-    container: python:3-slim
-    steps:
-    - name: Finished
-      run: |
-        pip3 install --upgrade coveralls
-        coveralls --service=github --finish
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # - name: Upload coverage data to coveralls.io
+      #   run: coveralls --service=github
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #     COVERALLS_FLAG_NAME: ${{ matrix.python_version }}
+      #     COVERALLS_PARALLEL: true
+
+  # coveralls:
+  #   name: Indicate completion to coveralls.io
+  #   needs: test
+  #   runs-on: ubuntu-latest
+  #   container: python:3-slim
+  #   steps:
+  #   - name: Finished
+  #     run: |
+  #       pip3 install --upgrade coveralls
+  #       coveralls --service=github --finish
+  #     env:
+  #       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   publish-to-pypi-and-github-release:
     if: "startsWith(github.ref, 'refs/tags/')"

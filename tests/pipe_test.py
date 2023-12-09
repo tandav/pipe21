@@ -115,8 +115,8 @@ def test_filter_values(it, f, expected):
     ('it', 'f', 'expected'), [
         ([0, 2, 3, 0, 4], range, [0, 1, 0, 1, 2, 0, 1, 2, 3]),
         ([2, 3, 4], lambda x: [(x, x), (x, x)], [(2, 2), (2, 2), (3, 3), (3, 3), (4, 4), (4, 4)]),
-        ([range(0, 5), range(100, 105)], yield_even, [0, 2, 4, 100, 102, 104]),
-        ([range(0, 5), range(100, 105)], lambda it: (x for x in it if x % 2 == 0), [0, 2, 4, 100, 102, 104]),
+        ([range(5), range(100, 105)], yield_even, [0, 2, 4, 100, 102, 104]),
+        ([range(5), range(100, 105)], lambda it: (x for x in it if x % 2 == 0), [0, 2, 4, 100, 102, 104]),
     ],
 )
 def test_flat_map(it, f, expected):
@@ -260,13 +260,13 @@ def test_chunked(it, n, expected):
 
 @pytest.mark.skipif(sys.version_info >= (3, 12), reason='pre itertools.batched implementation for python<3.12')
 def test_chunked_zero_without_itertools_batched():
-    assert range(5) | Chunked(0) | Pipe(list) == []
+    assert range(5) | Chunked(0) | Pipe(list) == []  # pylint: disable=unsupported-binary-operation
 
 
 @pytest.mark.skipif(sys.version_info < (3, 12), reason='itertools.batched implementation for python>=3.12')
 def test_chunked_zero_itertools_batched():
     with pytest.raises(ValueError, match='n must be at least one'):
-        assert range(5) | Chunked(0) | Pipe(list) == []
+        assert range(5) | Chunked(0) | Pipe(list) == []  # pylint: disable=unsupported-binary-operation
 
 
 @pytest.mark.parametrize(
@@ -363,7 +363,7 @@ def test_map_switch(it, cases, expected):
 @pytest.mark.parametrize(
     ('it', 'f', 'key', 'expected'), [
         (range(5), lambda x: x * 100, None, [100, 200, 300, 400]),
-        (range(5), lambda x: x * 100, lambda x: x % 2 == 0, [0, 200, 400]), (range(5), None, None, [1, 2, 3, 4]),
+        (range(5), lambda x: x * 100, lambda x: x % 2 == 0, [0, 200, 400]),
         (range(5), None, lambda x: x % 2 == 0, [0, 2, 4]),
         (range(5), None, None, [1, 2, 3, 4]),
     ],
