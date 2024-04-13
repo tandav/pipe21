@@ -168,6 +168,15 @@ def test_values(it, expected):
 
 
 @pytest.mark.parametrize(
+    ('it', 'expected'), [
+        ([(0, 1), (2, 3)], [(1, 0), (3, 2)]),
+    ],
+)
+def test_swap_kv(it, expected):
+    assert it | SwapKV() | Pipe(list) == expected
+
+
+@pytest.mark.parametrize(
     ('it', 'grep', 'expected'), [
         (['hello foo', 'world', 'awesome FOo'], 'foo', ['hello foo']),
         (['foo1', 'foo2', '3foo', 'bar1'], '^foo.*', ['foo1', 'foo2']),

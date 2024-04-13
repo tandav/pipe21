@@ -31,3 +31,5 @@
 - [petl-developers/petl: Python Extract Transform and Load Tables of Data](https://github.com/petl-developers/petl)
 - [Show HN: Pypipe – A Python command-line tool for pipeline processing | Hacker News](https://news.ycombinator.com/item?id=37981683)
 - [Marcel the Shell | Hacker News](https://news.ycombinator.com/item?id=37991746)
+- [cgarciae/pypeln: Concurrent data pipelines in Python >>>](https://github.com/cgarciae/pypeln)
+- [sfermigier/awesome-functional-python: A curated list of awesome things related to functional programming in Python.](https://github.com/sfermigier/awesome-functional-python)

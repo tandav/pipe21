@@ -203,6 +203,14 @@ Same as `FilterKeys` but for `v` in `(k, v)` pairs
 
 ```
 
+## SwapKV
+
+```py
+>>> [(0, 1), (2, 3)] | SwapKV() | Pipe(list)
+[(1, 0), (3, 2)]
+
+```
+
 ## Grep
 
 ```py

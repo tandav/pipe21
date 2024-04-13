@@ -82,7 +82,7 @@ jobs:
         run: python -m twine upload dist/*
 
       - name: Github Release
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2
 
   mkdocs-github-pages:
     if: "!startsWith(github.ref, 'refs/tags/')"
@@ -93,7 +93,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: 3.12
-      - uses: actions/cache@v3
+      - uses: actions/cache@v4
         with:
           key: ${{ github.ref }}
           path: .cache
