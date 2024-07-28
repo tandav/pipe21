@@ -629,3 +629,5 @@ namespace()
 
 >>> range(5) | Chunked(3) | Pipe(list)
 [(0, 1, 2), (3, 4)]
+
+```
