@@ -119,6 +119,6 @@ import pipe21 as P
 
 ---
 
-- [all available methods reference](reference.md)
-- [review of similar tools / alternatives](similar-tools.md)
+- [all available methods reference](docs/reference.md)
+- [review of similar tools / alternatives](docs/similar-tools.md)
 - written in pure python, no dependencies
