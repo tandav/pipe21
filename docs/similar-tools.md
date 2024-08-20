@@ -33,3 +33,7 @@
 - [Marcel the Shell | Hacker News](https://news.ycombinator.com/item?id=37991746)
 - [cgarciae/pypeln: Concurrent data pipelines in Python >>>](https://github.com/cgarciae/pypeln)
 - [sfermigier/awesome-functional-python: A curated list of awesome things related to functional programming in Python.](https://github.com/sfermigier/awesome-functional-python)
+- [PickwickSoft/pystreamapi: The Python Stream API Library offering Streams like you know from Java/Kotlin/Scala in Python with some cool extensions](https://github.com/PickwickSoft/pystreamapi)
+- [rmariano/pystream: Collections made easy in Python](https://github.com/rmariano/pystream)
+- [Pipe Syntax in SQL | Hacker News](https://news.ycombinator.com/item?id=41338877)
+- [ReactiveX/RxPY: ReactiveX for Python](https://github.com/ReactiveX/RxPY)
