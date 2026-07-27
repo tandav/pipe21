@@ -37,3 +37,6 @@
 - [rmariano/pystream: Collections made easy in Python](https://github.com/rmariano/pystream)
 - [Pipe Syntax in SQL | Hacker News](https://news.ycombinator.com/item?id=41338877)
 - [ReactiveX/RxPY: ReactiveX for Python](https://github.com/ReactiveX/RxPY)
+- [ebonnal/streamable: Pythonic Stream-like manipulation of iterables.](https://github.com/ebonnal/streamable)
+- [pyper-dev/pyper: Concurrent Python made simple](https://github.com/pyper-dev/pyper)
+- [SQL pipe syntax available in public preview in BigQuery | Hacker News](https://news.ycombinator.com/item?id=42998904)
