@@ -1,0 +1,26 @@
+version: '3'
+
+tasks:
+  test:
+    cmds:
+      - pytest
+      - python -m doctest docs/reference.md
+
+  mypy:
+    cmds:
+      - mypy
+
+  coverage:
+    cmds:
+      - pytest --cov=pipe21 --cov-report=html
+      - open htmlcov/index.html
+
+  bumpver:
+    desc: 'usage: task bumpver PART=minor'
+    cmds:
+      - bumpver update --no-fetch --{{.PART}}
+
+  mkdocs:
+    cmds:
+      - mkdocs build
+      - mkdocs serve
