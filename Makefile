@@ -3,6 +3,10 @@ test:
 	pytest
 	python -m doctest docs/reference.md
 
+.PHONY: mypy
+mypy:
+	mypy
+
 .PHONY: coverage
 coverage:
 	pytest --cov=pipe21 --cov-report=html
