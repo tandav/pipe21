@@ -5,49 +5,96 @@
 
 ```
 
-## Pipe
-Put a value into a function as 1st argument
+## Append
 
 ```py
->>> range(5) | Pipe(list)
-[0, 1, 2, 3, 4]
+>>> [(0,), (1,)] | Append(lambda x: str(x[0])) | Pipe(list)
+[(0, '0'), (1, '1')]
 
->>> 2 | Pipe(pow, 8)
-256
-
->>> 'FF' | Pipe(int, base=16)
-255
-
->>> b'\x02\x00' | Pipe(int.from_bytes, byteorder='big')
-512
-
->>> 'ab' | Pipe(enumerate, start=0) | Pipe(list)
-[(0, 'a'), (1, 'b')]
-
->>> import math
->>> 5.01 | Pipe(math.isclose, 5, abs_tol=0.01)
-True
-
->>> import random
->>> random.seed(44)
->>> [0, 1, 2] | Pipe(random.choices, [0.8, 0.15, 0.05], k=20)
-[0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 1, 0, 0]
-
->>> import itertools
->>> [0, 1, 2] | Pipe(itertools.zip_longest, 'ab', fillvalue=None) | Pipe(list)
-[(0, 'a'), (1, 'b'), (2, None)]
-
->>> import operator
->>> [0, 1, 2] | Pipe(itertools.accumulate, operator.add, initial=100) | Pipe(list)
-[100, 100, 101, 103]
+>>> [(0, '0'), (1, '1')] | Append(lambda x: str(x[0] * 10)) | Pipe(list)
+[(0, '0', '0'), (1, '1', '10')]
 
 ```
 
-## Map
+## Apply
 
 ```py
->>> range(5) | Map(str) | Pipe(''.join)
-'01234'
+>>> import random
+>>> random.seed(42)
+>>> range(5) | Pipe(list) | Apply(random.shuffle)
+[3, 1, 2, 4, 0]
+
+```
+
+## Chunked
+
+```py
+>>> range(5) | Chunked(2) | Pipe(list)
+[(0, 1), (2, 3), (4,)]
+
+>>> range(5) | Chunked(3) | Pipe(list)
+[(0, 1, 2), (3, 4)]
+
+```
+
+## Count
+
+useful for objects that don't have `__len__` method:
+
+```py
+>>> iter(range(3)) | Count()
+3
+
+```
+
+## DelAttr
+
+```py
+>>> from types import SimpleNamespace
+>>> SimpleNamespace(a='b') | DelAttr('a')
+namespace()
+
+```
+
+## DelItem
+
+```py
+>>> {'a': 'b'} | DelItem('a')
+{}
+
+```
+
+## Exec
+
+```py
+>>> import random
+>>> v = 42
+>>> random.seed(42)
+>>> x = [0, 1, 2]
+
+>>> v | Exec(lambda: random.shuffle(x))
+42
+>>> x
+[1, 0, 2]
+
+>>> random.seed(42)
+>>> x = [0, 1, 2]
+>>> v | Exec(random.shuffle, x)
+42
+>>> x
+[1, 0, 2]
+>>> u = []
+>>> v | Exec(lambda: u.append(1))
+42
+>>> u
+[1]
+>>> v | Exec(u.append, 2)
+42
+>>> u
+[1, 2]
+>>> x = [2, 0, 1]
+>>> x | Exec(x.sort, reverse=True)
+[2, 1, 0]
 
 ```
 
@@ -56,37 +103,6 @@ True
 ```py
 >>> range(5) | Filter(lambda x: x % 2 == 0) | Pipe(list)
 [0, 2, 4]
-
-```
-
-## Reduce
-
-```py
->>> import operator
->>> range(5) | Reduce(operator.add)
-10
-
->>> range(5) | Reduce(operator.add, 5)  # with initial value
-15
-
->>> [{1, 2}, {2, 3, 4}, {4, 5}] | Reduce(operator.or_)
-{1, 2, 3, 4, 5}
-
-```
-
-## MapKeys
-
-```py
->>> [(1, 10), (2, 20)] | MapKeys(str) | Pipe(list)
-[('1', 10), ('2', 20)]
-
-```
-
-## MapValues
-
-```py
->>> [(1, 10), (2, 20)] | MapValues(str) | Pipe(list)
-[(1, '10'), (2, '20')]
 
 ```
 
@@ -160,54 +176,20 @@ Same as `FilterKeys` but for `v` in `(k, v)` pairs
 
 ```
 
-## KeyBy
+## GetAttr
 
 ```py
->>> range(2) | KeyBy(str) | Pipe(list)
-[('0', 0), ('1', 1)]
+>>> from types import SimpleNamespace
+>>> SimpleNamespace(a='b') | GetAttr('a')
+'b'
 
 ```
 
-## ValueBy
+## GetItem
 
 ```py
->>> range(2) | ValueBy(str) | Pipe(list)
-[(0, '0'), (1, '1')]
-
-```
-
-## Append
-
-```py
->>> [(0,), (1,)] | Append(lambda x: str(x[0])) | Pipe(list)
-[(0, '0'), (1, '1')]
-
->>> [(0, '0'), (1, '1')] | Append(lambda x: str(x[0] * 10)) | Pipe(list)
-[(0, '0', '0'), (1, '1', '10')]
-
-```
-
-## Keys
-
-```py
->>> [(0, 'a'), (1, 'b')] | Keys() | Pipe(list)
-[0, 1]
-
-```
-
-## Values
-
-```py
->>> [(0, 'a'), (1, 'b')] | Values() | Pipe(list)
-['a', 'b']
-
-```
-
-## SwapKV
-
-```py
->>> [(0, 1), (2, 3)] | SwapKV() | Pipe(list)
-[(1, 0), (3, 2)]
+>>> {'a': 'b'} | GetItem('a')
+'b'
 
 ```
 
@@ -241,6 +223,20 @@ Same as `FilterKeys` but for `v` in `(k, v)` pairs
 
 ```
 
+## GroupBy
+
+Note: `GroupBy` sorts iterable before grouping. If you pass key function, eg `GroupBy(len)`, it also will be used as sorting key.
+
+```py
+>>> import operator
+>>> [(0, 'a'), (1, 'c'), (0, 'b'), (2, 'd')] | GroupBy(operator.itemgetter(0)) | MapValues(list) | Pipe(list)
+[(0, [(0, 'a'), (0, 'b')]), (1, [(1, 'c')]), (2, [(2, 'd')])]
+
+>>> ['ab', 'cd', 'e', 'f', 'gh', 'ij'] | GroupBy(len) | MapValues(list) | Pipe(list)
+[(1, ['e', 'f']), (2, ['ab', 'cd', 'gh', 'ij'])]
+
+```
+
 ## IterLines
 
 ```py
@@ -258,13 +254,244 @@ Same as `FilterKeys` but for `v` in `(k, v)` pairs
 
 ```
 
-## Count
-
-useful for objects that don't have `__len__` method:
+## Join
+The right side is re-iterated for every left item, so pass a re-iterable sequence (list, tuple, range), not a one-shot iterator.
 
 ```py
->>> iter(range(3)) | Count()
+>>> range(5) | Join(range(2, 5)) | Pipe(list)
+[(2, 2), (3, 3), (4, 4)]
+
+>>> range(1, 7) | Join(range(2, 6), key=lambda x, y: x % y == 0) | Pipe(list)
+[(2, 2), (3, 3), (4, 2), (4, 4), (5, 5), (6, 2), (6, 3)]
+
+```
+
+## KeyBy
+
+```py
+>>> range(2) | KeyBy(str) | Pipe(list)
+[('0', 0), ('1', 1)]
+
+```
+
+## Keys
+
+```py
+>>> [(0, 'a'), (1, 'b')] | Keys() | Pipe(list)
+[0, 1]
+
+```
+
+## Map
+
+```py
+>>> range(5) | Map(str) | Pipe(''.join)
+'01234'
+
+```
+
+## MapApply
+
+```py
+>>> import random
+>>> random.seed(42)
+>>> range(3, 5) | Map(range) | Map(list) | MapApply(random.shuffle) | Pipe(list)
+[[1, 0, 2], [3, 1, 2, 0]]
+
+>>> def setitem(key, value):
+...     def inner(x):
+...         x[key] = value
+...     return inner
+>>> [{'hello': 'world'}] | MapApply(setitem('foo', 'bar')) | Pipe(list)
+[{'hello': 'world', 'foo': 'bar'}]
+
+```
+
+## MapDelAttr
+
+```py
+>>> [SimpleNamespace(a='b')] | MapDelAttr('a') | Pipe(list)
+[namespace()]
+
+```
+
+## MapDelItem
+
+```py
+>>> [{'a': 'b'}] | MapDelItem('a') | Pipe(list)
+[{}]
+
+```
+
+## MapGetAttr
+
+```py
+>>> [SimpleNamespace(a='b')] | MapGetAttr('a') | Pipe(list)
+['b']
+
+```
+
+## MapGetItem
+
+```py
+>>> [{'a': 'b'}] | MapGetItem('a') | Pipe(list)
+['b']
+
+```
+
+## MapKeys
+
+```py
+>>> [(1, 10), (2, 20)] | MapKeys(str) | Pipe(list)
+[('1', 10), ('2', 20)]
+
+```
+
+## MapMethodCaller
+
+```py
+>>> class K:
+...     def hello(self):
+...         return 'hello'
+>>> [K()] | MapMethodCaller('hello') | Pipe(list)
+['hello']
+
+```
+
+## MapSetAttr
+
+```py
+>>> [SimpleNamespace(a='b')] | MapSetAttr('foo', 'bar') | Pipe(list)
+[namespace(a='b', foo='bar')]
+
+```
+
+## MapSetItem
+
+```py
+>>> [{'a': 'b'}] | MapSetItem('foo', 'bar') | Pipe(list)
+[{'a': 'b', 'foo': 'bar'}]
+
+```
+
+## MapSwitch
+Applies `Switch` to every item. The cases are re-iterated on every use, so pass a re-iterable sequence (list, tuple), not a one-shot iterator.
+
+```py
+>>> cases = [
+...     (lambda i: i % 3 == i % 5 == 0, lambda x: 'FizzBuzz'),
+...     (lambda i: i % 3 == 0, lambda x: 'Fizz'),
+...     (lambda i: i % 5 == 0, lambda x: 'Buzz'),
+...     (lambda i: i > 100, lambda x: f'{x} is large'),
+... ]
+>>> range(1, 20) | MapSwitch(cases) | Pipe(list)
+[1, 2, 'Fizz', 4, 'Buzz', 'Fizz', 7, 8, 'Fizz', 'Buzz', 11, 'Fizz', 13, 14, 'FizzBuzz', 16, 17, 'Fizz', 19]
+>>> range(5) | MapSwitch([(lambda x: x % 2 == 0, lambda x: x * 100)]) | Pipe(list)
+[0, 1, 200, 3, 400]
+
+```
+
+## MapValues
+
+```py
+>>> [(1, 10), (2, 20)] | MapValues(str) | Pipe(list)
+[(1, '10'), (2, '20')]
+
+```
+
+## MethodCaller
+
+```py
+>>> class K:
+...     def hello(self):
+...         return 'hello'
+...     def increment(self, i, add=1):
+...         return i + add
+>>> k = K()
+>>> k | MethodCaller('hello')
+'hello'
+>>> k | MethodCaller('increment', 1)
+2
+>>> k | MethodCaller('increment', 1, add=2)
 3
+
+```
+
+## Pipe
+Put a value into a function as 1st argument
+
+```py
+>>> range(5) | Pipe(list)
+[0, 1, 2, 3, 4]
+
+>>> 2 | Pipe(pow, 8)
+256
+
+>>> 'FF' | Pipe(int, base=16)
+255
+
+>>> b'\x02\x00' | Pipe(int.from_bytes, byteorder='big')
+512
+
+>>> 'ab' | Pipe(enumerate, start=0) | Pipe(list)
+[(0, 'a'), (1, 'b')]
+
+>>> import math
+>>> 5.01 | Pipe(math.isclose, 5, abs_tol=0.01)
+True
+
+>>> import random
+>>> random.seed(44)
+>>> [0, 1, 2] | Pipe(random.choices, [0.8, 0.15, 0.05], k=20)
+[0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 1, 0, 0]
+
+>>> import itertools
+>>> [0, 1, 2] | Pipe(itertools.zip_longest, 'ab', fillvalue=None) | Pipe(list)
+[(0, 'a'), (1, 'b'), (2, None)]
+
+>>> import operator
+>>> [0, 1, 2] | Pipe(itertools.accumulate, operator.add, initial=100) | Pipe(list)
+[100, 100, 101, 103]
+
+```
+
+## Reduce
+
+```py
+>>> import operator
+>>> range(5) | Reduce(operator.add)
+10
+
+>>> range(5) | Reduce(operator.add, 5)  # with initial value
+15
+
+>>> [{1, 2}, {2, 3, 4}, {4, 5}] | Reduce(operator.or_)
+{1, 2, 3, 4, 5}
+
+```
+
+## ReduceByKey
+
+```py
+>>> import operator
+>>> [('a', 1), ('b', 1), ('a', 1)] | ReduceByKey(operator.add)
+[('a', 2), ('b', 1)]
+
+```
+
+## SetAttr
+
+```py
+>>> SimpleNamespace(a='b') | SetAttr('foo', 'bar')
+namespace(a='b', foo='bar')
+
+```
+
+## SetItem
+
+```py
+>>> {'a': 'b'} | SetItem('foo', 'bar')
+{'a': 'b', 'foo': 'bar'}
 
 ```
 
@@ -279,16 +506,6 @@ useful for objects that don't have `__len__` method:
 [2, 3, 4]
 >>> range(5) | Slice(0, None, 2) | Pipe(list)
 [0, 2, 4]
-
-```
-
-## Take
-
-```py
->>> range(5) | Take(3)
-[0, 1, 2]
-
-```
 
 ```
 
@@ -309,42 +526,29 @@ useful for objects that don't have `__len__` method:
 
 ```
 
-## GroupBy
-
-Note: `GroupBy` sorts iterable before grouping. If you pass key function, eg `GroupBy(len)`, it also will be used as sorting key.
+## StarFlatMap
 
 ```py
->>> import operator
->>> [(0, 'a'), (1, 'c'), (0, 'b'), (2, 'd')] | GroupBy(operator.itemgetter(0)) | MapValues(list) | Pipe(list)
-[(0, [(0, 'a'), (0, 'b')]), (1, [(1, 'c')]), (2, [(2, 'd')])]
-
->>> ['ab', 'cd', 'e', 'f', 'gh', 'ij'] | GroupBy(len) | MapValues(list) | Pipe(list)
-[(1, ['e', 'f']), (2, ['ab', 'cd', 'gh', 'ij'])]
+>>> import itertools
+>>> range(2, 10) | Pipe(itertools.permutations, r=2) | StarFlatMap(lambda a, b: [(a, b)] if a % b == 0 else []) | Pipe(list)
+[(4, 2), (6, 2), (6, 3), (8, 2), (8, 4), (9, 3)]
 
 ```
 
-## ReduceByKey
+## StarMap
 
 ```py
->>> import operator
->>> [('a', 1), ('b', 1), ('a', 1)] | ReduceByKey(operator.add)
-[('a', 2), ('b', 1)]
-
-```
-
-## Apply
-
-```py
->>> import random
->>> random.seed(42)
->>> range(5) | Pipe(list) | Apply(random.shuffle)
-[3, 1, 2, 4, 0]
+>>> [(2, 5), (3, 2), (10, 3)] | StarMap(pow) | Pipe(list)
+[32, 9, 1000]
+>>> [('00', 16), ('A5', 16), ('FF', 16)] | StarMap(int) | Pipe(list)
+[0, 165, 255]
 
 ```
 
 ## StarPipe
 
 ```py
+>>> import operator
 >>> (1, 2) | StarPipe(operator.add)
 3
 
@@ -359,38 +563,11 @@ Note: `GroupBy` sorts iterable before grouping. If you pass key function, eg `Gr
 
 ```
 
-## StarMap
+## SwapKV
 
 ```py
->>> [(2, 5), (3, 2), (10, 3)] | StarMap(pow) | Pipe(list)
-[32, 9, 1000]
->>> [('00', 16), ('A5', 16), ('FF', 16)] | StarMap(int) | Pipe(list)
-[0, 165, 255]
-
-```
-
-## StarFlatMap
-
-```py
->>> range(2, 10) | Pipe(itertools.permutations, r=2) | StarFlatMap(lambda a, b: [(a, b)] if a % b == 0 else []) | Pipe(list)
-[(4, 2), (6, 2), (6, 3), (8, 2), (8, 4), (9, 3)]
-
-```
-
-## MapApply
-
-```py
->>> import random
->>> random.seed(42)
->>> range(3, 5) | Map(range) | Map(list) | MapApply(random.shuffle) | Pipe(list)
-[[1, 0, 2], [3, 1, 2, 0]]
-
->>> def setitem(key, value):
-...     def inner(x):
-...         x[key] = value
-...     return inner
->>> [{'hello': 'world'}] | MapApply(setitem('foo', 'bar')) | Pipe(list)
-[{'hello': 'world', 'foo': 'bar'}]
+>>> [(0, 1), (2, 3)] | SwapKV() | Pipe(list)
+[(1, 0), (3, 2)]
 
 ```
 
@@ -417,13 +594,42 @@ Takes a sequence of `(condition, function)` pairs and returns the result of the 
 
 ```
 
-## MapSwitch
+## Take
 
 ```py
->>> range(1, 20) | MapSwitch(cases) | Pipe(list)
-[1, 2, 'Fizz', 4, 'Buzz', 'Fizz', 7, 8, 'Fizz', 'Buzz', 11, 'Fizz', 13, 14, 'FizzBuzz', 16, 17, 'Fizz', 19]
->>> range(5) | MapSwitch([(lambda x: x % 2 == 0, lambda x: x * 100)]) | Pipe(list)
-[0, 1, 200, 3, 400]
+>>> range(5) | Take(3)
+[0, 1, 2]
+
+```
+
+## Unique
+
+```py
+>>> import operator
+>>> ['a', 'cd', 'cd', 'e', 'fgh'] | Unique() | Pipe(list)
+['a', 'cd', 'e', 'fgh']
+
+>>> ['a', 'cd', 'cd', 'e', 'fgh'] | Unique(len) | Pipe(list)
+['a', 'cd', 'fgh']
+
+>>> [{'a': 1}, {'a': 2}, {'a': 1}] | Unique(operator.itemgetter('a')) | Pipe(list)
+[{'a': 1}, {'a': 2}]
+
+```
+
+## ValueBy
+
+```py
+>>> range(2) | ValueBy(str) | Pipe(list)
+[(0, '0'), (1, '1')]
+
+```
+
+## Values
+
+```py
+>>> [(0, 'a'), (1, 'b')] | Values() | Pipe(list)
+['a', 'b']
 
 ```
 
@@ -439,198 +645,5 @@ Takes a function to map values (optional, by default there's no mapping) and a k
 [0, 2, 4]
 >>> range(5) | YieldIf() | Pipe(list)
 [1, 2, 3, 4]
-
-```
-
-## Join
-The right side is re-iterated for every left item, so pass a re-iterable sequence (list, tuple, range), not a one-shot iterator.
-
-```py
->>> range(5) | Join(range(2, 5)) | Pipe(list)
-[(2, 2), (3, 3), (4, 4)]
-
->>> range(1, 7) | Join(range(2, 6), key=lambda x, y: x % y == 0) | Pipe(list)
-[(2, 2), (3, 3), (4, 2), (4, 4), (5, 5), (6, 2), (6, 3)]
-
-```
-
-## GetItem
-
-```py
->>> {'a': 'b'} | GetItem('a')
-'b'
-
-```
-
-## SetItem
-
-```py
->>> {'a': 'b'} | SetItem('foo', 'bar')
-{'a': 'b', 'foo': 'bar'}
-
-```
-
-## DelItem
-
-```py
->>> {'a': 'b'} | DelItem('a')
-{}
-
-```
-
-## GetAttr
-
-```py
->>> from types import SimpleNamespace
->>> SimpleNamespace(a='b') | GetAttr('a')
-'b'
-
-```
-
-## SetAttr
-
-```py
->>> SimpleNamespace(a='b') | SetAttr('foo', 'bar')
-namespace(a='b', foo='bar')
-
-```
-
-## DelAttr
-
-```py
->>> SimpleNamespace(a='b') | DelAttr('a')
-namespace()
-
-```
-
-## MapGetItem
-
-```py
->>> [{'a': 'b'}] | MapGetItem('a') | Pipe(list)
-['b']
-
-```
-
-## MapSetItem
-
-```py
->>> [{'a': 'b'}] | MapSetItem('foo', 'bar') | Pipe(list)
-[{'a': 'b', 'foo': 'bar'}]
-
-```
-
-## MapDelItem
-
-```py
->>> [{'a': 'b'}] | MapDelItem('a') | Pipe(list)
-[{}]
-
-```
-
-## MapGetAttr
-
-```py
->>> [SimpleNamespace(a='b')] | MapGetAttr('a') | Pipe(list)
-['b']
-
-```
-
-## MapSetAttr
-
-```py
->>> [SimpleNamespace(a='b')] | MapSetAttr('foo', 'bar') | Pipe(list)
-[namespace(a='b', foo='bar')]
-
-```
-
-## MapDelAttr
-
-```py
->>> [SimpleNamespace(a='b')] | MapDelAttr('a') | Pipe(list)
-[namespace()]
-
-```
-
-## MethodCaller
-
-```py
->>> class K:
-...     def hello(self):
-...         return 'hello'
-...     def increment(self, i, add=1):
-...         return i + add
->>> k = K()
->>> k | MethodCaller('hello')
-'hello'
->>> k | MethodCaller('increment', 1)
-2
->>> k | MethodCaller('increment', 1, add=2)
-3
-
-```
-
-## MapMethodCaller
-
-```py
->>> [k] | MapMethodCaller('hello') | Pipe(list)
-['hello']
-
-```
-
-## Unique
-
-```py
->>> ['a', 'cd', 'cd', 'e', 'fgh'] | Unique() | Pipe(list)
-['a', 'cd', 'e', 'fgh']
-
->>> ['a', 'cd', 'cd', 'e', 'fgh'] | Unique(len) | Pipe(list)
-['a', 'cd', 'fgh']
-
->>> [{'a': 1}, {'a': 2}, {'a': 1}] | Unique(operator.itemgetter('a')) | Pipe(list)
-[{'a': 1}, {'a': 2}]
-
-```
-
-## Exec
-
-```py
->>> v = 42
->>> random.seed(42)
->>> x = [0, 1, 2]
-
->>> v | Exec(lambda: random.shuffle(x))
-42
->>> x
-[1, 0, 2]
-
->>> random.seed(42)
->>> x = [0, 1, 2]
->>> v | Exec(random.shuffle, x)
-42
->>> x
-[1, 0, 2]
->>> u = []
->>> v | Exec(lambda: u.append(1))
-42
->>> u
-[1]
->>> v | Exec(u.append, 2)
-42
->>> u
-[1, 2]
->>> x = [2, 0, 1]
->>> x | Exec(x.sort, reverse=True)
-[2, 1, 0]
-
-```
-
-## Chunked
-
-```py
->>> range(5) | Chunked(2) | Pipe(list)
-[(0, 1), (2, 3), (4,)]
-
->>> range(5) | Chunked(3) | Pipe(list)
-[(0, 1, 2), (3, 4)]
 
 ```

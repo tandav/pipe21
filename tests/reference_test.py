@@ -31,8 +31,9 @@ def stub_classes():
 
 
 def test_all_operators_have_reference_docs():
+    """Every operator is documented, and the reference is sorted alphabetically."""
     reference = REFERENCE.read_text()
-    assert re.findall(r'## (\w+)', reference) == all_ops()
+    assert re.findall(r'## (\w+)', reference) == sorted(all_ops())
 
 
 def test_reference_doctests_pass():

@@ -40,3 +40,4 @@
 - [ebonnal/streamable: Pythonic Stream-like manipulation of iterables.](https://github.com/ebonnal/streamable)
 - [pyper-dev/pyper: Concurrent Python made simple](https://github.com/pyper-dev/pyper)
 - [SQL pipe syntax available in public preview in BigQuery | Hacker News](https://news.ycombinator.com/item?id=42998904)
+- [olirice/flupy: Fluent data pipelines for python and your shell](https://github.com/olirice/flupy)
