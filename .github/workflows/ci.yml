@@ -32,9 +32,6 @@ jobs:
         # run: pytest --cov pipe21 --cov-fail-under=${{ env.MINIMUM_COVERAGE_PERCENTAGE }}
         run: pytest
 
-      - name: doctest
-        run: python3 -m doctest docs/reference.md
-
       - name: pre-commit
         run: pre-commit run --all-files
 

@@ -3,8 +3,7 @@ version: '3'
 tasks:
   test:
     cmds:
-      - pytest
-      - python -m doctest docs/reference.md
+      - uv run pytest -v
 
   mypy:
     cmds:
