@@ -395,6 +395,7 @@ Note: `GroupBy` sorts iterable before grouping. If you pass key function, eg `Gr
 ```
 
 ## Switch
+Takes a sequence of `(condition, function)` pairs and returns the result of the first matching one, or the input if nothing matches. The cases are re-iterated on every use, so pass a re-iterable sequence (list, tuple), not a one-shot iterator.
 
 ```py
 >>> cases = [
@@ -442,6 +443,8 @@ Takes a function to map values (optional, by default there's no mapping) and a k
 ```
 
 ## Join
+The right side is re-iterated for every left item, so pass a re-iterable sequence (list, tuple, range), not a one-shot iterator.
+
 ```py
 >>> range(5) | Join(range(2, 5)) | Pipe(list)
 [(2, 2), (3, 3), (4, 4)]

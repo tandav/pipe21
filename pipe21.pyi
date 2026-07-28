@@ -2,6 +2,7 @@ from collections.abc import Callable
 from collections.abc import Hashable
 from collections.abc import Iterable
 from collections.abc import Iterator
+from collections.abc import Sequence
 from typing import Any
 from typing import Concatenate
 from typing import Generic
@@ -219,12 +220,13 @@ class MapApply(B):
 
 
 class Switch(B, Generic[_R]):
-    def __init__(self, f: Iterable[tuple[Callable[[Any], object], Callable[[Any], _R]]]) -> None: ...
+    # cases are re-iterated on every use, so a one-shot iterator would match at most once
+    def __init__(self, f: Sequence[tuple[Callable[[Any], object], Callable[[Any], _R]]]) -> None: ...
     def __ror__(self, x: _T, /) -> _T | _R: ...
 
 
 class MapSwitch(B, Generic[_R]):
-    def __init__(self, f: Iterable[tuple[Callable[[Any], object], Callable[[Any], _R]]]) -> None: ...
+    def __init__(self, f: Sequence[tuple[Callable[[Any], object], Callable[[Any], _R]]]) -> None: ...
     def __ror__(self, it: Iterable[_T], /) -> Iterator[_T | _R]: ...
 
 
@@ -241,7 +243,8 @@ class _YieldIfSame(YieldIf[Any]):
 
 
 class Join(B, Generic[_V]):
-    def __init__(self, f: Iterable[_V], *, key: Callable[[Any, Any], object] = ...) -> None: ...
+    # the right side is re-iterated per left item, so a one-shot iterator would join only the first one
+    def __init__(self, f: Sequence[_V], *, key: Callable[[Any, Any], object] = ...) -> None: ...
     def __ror__(self, it: Iterable[_T], /) -> Iterator[tuple[_T, _V]]: ...
 
 

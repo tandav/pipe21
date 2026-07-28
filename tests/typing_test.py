@@ -95,6 +95,15 @@ def test_switch() -> None:
     assert_type(range(5) | YieldIf(str), Iterator[str])
 
 
+def test_reiterated_arguments_reject_one_shot_iterators() -> None:
+    """Switch/MapSwitch cases and the Join right side are re-iterated per item, so iterators are a type error."""
+    cases = [(lambda x: x % 2 == 0, lambda x: f'{x} is even')]
+    Switch(iter(cases))  # type: ignore[arg-type]
+    MapSwitch(c for c in cases)  # type: ignore[arg-type]
+    Join(iter(['a', 'b']))  # type: ignore[arg-type]
+    Join(x for x in 'ab')  # type: ignore[arg-type]
+
+
 def test_items_attrs() -> None:
     assert_type({'a': 'b'} | GetItem('a'), str)
     assert_type([1, 2, 3] | GetItem(0), int)

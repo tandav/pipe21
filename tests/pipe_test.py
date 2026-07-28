@@ -553,6 +553,13 @@ def test_switch_uses_first_matching_case():
     assert 1 | Switch(cases) == 'first'
 
 
+def test_switch_reuses_cases_for_every_item():
+    """The cases are re-iterated on every use, so they must be re-iterable."""
+    switch_cases = [(lambda x: x % 2 == 0, lambda x: 'even')]
+    assert [1 | Switch(switch_cases), 2 | Switch(switch_cases)] == [1, 'even']
+    assert range(3) | MapSwitch(switch_cases) | Pipe(list) == ['even', 1, 'even']
+
+
 def test_join_empty_sides():
     assert range(3) | Join([]) | Pipe(list) == []
     assert [] | Join(range(3)) | Pipe(list) == []
