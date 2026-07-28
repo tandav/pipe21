@@ -2,6 +2,7 @@ import functools
 import itertools
 import math
 import operator
+import os
 import random
 import sys
 from types import SimpleNamespace
@@ -146,7 +147,6 @@ def test_key_by_value_by():
     ],
 )
 def test_append(it, f, expected):
-    assert it | Append(f) | Pipe(list) == expected
     assert it | Append(f) | Pipe(list) == expected
 
 
@@ -475,3 +475,143 @@ def test_exec():
 
     x = [2, 0, 1]
     assert x | Exec(x.sort, reverse=True) == [2, 1, 0]
+
+
+@pytest.mark.parametrize(
+    ('it', 'pattern', 'kw', 'expected'), [
+        ([b'hello foo', b'world', b'awesome FOo'], b'foo', {}, [b'hello foo']),
+        ([b'hello foo', b'world', b'awesome FOo'], b'foo', {'i': True}, [b'hello foo', b'awesome FOo']),
+        ([b'hello foo', b'world', b'awesome FOo'], b'foo', {'v': True}, [b'world', b'awesome FOo']),
+        ([b'foo1', b'3foo'], b'^foo.*', {}, [b'foo1']),
+    ],
+)
+def test_grep_bytes(it, pattern, kw, expected):
+    assert it | Grep(pattern, **kw) | Pipe(list) == expected
+
+
+def test_iter_lines_accepts_str_path_and_file_descriptor(tmp_path):
+    file = tmp_path / 'file.txt'
+    file.write_text('hello\nworld\n')
+    assert str(file) | IterLines() | Pipe(list) == ['hello', 'world']
+    fd = os.open(file, os.O_RDONLY)
+    assert fd | IterLines() | Pipe(list) == ['hello', 'world']
+
+
+@pytest.mark.parametrize(
+    ('text', 'expected'), [
+        ('', []),
+        ('\n', ['']),
+        ('x\ny', ['x', 'y']),
+        ('  padded  \n', ['padded']),
+    ],
+)
+def test_iter_lines_edge_cases(tmp_path, text, expected):
+    file = tmp_path / 'file.txt'
+    file.write_text(text)
+    assert file | IterLines() | Pipe(list) == expected
+
+
+def test_map_methodcaller_args_kwargs():
+    assert ['ab'] | MapMethodCaller('center', 6, '-') | Pipe(list) == ['--ab--']
+    assert [K()] | MapMethodCaller('increment', 1) | Pipe(list) == [2]
+    assert [K()] | MapMethodCaller('increment', 1, add=2) | Pipe(list) == [3]
+
+
+@pytest.mark.parametrize(
+    ('it', 'f', 'expected'), [
+        ([], operator.add, []),
+        ([('a', 1)], operator.add, [('a', 1)]),
+        ([('b', 1), ('a', 1), ('b', 2)], operator.add, [('a', 1), ('b', 3)]),
+        ([(2, 'x'), (1, 'y'), (2, 'z')], operator.add, [(1, 'y'), (2, 'xz')]),
+    ],
+)
+def test_reduce_by_key_groups_and_sorts_by_key(it, f, expected):
+    assert it | ReduceByKey(f) == expected
+
+
+def test_group_by_sorts_unordered_input():
+    it = [('b', 1), ('a', 1), ('b', 2)]
+    assert it | GroupBy(operator.itemgetter(0)) | MapValues(list) | Pipe(list) == [
+        ('a', [('a', 1)]),
+        ('b', [('b', 1), ('b', 2)]),
+    ]
+
+
+def test_reduce_with_initializer_on_empty_iterable():
+    assert [] | Reduce(operator.add, 42) == 42
+    assert iter([]) | Reduce(operator.add, 42) == 42
+
+
+def test_switch_returns_input_when_nothing_matches():
+    assert 5 | Switch([]) == 5
+    assert 5 | Switch([(lambda x: False, lambda x: 'never')]) == 5
+    assert range(3) | MapSwitch([]) | Pipe(list) == [0, 1, 2]
+
+
+def test_switch_uses_first_matching_case():
+    cases = [(lambda x: x > 0, lambda x: 'first'), (lambda x: x > 0, lambda x: 'second')]
+    assert 1 | Switch(cases) == 'first'
+
+
+def test_join_empty_sides():
+    assert range(3) | Join([]) | Pipe(list) == []
+    assert [] | Join(range(3)) | Pipe(list) == []
+
+
+def test_join_reuses_right_side_for_every_left_item():
+    """The right side is re-iterated per left item, so it must be re-iterable."""
+    assert [0, 0] | Join([0, 0]) | Pipe(list) == [(0, 0), (0, 0), (0, 0), (0, 0)]
+
+
+@pytest.mark.parametrize(
+    ('it', 'n', 'expected'), [
+        ([], 3, []),
+        (range(2), 5, [(0, 1)]),
+    ],
+)
+def test_chunked_edge_cases(it, n, expected):
+    assert it | Chunked(n) | Pipe(list) == expected
+
+
+def test_unique_yields_first_occurrence_object():
+    a, b = {'k': 1}, {'k': 1}
+    result = [a, b] | Unique(operator.itemgetter('k')) | Pipe(list)
+    assert len(result) == 1
+    assert result[0] is a
+
+
+@pytest.mark.parametrize(
+    ('pipeline', 'exception'), [
+        (lambda: range(5) | Take(-1), ValueError),
+        (lambda: range(5) | Slice(-1) | Pipe(list), ValueError),
+        (lambda: [[1], [2]] | Unique() | Pipe(list), TypeError),
+        (lambda: [1, 'a'] | GroupBy(lambda x: x) | Pipe(list), TypeError),
+        (lambda: [1, 2] | Append(str) | Pipe(list), TypeError),  # type: ignore[operator]
+        (lambda: [1, 2] | Keys() | Pipe(list), TypeError),  # type: ignore[operator]
+        (lambda: [1, 2] | Grep('1') | Pipe(list), TypeError),  # type: ignore[operator]
+        (lambda: {'a': 1} | GetItem('b'), KeyError),
+        (lambda: 1 | MethodCaller('nope'), AttributeError),
+        (lambda: SimpleNamespace() | GetAttr('nope'), AttributeError),
+    ],
+)
+def test_errors_propagate(pipeline, exception):
+    with pytest.raises(exception):
+        pipeline()
+
+
+def test_set_and_del_item_on_sequences():
+    x = [0, 1, 2]
+    assert x | SetItem(0, 'a') == ['a', 1, 2]
+    assert x | DelItem(0) == [1, 2]
+    assert [0, 1, 2] | GetItem(slice(1, None)) == [1, 2]
+
+
+def test_operators_are_reusable():
+    """A pipe object holds no per-run state, so it can be applied more than once."""
+    op = Map(str)
+    assert range(2) | op | Pipe(list) == ['0', '1']
+    assert range(2) | op | Pipe(list) == ['0', '1']
+
+    uniq = Unique()
+    assert [1, 1, 2] | uniq | Pipe(list) == [1, 2]
+    assert [1, 1, 2] | uniq | Pipe(list) == [1, 2]

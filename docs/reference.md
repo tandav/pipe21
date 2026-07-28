@@ -244,16 +244,16 @@ Same as `FilterKeys` but for `v` in `(k, v)` pairs
 ## IterLines
 
 ```py
+>>> import pathlib
 >>> import tempfile
->>> f = tempfile.NamedTemporaryFile('w+')
->>> f.write('hello\nworld\n')
+>>> tmpdir = tempfile.TemporaryDirectory()
+>>> f = pathlib.Path(tmpdir.name, 'file.txt')
+>>> f.write_text('hello\nworld\n')
 12
->>> f.seek(0)
-0
->>> f.name | IterLines() | Pipe(list)
+>>> f | IterLines() | Pipe(list)
 ['hello', 'world']
 
->>> f.name | IterLines(strip=False) | Pipe(list)
+>>> f | IterLines(strip=False) | Pipe(list)
 ['hello\n', 'world\n']
 
 ```
